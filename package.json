@@ -1,0 +1,43 @@
+{
+  "name": "react-dashboard",
+  "version": "1.0.0-beta.1",
+  "description": "A React Dashboard Component.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "vitest",
+    "build": "rollup -c --bundleConfigAsCjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [
+    "ui",
+    "react",
+    "library",
+    "component",
+    "dashboard"
+  ],
+  "author": "Edgar Bermejo",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.0.18",
+    "@storybook/addon-interactions": "^7.0.18",
+    "@storybook/addon-links": "^7.0.18",
+    "@storybook/blocks": "^7.0.18",
+    "@storybook/react": "^7.0.18",
+    "@storybook/react-vite": "^7.0.18",
+    "@storybook/testing-library": "^0.0.14-next.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "happy-dom": "^9.20.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.0.18",
+    "vitest": "^0.31.3"
+  }
+}
