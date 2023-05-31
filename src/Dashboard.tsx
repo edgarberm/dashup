@@ -1,6 +1,12 @@
 import { useEventListener, useStateRef } from './hooks'
 import { throttle } from './utils'
-import React, { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import Widget from './Widget'
 import {
   bottom,
@@ -10,6 +16,8 @@ import {
   getLayoutItem,
   moveElement,
 } from './utils'
+import { Area, DashboardItem, DashboardProps, Layout } from './types'
+// import './style.css'
 
 const PLACEHOLDER = {
   id: 'placeholder',
@@ -46,8 +54,11 @@ export default function Dashboard({
   const [layout, setLayout, layoutRef] = useStateRef<Layout>([])
   const colWidth = useMemo(
     () => (width - margin[0]) / columns - margin[0],
-    [columns, width, margin],
+    [columns, width, margin]
   )
+
+  console.log(margin);
+  
 
   useEventListener('resize', throttle(onWindowResize, 500))
 
@@ -81,7 +92,7 @@ export default function Dashboard({
             originalLayout.current = originalLayout.current.concat(diff)
           } else {
             originalLayout.current = originalLayout.current.filter((obj) => {
-              return !diff.some((obj2) => {
+              return !diff.some((obj2: DashboardItem) => {
                 return obj.id === obj2.id
               })
             })
@@ -108,7 +119,7 @@ export default function Dashboard({
         item,
         widget.x,
         widget.y,
-        true,
+        true
       )
       const compactLayout = compact(newLayout) as Layout
 
@@ -118,7 +129,7 @@ export default function Dashboard({
       updateHeight()
 
       const compactItem = compactLayout.find(
-        (c) => c.id === widget.id,
+        (c: DashboardItem) => c.id === widget.id
       ) as DashboardItem
 
       if (!compactItem) return
@@ -160,7 +171,7 @@ export default function Dashboard({
               collision[0],
               collision[0].x,
               widget.height,
-              false,
+              false
             )
           : layoutRef.current
       const compactLayout = compact(newLayout) as Layout
@@ -186,7 +197,7 @@ export default function Dashboard({
 
   const handleRemoveWidget = (id: string) => {
     const newLayout = layoutRef.current.filter(
-      (w: DashboardItem) => w.id !== id,
+      (w: DashboardItem) => w.id !== id
     )
     const compactLayout = compact(newLayout) as Layout
 
@@ -197,7 +208,7 @@ export default function Dashboard({
   }
 
   return (
-    <div ref={dashboardRef} className='dashboard-layout' style={mergedStyle}>
+    <div ref={dashboardRef} className='dashboard' style={mergedStyle}>
       {layout.map((w) => (
         <Widget
           key={w.id}

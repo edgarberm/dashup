@@ -1,4 +1,6 @@
-function uuidv4() {
+import { DashboardItem, Layout } from './types'
+
+export function uuidv4() {
   // @ts-ignore
   const pattern = [1e7] + -1e3 + -4e3 + -8e3 + -1e11
   // @ts-ignore
@@ -77,6 +79,8 @@ export function calcPositionInPx(
   columns: number,
   padding: [number, number],
 ) {
+  console.log(padding);
+  
   const left = Math.round((x - padding[0]) / (colWidth + padding[0]))
   const top = Math.round((y - padding[1]) / (rowHeight + padding[1]))
   // Clampping

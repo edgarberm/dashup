@@ -16,6 +16,7 @@ import {
   getNewPosition,
   setWidgetStyle,
 } from './utils'
+import { Area, DashboardWidgetProps } from './types'
 
 /**
  * La idea de este componente es que solo se encargue de 'pintarse' a si mismo, la lógica
@@ -138,7 +139,7 @@ export default function Widget({
       innerH.current,
       colW.current,
       rowHeight,
-      padding,
+      padding
     )
 
     if (isDraggingRef.current && draggingArea.current) {
@@ -222,7 +223,7 @@ export default function Widget({
           lastX.current,
           lastY.current,
           position.x,
-          position.y,
+          position.y
         )
         area.x = draggingArea.current.x + coreEvent.deltaX / 1
         area.y = draggingArea.current.y + coreEvent.deltaY / 1
@@ -241,7 +242,7 @@ export default function Widget({
       colW.current,
       rowHeight,
       columns,
-      padding,
+      padding
     )
 
     lastX.current = position.x
@@ -295,7 +296,7 @@ export default function Widget({
       innerH.current,
       colW.current,
       rowHeight,
-      padding,
+      padding
     )
 
     switch (event.type) {
@@ -335,7 +336,7 @@ export default function Widget({
           lastW.current,
           lastH.current,
           position.x,
-          position.y,
+          position.y
         )
         newSize.width = resizingArea.current.width + coreEvent.deltaX / 1
         newSize.height = resizingArea.current.height + coreEvent.deltaY / 1
@@ -354,7 +355,7 @@ export default function Widget({
       colW.current,
       rowHeight,
       columns,
-      padding,
+      padding
     )
 
     if (size.w < minWidth) {
@@ -397,7 +398,7 @@ export default function Widget({
     <div
       ref={widget}
       className={`
-        dashboard-widget
+        widget
         ${placeholderClassName}
         ${draggable && !stationary ? 'draggable' : ''}
         ${resizable && !stationary ? 'resizable' : ''}
@@ -407,11 +408,9 @@ export default function Widget({
     >
       {/** 🗒️ @note si es el placeholder no renderizamos el contenido */}
       {placeholderClassName === undefined && (
-        <div>
-          <div className='draggable-handle flex flex-row items-center justify-between'>
-            <p style={{ fontSize: 14, fontWeight: 600 }}>
-              {title}
-            </p>
+        <>
+          <div className='draggable-handle'>
+            <p className='title'>{title}</p>
 
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               {/* {options?.map((option: DashboardItemOption, index: number) => (
@@ -427,17 +426,20 @@ export default function Widget({
                 </Tooltip>
               ))} */}
 
-              {/* {removible && (
-                <Tooltip text='Remove widget'>
-                  <IconButton
-                    size='small'
-                    color='transparent'
-                    onClick={handleWidgetRemove}
+              {removible && (
+                <button
+                  className='widget-remove--button'
+                  onClick={handleWidgetRemove}
+                >
+                  <svg
+                    height='20'
+                    viewBox='0 -960 960 960'
+                    width='20'
                   >
-                    <Icon icon='close' />
-                  </IconButton>
-                </Tooltip>
-              )} */}
+                    <path d='M291-253.847 253.847-291l189-189-189-189L291-706.153l189 189 189-189L706.153-669l-189 189 189 189L669-253.847l-189-189-189 189Z' />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
 
@@ -449,7 +451,7 @@ export default function Widget({
           {resizable && !stationary && (
             <span ref={resizeHandle} className='resizable-handle'></span>
           )}
-        </div>
+        </>
       )}
     </div>
   )

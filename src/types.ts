@@ -1,4 +1,4 @@
-interface Area {
+export interface Area {
   id: string
   x: number
   y: number
@@ -9,13 +9,13 @@ interface Area {
 /**
  * @prop {string} title
  */
-type DashboardItemOption = {
+export type DashboardItemOption = {
   title?: string // To show in the Tooltip
   action: () => void
   icon: JSX.Element
 }
 
-interface DashboardItem {
+export interface DashboardItem {
   id: string
   x: number
   y: number
@@ -31,13 +31,13 @@ interface DashboardItem {
   removible?: boolean
   moved?: boolean // NOTE: no se expone en `DashboardWidgetProps`puesto que no se utiliza en el componente
   title?: string
-  component?: JSX.Element<any>
+  component?: JSX.Element
   options?: DashboardItemOption[]
 }
 
-type Layout = DashboardItem[]
+export type Layout = DashboardItem[]
 
-interface DashboardProps {
+export interface DashboardProps {
   widgets: Layout
   columns?: number
   rowHeight?: number
@@ -47,7 +47,7 @@ interface DashboardProps {
   onResize?: () => void
 }
 
-interface DashboardWidgetProps extends DashboardItem {
+export interface DashboardWidgetProps extends DashboardItem {
   columns: number
   colWidth: number
   rowHeight: number
