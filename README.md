@@ -1,4 +1,4 @@
-# <img src="./assets/Icon.png" width="22px" height="22px" /> React Dashboard
+# <img src="./assets/Icon.png" width="22px" height="22px" /> Re-dash
 
 <img src="./assets/Icon.png" width="120px" height="120px" />
 

@@ -1,9 +1,9 @@
 {
-  "name": "react-dashboard",
+  "name": "re-dash",
   "version": "1.0.0-beta.1",
   "description": "A React Dashboard Component.",
   "repository": {
-    "directory": "https://github.com/builtbyedgar/react-dashboard"
+    "directory": "https://github.com/builtbyedgar/re-dash"
   },
   "type": "module",
   "main": "dist/cjs/index.js",
