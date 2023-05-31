@@ -1,39 +1,21 @@
-# ![React Dashboard](./assets/Icon-24.png) React Dashboard
+# <img src="./assets/Icon.png" width="22px" height="22px" /> React Dashboard
+
+<img src="./assets/Icon.png" width="120px" height="120px" />
+
+<p>&nbsp;</p>
 
 ![version](https://img.shields.io/badge/version-1.0.0@beta.1-brightgreen.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/react-dashboard)
 
-<p>&nbsp;</p>
 
-![React Dashboard](./assets/Icon.png)
 
 <p>&nbsp;</p>
 
-Get started and build your dream dashboard with React Dashboard Component. Fast, lightweight, configurable and super easy to use! ⚡️
-
-🚨 **DISCLAIMER** This component are under development.
+🚨 **DISCLAIMER** This component are under development. Is not ready for production!
+I would be delighted to have your help in getting it ready as soon as possible. If you'd like, you can create an issue [here](https://github.com/builtbyedgar/react-dashboard/issues).
 
 ---
-
-### Introduction
-
-Designed for ...
-
-Save hundreds of hours trying to create and develop a dashboard from scratch.
-The fastest dashboard is here. Seriously.
-
-With Horizon UI you will find many examples for pages like NFTs Pages,
-Authentication Pages, Profile and so on. Just choose between a Basic Design or a
-cover and you are good to go!
-
-### 🎉 [NEW] Features
-
-Bla bla bla
-
-### Documentation
-
-Bla bla bla
 
 ### Quick Start
 
@@ -127,4 +109,8 @@ Issues
 
 ### Todo's
 
-🚨 **IMPORTANT** This component are under development.
+- [ ] Storybook
+- [ ] Refactor
+- [ ] Docuentation
+- [ ] Extra features
+- [ ] Test
