@@ -1,8 +1,8 @@
-import { uuidv4 } from '../utils'
-import Dashboard from '../Dashboard'
 import { Meta, StoryObj } from '@storybook/react'
-import React, { CSSProperties, useState } from 'react'
-import { DashboardItem, DashboardProps, Layout } from '../types'
+import { useState } from 'react'
+import Dashboard from '../src/Dashboard'
+import { DashboardProps, Layout } from '../src/types'
+import { uuidv4 } from '../src/utils'
 import './dashboard.css'
 
 function FakeComponent(): JSX.Element {
