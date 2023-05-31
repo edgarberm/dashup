@@ -12,7 +12,7 @@
 
 <p>&nbsp;</p>
 
-🚨 **DISCLAIMER** This component are under development. Is not ready for production!
+🚨 **IMPORTANT** This component are under development. Is not ready for production!
 I would be delighted to have your help in getting it ready as soon as possible. If you'd like, you can create an issue [here](https://github.com/builtbyedgar/react-dashboard/issues).
 
 ---
