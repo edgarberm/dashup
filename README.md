@@ -106,3 +106,4 @@ type DashboardItemOption = {
 - [ ] More Storybook examples and customizations
 - [ ] Docuentation
 - [ ] Test
+- [ ] Publish package
