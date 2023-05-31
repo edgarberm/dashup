@@ -6,7 +6,7 @@
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "vitest",
     "build": "rollup -c --bundleConfigAsCjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -32,11 +32,12 @@
     "@storybook/react": "^7.0.18",
     "@storybook/react-vite": "^7.0.18",
     "@storybook/testing-library": "^0.0.14-next.2",
-    "prop-types": "^15.8.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "happy-dom": "^9.20.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.0.18"
+    "storybook": "^7.0.18",
+    "vitest": "^0.31.3"
   }
 }
-
-

@@ -18,7 +18,7 @@ const FAKE_WIDGETS: Layout = [
     id: uuidv4(),
     x: 0,
     y: 2,
-    width: 3,
+    width: 1,
     height: 2,
     title: 'Widget 1 (not draggable)',
     draggable: false,
@@ -136,7 +136,7 @@ const dashboard: Meta<typeof Dashboard> = {
     widgets: FAKE_WIDGETS,
     columns: 12,
     rowHeight: 100,
-    margin: [12, 12],
+    margin: [10, 10],
     onChange: () => {},
     onResize: () => {},
   } as DashboardProps,
@@ -151,7 +151,7 @@ export const Default: Story = {
       const { args } = props
       const [widgets, setWidgets] = useState(args.widgets)
       const handleChange = (dashboard: Layout) => {
-        setWidgets(dashboard)
+        // setWidgets(dashboard)
       }
 
       return (
