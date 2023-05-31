@@ -17,19 +17,19 @@ I would be delighted to have your help in getting it ready as soon as possible. 
 
 ---
 
-### Quick Start
+### How to use it
+
+**Peer dependencies**
+
+- React v18
+- React RouterDom
+
 
 Install React Dashboard by running either of the following:
-
-- Requires React v18
 
 ```bash
 npm i react-dashboard@latest
 ```
-
-### Example
-
-The component is super easy to configure and work with...
 
 #### Properties
 
@@ -99,18 +99,10 @@ type DashboardItemOption = {
 }
 ```
 
-### Versions
-
-Here
-
-### Reporting Issues
-
-Issues
-
 ### Todo's
 
-- [ ] Storybook
-- [ ] Refactor
-- [ ] Docuentation
+- [ ] Code refactor
 - [ ] Extra features
+- [ ] More Storybook examples and customizations
+- [ ] Docuentation
 - [ ] Test
