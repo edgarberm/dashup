@@ -1,12 +1,6 @@
 import { useEventListener, useStateRef } from './hooks'
 import { throttle } from './utils'
-import {
-  CSSProperties,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import Widget from './Widget'
 import {
   bottom,
@@ -56,9 +50,6 @@ export default function Dashboard({
     () => (width - margin[0]) / columns - margin[0],
     [columns, width, margin]
   )
-
-  console.log(margin);
-  
 
   useEventListener('resize', throttle(onWindowResize, 500))
 

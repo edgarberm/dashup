@@ -8,13 +8,13 @@ export function uuidv4() {
     (
       c ^
       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    ).toString(16),
+    ).toString(16)
   )
 }
 
 export function throttle<Args extends unknown[]>(
   fn: (...args: Args) => void,
-  timeout = 300,
+  timeout = 300
 ) {
   let lastArgs: Args | undefined
 
@@ -40,8 +40,6 @@ export function throttle<Args extends unknown[]>(
   return throttled
 }
 
-
-
 /**
  * Esta función se encarga
  */
@@ -52,7 +50,7 @@ export function calcPosition(
   height: number,
   columnWidth: number,
   rowHeight: number,
-  padding: [number, number],
+  padding: [number, number]
 ) {
   return {
     x: Math.round(columnWidth * x + (x + 1) * padding[0]),
@@ -77,10 +75,8 @@ export function calcPositionInPx(
   colWidth: number,
   rowHeight: number,
   columns: number,
-  padding: [number, number],
+  padding: [number, number]
 ) {
-  console.log(padding);
-  
   const left = Math.round((x - padding[0]) / (colWidth + padding[0]))
   const top = Math.round((y - padding[1]) / (rowHeight + padding[1]))
   // Clampping
@@ -98,7 +94,7 @@ export function calcSizeInPx(
   colWidth: number,
   rowHeight: number,
   columns: number,
-  padding: [number, number],
+  padding: [number, number]
 ) {
   const W = Math.round((width + padding[0]) / (colWidth + padding[0]))
   const H = Math.round((height + padding[1]) / (rowHeight + padding[1]))
@@ -115,7 +111,7 @@ export function calcSizeInPx(
  */
 export function getNewPosition(
   position: { x: number; y: number },
-  target: HTMLElement,
+  target: HTMLElement
 ): {
   x: number
   y: number
@@ -153,12 +149,15 @@ export function bottom(layout: Layout): number {
   return max
 }
 
+/**
+ * Get all stationary widgets
+ */
 function getStatics(layout: Layout): Layout {
   return [...layout].filter((l) => l.stationary)
 }
 
 /**
- * Ordena los elementos del layout de arriba a abajo y de izquierda a derecha
+ * Arrange the elements of the layout from top to bottom and from left to right.
  *
  * @param {Layout} layout Array of layout objects.
  * @return {Layout} Layout, sorted static items first.
@@ -180,44 +179,44 @@ function sortLayoutItemsByRowCol(layout: Layout): Layout {
 
 export function findLayoutsDifference(
   layout: Layout,
-  originalLayout: Layout,
+  originalLayout: Layout
 ): Layout {
-  // Están en layout pero no en originalLayout
+  // They are in layout but not in originalLayout
   const uniqueResultOne = layout.filter(
-    (obj) => !originalLayout.some((obj2) => obj.id === obj2.id),
+    (obj) => !originalLayout.some((obj2) => obj.id === obj2.id)
   )
-  // Están en originalLayout pero no en layout
+  // They are in originalLayout but not in layout
   const uniqueResultTwo = originalLayout.filter(
-    (obj) => !layout.some((obj2) => obj.id === obj2.id),
+    (obj) => !layout.some((obj2) => obj.id === obj2.id)
   )
 
   return [...uniqueResultOne, ...uniqueResultTwo]
 }
 
 /**
- * Comprueba si dos widgets colisionan
+ * Check if two widgets collide
  *
  * @return {boolean}
  */
 function collides(w1: DashboardItem, w2: DashboardItem): boolean {
   if (w1 === w2) return false
-  if (w1.x + w1.width <= w2.x) return false // w1 está a la izquierda de w2
-  if (w1.x >= w2.x + w2.width) return false // w1 está a la derecha de w2
-  if (w1.y + w1.height <= w2.y) return false // w1 está encima w2
-  if (w1.y >= w2.y + w2.height) return false // w1 está debajo w2
-  return true // se solapan
+  if (w1.x + w1.width <= w2.x) return false // w1 is to the left of w2
+  if (w1.x >= w2.x + w2.width) return false // w1 is to the right of w2
+  if (w1.y + w1.height <= w2.y) return false // w1 is above w2
+  if (w1.y >= w2.y + w2.height) return false // w1 is below w2
+  return true // overlap
 }
 
 /**
- * Devuelve el primer elemento con el que colisiona.
- * 🚨 No nos importa el orden, aunque es posible que esto no sea correcrto.
+ * Return the first element with which it collides
+ * 🚨 We don't care about the order, although this may not be accurate
  *
  * @param  {DashboardItem} layoutItem Layout item.
  * @return {DashboardItem|undefined}  A colliding layout item, or undefined.
  */
 function getFirstCollision(
   layout: Layout,
-  layoutItem: DashboardItem,
+  layoutItem: DashboardItem
 ): DashboardItem | undefined {
   for (let i = 0, len = layout.length; i < len; i++) {
     if (collides(layout[i], layoutItem)) return layout[i]
@@ -226,21 +225,21 @@ function getFirstCollision(
 
 export function getAllCollisions(
   layout: Layout,
-  layoutItem: DashboardItem,
+  layoutItem: DashboardItem
 ): DashboardItem[] {
   return [...layout].filter((l) => collides(l, layoutItem))
 }
 
 export function compactItem(
   compareWith: Layout,
-  widget: DashboardItem,
+  widget: DashboardItem
 ): DashboardItem {
-  // Mueve el widget hacia arriba tanto como pueda sin colisionar.
+  // Move the widget upwards as much as possible without colliding
   while (widget.y > 0 && !getFirstCollision(compareWith, widget)) {
     widget.y = widget.y - 1
   }
 
-  // Mueve el widget hacia abajo y sigue moviéndolo si está colisionando.
+  // Move the widget downwards and continue moving if it is colliding
   let collides
   while ((collides = getFirstCollision(compareWith, widget))) {
     widget.y = collides.y + collides.height
@@ -250,34 +249,34 @@ export function compactItem(
 }
 
 /**
- * Compacta un layout.
- * Esto implica bajar por cada coordenada Y y eliminar los huecos entre los elementos.
+ * Compact the layout
+ * This involves iterating through each Y coordinate and eliminating the gaps between elements
  *
  * @param  {Layout} layout Layout.
  * @return {Layout} Compacted Layout.
  */
 export function compact(layout: Layout): Layout {
   const dashboard = [...layout]
-  // Guardamos los estáticos
+  // We save the static elements
   const compareWith = getStatics(dashboard)
 
-  // Ordenamos los widgets por filas y columnas.
+  // We sort the widgets by rows and columns
   const sorted = sortLayoutItemsByRowCol(dashboard)
-  // Nuestro output
+  // Our output
   const out = Array(dashboard.length)
 
   for (let i = 0, len = sorted.length; i < len; i++) {
     let widget = sorted[i]
 
-    // No movemos los widgets estáticos
+    // We don't move the static widgets
     if (!widget.stationary) {
       widget = compactItem(compareWith, widget)
 
-      // Movemos los widget anteriores
+      // We move the previous widgets
       compareWith.push(widget)
     }
 
-    // Los añadimos a nuestro output en el orden correcto.
+    // We add them to our output in the correct order
     out[dashboard.indexOf(widget)] = widget
 
     widget.moved = false
@@ -290,9 +289,9 @@ export function setWidgetStyle(
   x: number,
   y: number,
   width: number,
-  height: number,
+  height: number
 ): any {
-  const translate = 'translate3d(' + x + 'px,' + y + 'px, 0)'
+  const translate = 'translate3d(' + x + 'px, ' + y + 'px, 0)'
   return {
     transform: translate,
     width: width + 'px',
@@ -301,10 +300,10 @@ export function setWidgetStyle(
   }
 }
 
-// Obtenemos la posición del widget en el dashboard (en px) a partir de un mouse event
+// We obtain the position of the widget on the dashboard (in pixels) from a mouse event
 export function getControlPosition(
   event: globalThis.MouseEvent,
-  parent: HTMLElement,
+  parent: HTMLElement
 ) {
   const offsetParent = parent.offsetParent || document.body // change for dashboardRef
   const offsetParentRect =
@@ -323,7 +322,7 @@ export function createCoreData(
   lastX: number,
   lastY: number,
   x: number,
-  y: number,
+  y: number
 ) {
   return {
     deltaX: x - lastX,
@@ -342,7 +341,7 @@ export function createCoreData(
  */
 export function getLayoutItem(
   layout: Layout,
-  id: string,
+  id: string
 ): DashboardItem | undefined {
   for (let i = 0, len = layout.length; i < len; i++) {
     if (layout[i].id === id) return layout[i]
@@ -350,14 +349,14 @@ export function getLayoutItem(
 }
 
 /**
- * Mueve un elemento.
- * También es responsable de mover en cascada los otros elementos.
+ * Move an element
+ * It is also responsible for cascading the movement of the other elements
  *
  * @param  {Layout}      layout
  * @param  {DashboardItem} widget
- * @param  {number}     x en unidades del grid
- * @param  {number}     y en unidades del grid
- * @param  {boolean}    isUserAction indica si el elemento que estamos moviendo está siendo arrastrado/redimensionado por el usuario.
+ * @param  {number}     x in grid units
+ * @param  {number}     y in grid units
+ * @param  {boolean}    isUserAction Indicate if the element being moved is being dragged/resized by the user
  */
 export function moveElement(
   layout: Layout,
@@ -365,7 +364,7 @@ export function moveElement(
   x?: number,
   y?: number,
   isUserAction?: boolean,
-  preventCollision?: boolean,
+  preventCollision?: boolean
 ): Layout {
   if (widget.stationary) return layout
 
@@ -374,20 +373,20 @@ export function moveElement(
 
   const movingUp = y && widget.y > y
 
-  // bastante más rápido que extender el objeto
+  // Much faster than extending the object
   if (typeof x === 'number') widget.x = x
   if (typeof y === 'number') widget.y = y
   widget.moved = true
 
   let dashboard: DashboardItem[] = [...layout]
-  // Si choca con algo, lo movemos.
+  // If it collides with something, we move it
   let sorted: DashboardItem[] = sortLayoutItemsByRowCol(dashboard)
-  // Tenemos que reordenar los elementos con los que comparamos para asegurarnos de en el
-  // caso de tener colisiones múltiples, obtener l colisión más cercana.
+  // We need to reorder the elements we compare with to ensure that in the
+  // case of having multiple collisions, we obtain the closest collision
   if (movingUp) sorted = sorted.reverse()
   const collisions = getAllCollisions(sorted, widget)
 
-  // NOTE: para en un futuro poder bloquear el dashboard (ahora no hace nada)
+  // NOTE: to be able to lock the dashboard in the future (currently does nothing).
   if (preventCollision && collisions.length) {
     widget.x = oldX
     widget.y = oldY
@@ -395,7 +394,7 @@ export function moveElement(
     return layout
   }
 
-  // Movemos cada elemento que colisiona
+  // We move each colliding element
   const len = collisions.length
   for (let i = 0; i < len; i++) {
     const collision = collisions[i]
@@ -405,20 +404,20 @@ export function moveElement(
     if (widget.y > collision.y && widget.y - collision.y > collision.height / 4)
       continue
 
-    // No movemos los widges estáticos
+    // We don't move the static widgets
     if (collision.stationary) {
       dashboard = moveElementAwayFromCollision(
         layout,
         collision,
         widget,
-        isUserAction,
+        isUserAction
       )
     } else {
       dashboard = moveElementAwayFromCollision(
         layout,
         widget,
         collision,
-        isUserAction,
+        isUserAction
       )
     }
   }
@@ -427,9 +426,9 @@ export function moveElement(
 }
 
 /**
- * Aquí es donde ocurre la magia.. 🪄
+ * This is where the magic happens.. 🪄
  *
- * Intentamos mover el widget hacia arriba si hay espacio, si no, hacia abajo.
+ * We attempt to move the widget upwards if there is space, otherwise downwards
  *
  * @param  {Array} layout
  * @param  {LayoutItem} collidesWith
@@ -440,15 +439,15 @@ function moveElementAwayFromCollision(
   layout: Layout,
   collidesWith: DashboardItem,
   itemToMove: DashboardItem,
-  isUserAction?: boolean,
+  isUserAction?: boolean
 ): Layout {
   const preventCollision = false // we're already colliding
 
-  // Si hay suficiente espacio movemos el widget encima.
-  // IMPORTANTE tener en cuenta que solo ha de hecerse en la colisión 'principal', de lo contrario
-  // podemos entrar en unbucle infinito.
+  // If there is enough space, we move the widget above
+  // IMPORTANTE Keep in mind that this should only be done for the 'main' collision, 
+  // otherwise we may enter an infinite loop.
   if (isUserAction) {
-    // Copiamos el original para no modificarlo
+    // We make a copy of the original to avoid modifying it
     const fakeItem: DashboardItem = {
       x: itemToMove.x,
       y: itemToMove.y,
@@ -465,7 +464,7 @@ function moveElementAwayFromCollision(
         itemToMove,
         undefined,
         fakeItem.y,
-        preventCollision,
+        preventCollision
       )
     }
   }
@@ -475,6 +474,6 @@ function moveElementAwayFromCollision(
     itemToMove,
     undefined,
     itemToMove.y + 1,
-    preventCollision,
+    preventCollision
   )
 }
