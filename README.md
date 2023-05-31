@@ -101,7 +101,7 @@ type DashboardItemOption = {
 
 ### Todo's
 
-- [ ] Code refactor
+- [x] Code refactor
 - [ ] Extra features
 - [ ] More Storybook examples and customizations
 - [ ] Docuentation
