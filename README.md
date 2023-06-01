@@ -1,10 +1,10 @@
-# <img src="./assets/Icon.png" width="22px" height="22px" /> Re-cockpit
+# <img src="./assets/Icon.png" width="22px" height="22px" /> Redashify
 
 <img src="./assets/Icon.png" width="120px" height="120px" />
 
 <p>&nbsp;</p>
 
-![version](https://img.shields.io/badge/version-1.0.0@beta.3-brightgreen.svg)
+![version](https://img.shields.io/badge/version-1.0.0@beta.5-brightgreen.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/re-cockpit)
 
@@ -28,7 +28,7 @@ I would be delighted to have your help in getting it ready as soon as possible. 
 Install React Dashboard by running either of the following:
 
 ```bash
-npm i re-cockpit
+npm i redashify@latest
 ```
 
 #### Properties
