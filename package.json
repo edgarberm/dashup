@@ -2,9 +2,16 @@
   "name": "re-cockpit",
   "version": "1.0.0-beta.1",
   "description": "A React Dashboard Component.",
+  "repository": {
+    "directory": "https://github.com/builtbyedgar/re-cockpit"
+  },
+  "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "vitest",
     "build": "rollup -c --bundleConfigAsCjs",

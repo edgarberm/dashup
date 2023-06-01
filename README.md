@@ -1,4 +1,4 @@
-# <img src="./assets/Icon.png" width="22px" height="22px" /> React Dashboard
+# <img src="./assets/Icon.png" width="22px" height="22px" /> Re-cockpit
 
 <img src="./assets/Icon.png" width="120px" height="120px" />
 
@@ -6,14 +6,14 @@
 
 ![version](https://img.shields.io/badge/version-1.0.0@beta.1-brightgreen.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
-![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/react-dashboard)
+![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/re-cockpit)
 
 
 
 <p>&nbsp;</p>
 
 🚨 **IMPORTANT** This component are under development. Is not ready for production!
-I would be delighted to have your help in getting it ready as soon as possible. If you'd like, you can create an issue [here](https://github.com/builtbyedgar/react-dashboard/issues).
+I would be delighted to have your help in getting it ready as soon as possible. If you'd like, you can create an issue [here](https://github.com/builtbyedgar/re-cockpit/issues).
 
 ---
 
@@ -28,7 +28,7 @@ I would be delighted to have your help in getting it ready as soon as possible. 
 Install React Dashboard by running either of the following:
 
 ```bash
-npm i react-dashboard@latest
+npm i re-cockpit
 ```
 
 #### Properties
@@ -106,3 +106,4 @@ type DashboardItemOption = {
 - [ ] More Storybook examples and customizations
 - [ ] Docuentation
 - [ ] Test
+- [ ] Publish package
