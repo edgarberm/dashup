@@ -32,8 +32,6 @@
 .widget {
   left: 0;
   right: auto;
-  /* min-width: 100px;
-  min-height: 100px; */
   background-color: var(--c-white);
   border: 1px solid var(--c-border);
   border-radius: 4px;
@@ -114,7 +112,7 @@
   opacity: 0.2;
   background-color: rgb(173, 213, 248);
   border: none;
-  transition: width 0.1s, height 0.1s;
+  transition: all 0.1s;
   z-index: 0;
   user-select: none;
   pointer-events: none;

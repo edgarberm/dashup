@@ -1,4 +1,4 @@
-import { DashboardItem, Layout } from './types'
+import { DashboardItem, Layout } from '../types'
 
 export function uuidv4() {
   // @ts-ignore
@@ -444,7 +444,7 @@ function moveElementAwayFromCollision(
   const preventCollision = false // we're already colliding
 
   // If there is enough space, we move the widget above
-  // IMPORTANTE Keep in mind that this should only be done for the 'main' collision, 
+  // IMPORTANTE Keep in mind that this should only be done for the 'main' collision,
   // otherwise we may enter an infinite loop.
   if (isUserAction) {
     // We make a copy of the original to avoid modifying it

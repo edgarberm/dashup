@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import Dashboard from '../src'
 import { DashboardProps, Layout } from '../src/types'
-import { uuidv4 } from '../src/utils'
+import { uuidv4 } from '../src/utils/utils'
 import './dashboard.css'
 import { useState } from 'react'
 
@@ -70,16 +70,16 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 4',
     component: <FakeComponent />,
   },
-  {
-    id: uuidv4(),
-    x: 3,
-    y: 2,
-    width: 4,
-    height: 3,
-    title: 'Widget 5 (stationary)',
-    stationary: true,
-    component: <FakeComponent />,
-  },
+  // {
+  //   id: uuidv4(),
+  //   x: 3,
+  //   y: 2,
+  //   width: 4,
+  //   height: 3,
+  //   title: 'Widget 5 (stationary)',
+  //   stationary: true,
+  //   component: <FakeComponent />,
+  // },
   {
     id: uuidv4(),
     x: 7,
@@ -111,6 +111,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 8 (no resizable)',
     resizable: false,
     component: <FakeComponent />,
+    hideTopbar: true
   },
 ]
 

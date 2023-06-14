@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react'
+
 export interface Area {
   id: string
   x: number
@@ -35,6 +37,7 @@ export interface DashboardItem {
   moved?: boolean // NOTE: no se expone en `DashboardWidgetProps`puesto que no se utiliza en el componente
   title?: string
   component?: JSX.Element
+  hideTopbar?: boolean
   options?: DashboardItemOption[]
 }
 
@@ -71,4 +74,10 @@ export interface DashboardWidgetProps extends DashboardItem {
   onDrag: (eventName: string, widget: Area) => void
   onResize: (eventName: string, widget: Area) => void
   onRemove?: (id: string) => void
+}
+
+export interface WidgetTopBarProps {
+  title?: string
+  removible?: boolean
+  onWidgetRemove?: (event: MouseEvent<HTMLButtonElement>) => void
 }

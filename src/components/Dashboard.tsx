@@ -1,5 +1,5 @@
-import { useEventListener, useStateRef } from './hooks'
-import { throttle } from './utils'
+import { useEventListener, useStateRef } from '../hooks/hooks'
+import { throttle } from '../utils/utils'
 // @ts-ignore
 import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import Widget from './Widget'
@@ -10,9 +10,9 @@ import {
   getAllCollisions,
   getLayoutItem,
   moveElement,
-} from './utils'
-import { Area, DashboardItem, DashboardProps, Layout } from './types'
-import './dashboard.scss'
+} from '../utils/utils'
+import { Area, DashboardItem, DashboardProps, Layout } from '../types'
+import '../style/index.css'
 
 const PLACEHOLDER = {
   id: 'placeholder',
@@ -24,13 +24,16 @@ const PLACEHOLDER = {
 
 /**
  *  @todos
- * - Para los widget staticos necesitamos poder moverlos para colocarlos en el lugar apropiado
  * - Fix: la animación del plceholder en el repintado. (CSS transfor tansition)
  * - Styling (UI)
  * - Mejorar UX.
  *    - Swapping horizontal de los widgets si es posible antes de empujar
+ *    - Restringir el drag y el resize al contenedor
  *    - Que se pueda ocultar el header y se muestre en el hover
  * - Refactor
+ *
+ * @think
+ * - Para los widget staticos necesitamos poder moverlos para colocarlos en el lugar apropiado
  */
 export default function Dashboard({
   widgets,
