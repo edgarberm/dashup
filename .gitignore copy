@@ -1,0 +1,44 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# testing
+coverage
+
+# production
+**/dist
+
+# misc
+.eslintcache
+.DS_Store
+
+# config files
+!.env
+!.env.*
+!.env.local
+!.env.test.*
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/e2e/settings/storage*.json
+
+
+# log files
+*.log
+npm-debug.log*
+
+# credentials
+credentials/
+
+# editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+www/.env.test.local

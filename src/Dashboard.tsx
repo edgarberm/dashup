@@ -1,5 +1,6 @@
 import { useEventListener, useStateRef } from './hooks'
 import { throttle } from './utils'
+// @ts-ignore
 import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import Widget from './Widget'
 import {
@@ -11,7 +12,7 @@ import {
   moveElement,
 } from './utils'
 import { Area, DashboardItem, DashboardProps, Layout } from './types'
-// import './style.css'
+import './dashboard.scss'
 
 const PLACEHOLDER = {
   id: 'placeholder',
@@ -35,6 +36,8 @@ export default function Dashboard({
   columns = 24,
   rowHeight = 100,
   margin = [10, 10],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  draggableHandle,
   onChange,
   onResize,
 }: DashboardProps): JSX.Element {
@@ -82,7 +85,7 @@ export default function Dashboard({
           if (layout.length > originalLayout.current.length) {
             originalLayout.current = originalLayout.current.concat(diff)
           } else {
-            originalLayout.current = originalLayout.current.filter((obj) => {
+            originalLayout.current = originalLayout.current.filter((obj: DashboardItem) => {
               return !diff.some((obj2: DashboardItem) => {
                 return obj.id === obj2.id
               })
