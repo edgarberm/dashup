@@ -1,14 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react'
 import Dashboard from '../src'
-import { DashboardProps, Layout } from '../src/types'
 import { uuidv4 } from '../src/utils/utils'
 import './dashboard.css'
 import { useState } from 'react'
 
-function FakeComponent(): JSX.Element {
+function FakeComponent({text= 'Content'}: {text?: string}): JSX.Element {
   return (
     <div className='content'>
-      <p>Content</p>
+      <p>{text}</p>
     </div>
   )
 }
@@ -110,7 +109,7 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 8 (no resizable)',
     resizable: false,
-    component: <FakeComponent />,
+    component: <FakeComponent text='No topbar' />,
     hideTopbar: true
   },
 ]

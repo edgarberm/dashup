@@ -11,7 +11,6 @@ import {
   getLayoutItem,
   moveElement,
 } from '../utils/utils'
-import { Area, DashboardItem, DashboardProps, Layout } from '../types'
 import '../styles/index.css'
 
 const PLACEHOLDER = {

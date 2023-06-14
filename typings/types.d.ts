@@ -1,6 +1,5 @@
-import { MouseEvent } from 'react'
 
-export interface Area {
+interface Area {
   id: string
   x: number
   y: number
@@ -11,7 +10,7 @@ export interface Area {
 /**
  * @prop {string} title
  */
-export type DashboardItemOption = {
+type DashboardItemOption = {
   /** to show in the Tooltip */
   title?: string
   /** action */
@@ -20,13 +19,19 @@ export type DashboardItemOption = {
   icon: JSX.Element
 }
 
-export interface DashboardItem {
+interface DashboardItem {
   id: string
+  /** In columns */
   x: number
+  /** In rows */
   y: number
+  /** In columns */
   width: number
+  /** In rows */
   height: number
+  /** In columns */
   minWidth?: number
+  /** In rows */
   minHeight?: number
   maxWidth?: number
   maxHeight?: number
@@ -41,9 +46,9 @@ export interface DashboardItem {
   options?: DashboardItemOption[]
 }
 
-export type Layout = DashboardItem[]
+type Layout = DashboardItem[]
 
-export interface DashboardProps {
+interface DashboardProps {
   /** The widget list */
   widgets: Layout
   /** number of columns */
@@ -62,7 +67,7 @@ export interface DashboardProps {
   onResize?: () => void
 }
 
-export interface DashboardWidgetProps extends DashboardItem {
+interface DashboardWidgetProps extends DashboardItem {
   columns: number
   colWidth: number
   rowHeight: number
@@ -76,8 +81,10 @@ export interface DashboardWidgetProps extends DashboardItem {
   onRemove?: (id: string) => void
 }
 
-export interface WidgetTopBarProps {
+interface WidgetTopBarProps {
   title?: string
   removible?: boolean
   onWidgetRemove?: (event: MouseEvent<HTMLButtonElement>) => void
 }
+
+default function Dashboard({ widgets, columns, rowHeight, margin, draggableHandle, placeholderClassName, onChange, onResize, }: DashboardProps): JSX.Element;

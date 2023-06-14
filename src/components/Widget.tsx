@@ -7,7 +7,6 @@ import {
   useState,
 } from 'react'
 import { useStateRef } from '../hooks/hooks'
-import { Area, DashboardWidgetProps } from '../types'
 import {
   calcPosition,
   calcPositionInPx,

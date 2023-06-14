@@ -16,22 +16,22 @@ export default defineConfig({
       clean: true,
       exclude: [
         '**.*.*',
-        '__test__',
         '.storybook',
         'assets',
         'dist',
         'node_modules',
         'stories',
+        'test',
         'src/index.ts',
         'src/styles',
-        'src/types.ts',
+        'src/types.d.ts',
       ],
     },
   },
   build: {
     cssCodeSplit: true,
     cssMinify: true,
-    sourcemap: true,
+    sourcemap: 'inline',
     lib: {
       entry: '/dist/index.js',
       name: 'redashify',
@@ -45,13 +45,6 @@ export default defineConfig({
         react({
           jsxRuntime: 'classic'
         }),
-        typescript({
-          exclude: ['./stories/**/*.(ts|tsx)', './test/**/*.(ts|tsx)'],
-          declaration: true,
-          declarationDir: 'dist/types',
-          allowSyntheticDefaultImports: true,
-          esModuleInterop: true,
-        }),
       ],
       output: {
         sourcemap: true,
@@ -62,9 +55,6 @@ export default defineConfig({
         },
         plugins: [
           terser(),
-          react({
-            jsxRuntime: 'classic'
-          }),
         ],
       },
     },

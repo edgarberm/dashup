@@ -1,5 +1,3 @@
-import { WidgetTopBarProps } from '../types'
-
 export default function WidgetTopBar({
   title,
   removible,
