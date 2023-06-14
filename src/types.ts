@@ -10,8 +10,11 @@ export interface Area {
  * @prop {string} title
  */
 export type DashboardItemOption = {
-  title?: string // To show in the Tooltip
+  /** to show in the Tooltip */
+  title?: string
+  /** action */
   action: () => void
+  /** icon for the option */
   icon: JSX.Element
 }
 
@@ -38,12 +41,21 @@ export interface DashboardItem {
 export type Layout = DashboardItem[]
 
 export interface DashboardProps {
+  /** The widget list */
   widgets: Layout
+  /** number of columns */
   columns?: number
+  /** the rows height */
   rowHeight?: number
+  /** the margin between widgets */
   margin?: [number, number]
+  /** The className for the draggable handle */
   draggableHandle?: string
+  /** the className for the placeholder (ghost) */
+  placeholderClassName?: string
+  /** callback method when a widget is moved, resized or deleted */
   onChange?: (widgets: Layout) => void
+  /** callback method when the dashboard (or window) is resized */
   onResize?: () => void
 }
 
@@ -54,6 +66,7 @@ export interface DashboardWidgetProps extends DashboardItem {
   dashboardWidth: number
   padding: [number, number]
   draggableHandle?: string
+  /** user internally */
   placeholderClassName?: string
   onDrag: (eventName: string, widget: Area) => void
   onResize: (eventName: string, widget: Area) => void

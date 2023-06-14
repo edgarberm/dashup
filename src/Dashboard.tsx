@@ -24,6 +24,7 @@ const PLACEHOLDER = {
 
 /**
  *  @todos
+ * - Para los widget staticos necesitamos poder moverlos para colocarlos en el lugar apropiado
  * - Fix: la animación del plceholder en el repintado. (CSS transfor tansition)
  * - Styling (UI)
  * - Mejorar UX.
@@ -36,8 +37,8 @@ export default function Dashboard({
   columns = 24,
   rowHeight = 100,
   margin = [10, 10],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  draggableHandle,
+  draggableHandle = 'draggable-handle',
+  placeholderClassName = 'widget-placeholder',
   onChange,
   onResize,
 }: DashboardProps): JSX.Element {
@@ -212,6 +213,7 @@ export default function Dashboard({
           rowHeight={rowHeight}
           dashboardWidth={width}
           padding={margin}
+          draggableHandle={draggableHandle}
           onDrag={handleWidgetDrag}
           onResize={handleWidgetResize}
           onRemove={handleRemoveWidget}
@@ -227,7 +229,7 @@ export default function Dashboard({
           rowHeight={rowHeight}
           dashboardWidth={width}
           padding={margin}
-          placeholderClassName='dashboard-placeholder'
+          placeholderClassName={placeholderClassName}
           onDrag={handleWidgetDrag}
           onResize={handleWidgetResize}
         />

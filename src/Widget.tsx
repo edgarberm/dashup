@@ -53,7 +53,7 @@ export default function Widget({
   rowHeight,
   dashboardWidth,
   padding,
-  draggableHandle = 'draggable-handle',
+  draggableHandle,
   placeholderClassName,
   onDrag,
   onResize,
