@@ -95,6 +95,9 @@
 }
 
 .widget .widget-remove--button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 20px;
   height: 20px;
@@ -103,6 +106,7 @@
   background-color: transparent;
   border: 1px solid var(--c-border);
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .widget-placeholder {
@@ -112,10 +116,14 @@
   opacity: 0.2;
   background-color: rgb(173, 213, 248);
   border: none;
-  transition: all 0.1s;
+  transition: none;
   z-index: 0;
   user-select: none;
   pointer-events: none;
+}
+
+.widget-placeholder.animated {
+  transition: transform 0.1s, width 0.2s, height 0.2s;
 }
 
 .content {

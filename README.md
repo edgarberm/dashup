@@ -19,12 +19,6 @@ I would be delighted to have your help in getting it ready as soon as possible. 
 
 ### How to use it
 
-**Peer dependencies**
-
-- React v18
-- React RouterDom
-
-
 Install React Dashboard by running either of the following:
 
 ```bash
@@ -84,7 +78,6 @@ interface DashboardItem {
   draggable?: boolean
   resizable?: boolean
   removible?: boolean
-  moved?: boolean
   title?: string
   component?: JSX.Element
   options?: DashboardItemOption[]
@@ -98,6 +91,11 @@ type DashboardItemOption = {
   icon: JSX.Element
 }
 ```
+
+#### Peer dependencies
+
+- React v18
+- react-dom
 
 ### Todo's
 

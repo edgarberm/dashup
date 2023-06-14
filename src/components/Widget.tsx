@@ -401,7 +401,7 @@ export default function Widget({
       ref={widget}
       className={`
         widget
-        ${placeholderClassName}
+        ${placeholderClassName || ''}
         ${draggable && !stationary ? 'draggable' : ''}
         ${resizable && !stationary ? 'resizable' : ''}
         ${isDragging ? 'dragging' : ''}

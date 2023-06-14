@@ -220,7 +220,7 @@ export const Default: Story = {
       const { args } = props
       const [widgets, setWidgets] = useState(args.widgets)
       const handleChange = (dashboard: Layout) => {
-        // setWidgets(dashboard)
+        setWidgets(dashboard)
       }
 
       return (

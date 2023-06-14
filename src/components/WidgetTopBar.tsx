@@ -10,19 +10,6 @@ export default function WidgetTopBar({
       <p className='title'>{title}</p>
 
       <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {/* {options?.map((option: DashboardItemOption, index: number) => (
-                <Tooltip key={index} text={option.title || ''}>
-                  <IconButton
-                    size='small'
-                    color='transparent'
-                    className='dashboard-item-option'
-                    onClick={option.action}
-                  >
-                    {option.icon}
-                  </IconButton>
-                </Tooltip>
-              ))} */}
-
         {removible && (
           <button className='widget-remove--button' onClick={onWidgetRemove}>
             <svg height='20' viewBox='0 -960 960 960' width='20'>

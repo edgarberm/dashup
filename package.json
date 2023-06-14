@@ -17,9 +17,13 @@
   ],
   "scripts": {
     "test": "vitest",
-    "build": "rollup -c --bundleConfigAsCjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build": "npm run clean && vite build",
+    "build:css": "sass --style=compressed src/styles/index.css dist/styles/style.css",
+    "clean": "rm -rf dist",
+    "pack": "npm run build && npm pack",
+    "publish": "npm publish"
   },
   "keywords": [
     "ui",
@@ -44,8 +48,7 @@
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "@types/react-test-renderer": "^18.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.0.0",
     "sass": "^1.63.4",
     "storybook": "^7.0.18",
     "vite": "^4.3.9",
