@@ -22,10 +22,10 @@
     "precommit": "lint-staged && test",
     "test": "vitest",
     "storybook": "storybook dev -p 6006",
-    "build": "pnpm run clean && vite build && pnpm run typings",
+    "build": "npm run clean && vite build && npm run typings",
     "typings": "cp ./src/typings/types.d.ts ./dist",
     "clean": "rm -rf dist",
-    "pack": "pnpm run build && npm pack",
+    "pack": "npm run build && npm pack",
     "publish": "npm publish --access public",
     "postinstall": "npm exec -y husky install",
     "build-storybook": "storybook build"
@@ -43,7 +43,7 @@
   ],
   "engines": {
     "node": ">=18",
-    "pnpm": ">=8"
+    "npm": ">=9"
   },
   "peerDependencies": {
     "react": "^18.2.0",
