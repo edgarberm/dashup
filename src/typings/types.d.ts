@@ -1,4 +1,3 @@
-
 interface Area {
   id: string
   x: number
@@ -87,4 +86,13 @@ interface WidgetTopBarProps {
   onWidgetRemove?: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-default function Dashboard({ widgets, columns, rowHeight, margin, draggableHandle, placeholderClassName, onChange, onResize, }: DashboardProps): JSX.Element;
+declare function Dashboard({
+  widgets,
+  columns,
+  rowHeight,
+  margin,
+  draggableHandle,
+  placeholderClassName,
+  onChange,
+  onResize,
+}: DashboardProps): JSX.Element

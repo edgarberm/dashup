@@ -1,14 +1,14 @@
 {
-  "name": "redashify",
-  "version": "1.0.0-beta.1",
+  "name": "dashup",
+  "version": "1.0.0-beta.5",
   "description": "A React Dashboard Component.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/builtbyedgar/redashify"
+    "url": "https://github.com/builtbyedgar/dashup"
   },
   "author": "Edgar Bermejo",
   "license": "MIT",
-  "homepage": "https://github.com/builtbyedgar/redashify/README.md",
+  "homepage": "https://github.com/builtbyedgar/dashup/README.md",
   "type": "module",
   "main": "dist/index.umd.js",
   "module": "dist/index.js",
@@ -17,22 +17,34 @@
     "dist"
   ],
   "scripts": {
+    "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\" --ignore-path .gitignore",
+    "format": "prettier --write . --ignore-path .gitignore",
+    "precommit": "lint-staged && test",
     "test": "vitest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build": "npm run clean && vite build && npm run typings",
-    "typings": "cp ./typings/types.d.ts ./dist",
+    "build": "pnpm run clean && vite build && pnpm run typings",
+    "typings": "cp ./src/typings/types.d.ts ./dist",
     "clean": "rm -rf dist",
-    "pack": "npm run build && npm pack",
-    "publish": "npm publish --access public"
+    "pack": "pnpm run build && npm pack",
+    "publish": "npm publish --access public",
+    "postinstall": "npm exec -y husky install"
   },
   "keywords": [
     "ui",
     "react",
     "library",
     "component",
-    "dashboard"
+    "dashboard",
+    "layout",
+    "draggable",
+    "sortable",
+    "resizable"
   ],
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8"
+  },
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -49,10 +61,35 @@
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "@types/react-test-renderer": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
     "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.6.12",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
     "sass": "^1.63.4",
     "storybook": "^7.0.18",
+    "typescript-eslint": "0.0.1-alpha.0",
     "vite": "^4.3.9",
     "vitest": "^0.32.0"
+  },
+  "lint-staged": {
+    "*.+(ts|tsx)": [
+      "npm run lint"
+    ],
+    "*.+(ts|tsx|json|css|md)": [
+      "npm run format"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

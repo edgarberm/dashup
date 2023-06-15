@@ -6,13 +6,13 @@ export function uuidv4() {
     (
       c ^
       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    ).toString(16)
+    ).toString(16),
   )
 }
 
 export function throttle<Args extends unknown[]>(
   fn: (...args: Args) => void,
-  timeout = 300
+  timeout = 300,
 ) {
   let lastArgs: Args | undefined
 
@@ -48,7 +48,7 @@ export function calcPosition(
   height: number,
   columnWidth: number,
   rowHeight: number,
-  padding: [number, number]
+  padding: [number, number],
 ) {
   return {
     x: Math.round(columnWidth * x + (x + 1) * padding[0]),
@@ -73,7 +73,7 @@ export function calcPositionInPx(
   colWidth: number,
   rowHeight: number,
   columns: number,
-  padding: [number, number]
+  padding: [number, number],
 ) {
   const left = Math.round((x - padding[0]) / (colWidth + padding[0]))
   const top = Math.round((y - padding[1]) / (rowHeight + padding[1]))
@@ -92,7 +92,7 @@ export function calcSizeInPx(
   colWidth: number,
   rowHeight: number,
   columns: number,
-  padding: [number, number]
+  padding: [number, number],
 ) {
   const W = Math.round((width + padding[0]) / (colWidth + padding[0]))
   const H = Math.round((height + padding[1]) / (rowHeight + padding[1]))
@@ -109,7 +109,7 @@ export function calcSizeInPx(
  */
 export function getNewPosition(
   position: { x: number; y: number },
-  target: HTMLElement
+  target: HTMLElement,
 ): {
   x: number
   y: number
@@ -177,15 +177,15 @@ function sortLayoutItemsByRowCol(layout: Layout): Layout {
 
 export function findLayoutsDifference(
   layout: Layout,
-  originalLayout: Layout
+  originalLayout: Layout,
 ): Layout {
   // They are in layout but not in originalLayout
   const uniqueResultOne = layout.filter(
-    (obj) => !originalLayout.some((obj2) => obj.id === obj2.id)
+    (obj) => !originalLayout.some((obj2) => obj.id === obj2.id),
   )
   // They are in originalLayout but not in layout
   const uniqueResultTwo = originalLayout.filter(
-    (obj) => !layout.some((obj2) => obj.id === obj2.id)
+    (obj) => !layout.some((obj2) => obj.id === obj2.id),
   )
 
   return [...uniqueResultOne, ...uniqueResultTwo]
@@ -214,7 +214,7 @@ function collides(w1: DashboardItem, w2: DashboardItem): boolean {
  */
 function getFirstCollision(
   layout: Layout,
-  layoutItem: DashboardItem
+  layoutItem: DashboardItem,
 ): DashboardItem | undefined {
   for (let i = 0, len = layout.length; i < len; i++) {
     if (collides(layout[i], layoutItem)) return layout[i]
@@ -223,14 +223,14 @@ function getFirstCollision(
 
 export function getAllCollisions(
   layout: Layout,
-  layoutItem: DashboardItem
+  layoutItem: DashboardItem,
 ): DashboardItem[] {
   return [...layout].filter((l) => collides(l, layoutItem))
 }
 
 export function compactItem(
   compareWith: Layout,
-  widget: DashboardItem
+  widget: DashboardItem,
 ): DashboardItem {
   // Move the widget upwards as much as possible without colliding
   while (widget.y > 0 && !getFirstCollision(compareWith, widget)) {
@@ -287,7 +287,7 @@ export function setWidgetStyle(
   x: number,
   y: number,
   width: number,
-  height: number
+  height: number,
 ): any {
   const translate = 'translate3d(' + x + 'px, ' + y + 'px, 0)'
   return {
@@ -301,7 +301,7 @@ export function setWidgetStyle(
 // We obtain the position of the widget on the dashboard (in pixels) from a mouse event
 export function getControlPosition(
   event: globalThis.MouseEvent,
-  parent: HTMLElement
+  parent: HTMLElement,
 ) {
   const offsetParent = parent.offsetParent || document.body // change for dashboardRef
   const offsetParentRect =
@@ -320,7 +320,7 @@ export function createCoreData(
   lastX: number,
   lastY: number,
   x: number,
-  y: number
+  y: number,
 ) {
   return {
     deltaX: x - lastX,
@@ -339,7 +339,7 @@ export function createCoreData(
  */
 export function getLayoutItem(
   layout: Layout,
-  id: string
+  id: string,
 ): DashboardItem | undefined {
   for (let i = 0, len = layout.length; i < len; i++) {
     if (layout[i].id === id) return layout[i]
@@ -362,7 +362,7 @@ export function moveElement(
   x?: number,
   y?: number,
   isUserAction?: boolean,
-  preventCollision?: boolean
+  preventCollision?: boolean,
 ): Layout {
   if (widget.stationary) return layout
 
@@ -408,14 +408,14 @@ export function moveElement(
         layout,
         collision,
         widget,
-        isUserAction
+        isUserAction,
       )
     } else {
       dashboard = moveElementAwayFromCollision(
         layout,
         widget,
         collision,
-        isUserAction
+        isUserAction,
       )
     }
   }
@@ -437,7 +437,7 @@ function moveElementAwayFromCollision(
   layout: Layout,
   collidesWith: DashboardItem,
   itemToMove: DashboardItem,
-  isUserAction?: boolean
+  isUserAction?: boolean,
 ): Layout {
   const preventCollision = false // we're already colliding
 
@@ -462,7 +462,7 @@ function moveElementAwayFromCollision(
         itemToMove,
         undefined,
         fakeItem.y,
-        preventCollision
+        preventCollision,
       )
     }
   }
@@ -472,6 +472,6 @@ function moveElementAwayFromCollision(
     itemToMove,
     undefined,
     itemToMove.y + 1,
-    preventCollision
+    preventCollision,
   )
 }

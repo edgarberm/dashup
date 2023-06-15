@@ -1,4 +1,4 @@
-# <img src="./assets/Icon.png" width="22px" height="22px" /> Redashify
+# <img src="./assets/Icon.png" width="22px" height="22px" /> Dashup
 
 <img src="./assets/Icon.png" width="120px" height="120px" />
 
@@ -6,14 +6,12 @@
 
 ![version](https://img.shields.io/badge/version-1.0.0@beta.5-brightgreen.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
-![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/re-cockpit)
-
-
+![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
 <p>&nbsp;</p>
 
 🚨 **IMPORTANT** This component are under development. Is not ready for production!
-I would be delighted to have your help in getting it ready as soon as possible. If you'd like, you can create an issue [here](https://github.com/builtbyedgar/re-cockpit/issues).
+I would be delighted to have your help in getting it ready as soon as possible. If you'd like, you can create an issue [here](https://github.com/builtbyedgar/dashup/issues).
 
 ---
 
@@ -22,7 +20,7 @@ I would be delighted to have your help in getting it ready as soon as possible. 
 Install React Dashboard by running either of the following:
 
 ```bash
-npm i redashify@latest
+npm i dashup@latest
 ```
 
 #### Properties
@@ -96,6 +94,8 @@ type DashboardItemOption = {
 
 - React v18
 - react-dom
+
+Zero dependendecies for drag, sort or anything!
 
 ### Todo's
 

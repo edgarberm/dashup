@@ -47,6 +47,7 @@ export default function Widget({
   removible = true,
   title,
   component,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   options,
   hideTopbar = false,
   columns,

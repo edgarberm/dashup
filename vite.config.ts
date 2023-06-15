@@ -43,7 +43,7 @@ export default defineConfig({
       external: ['react', 'react-dom', 'react/jsx-runtime'],
       plugins: [
         react({
-          jsxRuntime: 'classic'
+          jsxRuntime: 'classic',
         }),
       ],
       output: {
@@ -53,9 +53,7 @@ export default defineConfig({
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime',
         },
-        plugins: [
-          terser(),
-        ],
+        plugins: [terser()],
       },
     },
   },

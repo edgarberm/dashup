@@ -4,7 +4,7 @@ import { uuidv4 } from '../src/utils/utils'
 import './dashboard.css'
 import { useState } from 'react'
 
-function FakeComponent({text= 'Content'}: {text?: string}): JSX.Element {
+function FakeComponent({ text = 'Content' }: { text?: string }): JSX.Element {
   return (
     <div className='content'>
       <p>{text}</p>
@@ -110,7 +110,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 8 (no resizable)',
     resizable: false,
     component: <FakeComponent text='No topbar' />,
-    hideTopbar: true
+    hideTopbar: true,
   },
 ]
 
@@ -198,7 +198,7 @@ const dashboard: Meta<typeof Dashboard> = {
         type: { summary: 'onResize?: () => void' },
         defaultValue: { summary: undefined },
       },
-    }
+    },
   },
   args: {
     widgets: FAKE_WIDGETS,
