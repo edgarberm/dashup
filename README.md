@@ -15,6 +15,8 @@ This library provides a set of highly customizable and performant **React** comp
 
 🚨 **IMPORTANT**: This component are under development. Is not ready for production!
 
+<video src='./assets/dashup.mov' width='600' autoplay loop />
+
 ## Features
 
 #### 100% React & TypeScript 
@@ -171,6 +173,7 @@ type WidgetOption = {
 - [ ] Code refactor
 - [ ] Extra features
 - [ ] More Storybook examples and customizations
+- [ ] Codesandbox examples
 - [ ] Docuentation
 - [ ] Test
 - [x] Publish package beta
@@ -178,10 +181,10 @@ type WidgetOption = {
 
 ## Contributing
 
-
 Please, help me for test the component 🙏🏻
 
 I welcome contributions from the community! If you'd like to contribute to this project, please review the [contribution guidelines](CONTRIBUTING.md) and submit a pull request.
 
-License
-This project is licensed under the MIT License.
+
+## License
+This project is licensed under the [MIT](LICENSE.md) License.
