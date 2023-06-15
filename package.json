@@ -8,7 +8,7 @@
   },
   "author": "Edgar Bermejo",
   "license": "MIT",
-  "homepage": "https://github.com/builtbyedgar/dashup/README.md",
+  "homepage": "http://builtbyedgar.github.io/dashup",
   "type": "module",
   "main": "dist/index.umd.js",
   "module": "dist/index.js",
@@ -22,13 +22,13 @@
     "precommit": "lint-staged && test",
     "test": "vitest",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
     "build": "pnpm run clean && vite build && pnpm run typings",
     "typings": "cp ./src/typings/types.d.ts ./dist",
     "clean": "rm -rf dist",
     "pack": "pnpm run build && npm pack",
     "publish": "npm publish --access public",
-    "postinstall": "npm exec -y husky install"
+    "postinstall": "npm exec -y husky install",
+    "build-storybook": "storybook build"
   },
   "keywords": [
     "ui",
@@ -75,6 +75,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.12",
+    "gh-pages": "^5.0.0",
     "happy-dom": "^9.20.3",
     "husky": "^8.0.3",
     "jsdom-testing-mocks": "^1.9.0",
