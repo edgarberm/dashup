@@ -17,13 +17,13 @@ export default useIsomorphicLayoutEffect
 export function useEventListener<
   KW extends keyof WindowEventMap,
   KH extends keyof HTMLElementEventMap,
-  T extends HTMLElement | void = void
+  T extends HTMLElement | void = void,
 >(
   eventName: KW | KH,
   handler: (
-    event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event
+    event: WindowEventMap[KW] | HTMLElementEventMap[KH] | Event,
   ) => void,
-  element?: RefObject<T>
+  element?: RefObject<T>,
 ) {
   const savedHandler = useRef(handler)
 
@@ -48,7 +48,7 @@ export function useEventListener<
 }
 
 export function useStateRef<T>(
-  initialValue: T | (() => T)
+  initialValue: T | (() => T),
 ): [T, Dispatch<SetStateAction<T>>, MutableRefObject<T>] {
   const [value, setValue] = useState(initialValue)
 

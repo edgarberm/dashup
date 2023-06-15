@@ -1,19 +1,29 @@
-import { render, waitFor } from '@testing-library/react'
-import Dashboard from '../src/Dashboard'
+import { render } from '@testing-library/react'
+import { describe, expect, test } from 'vitest'
+import Dashboard from '../src/components/Dashboard'
+import '../src/styles/index.css'
 
 /**
  * colWidth = 86.5
  */
 function Wrapper({ children }: { children: JSX.Element }) {
   return (
-    <div id='wrapper' style={{ minWidth: 1200, width: 1200, minHeight: 800 }}>
+    <div
+      id='wrapper'
+      style={{
+        minWidth: globalThis.innerWidth,
+        width: globalThis.innerWidth,
+        minHeight: globalThis.innerHeight,
+        height: globalThis.innerHeight,
+      }}
+    >
       {children}
     </div>
   )
 }
 
-describe('Dashboard component test', () => {
-  test('Dashboard is render correct', async () => {
+describe('Dashboard component ', () => {
+  test('should render correctly', async () => {
     const { container } = render(
       <Wrapper>
         <Dashboard
@@ -22,14 +32,14 @@ describe('Dashboard component test', () => {
           rowHeight={100}
           margin={[10, 10]}
         />
-      </Wrapper>
+      </Wrapper>,
     )
     const dashboard = container.querySelector('.dashboard') as HTMLElement
     expect(dashboard.children.length).toBe(0)
   })
 
-  test('Dashboard is render widgets correctly', async () => {
-    const { container, debug } = render(
+  test('should render widgets correctly', async () => {
+    const { container } = render(
       <Wrapper>
         <Dashboard
           columns={12}
@@ -58,20 +68,10 @@ describe('Dashboard component test', () => {
             },
           ]}
         />
-      </Wrapper>
+      </Wrapper>,
     )
 
-    await waitFor(() => {
-      const dashboard = container.querySelector('.dashboard') as HTMLElement
-      const wrapper = container.querySelector('#wrapper') as HTMLElement
-      console.log(container.offsetWidth)
-      console.log(dashboard.offsetWidth)
-      console.log(wrapper.getBoundingClientRect().width)
-      // console.log(dashboard.style.minWidth)
-  
-      expect(dashboard.children.length).toBe(2)
-  
-      // debug()
-    })
+    const dashboard = container.querySelector('.dashboard') as HTMLElement
+    expect(dashboard.children.length).toBe(2)
   })
 })

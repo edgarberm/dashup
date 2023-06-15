@@ -1,5 +1,3 @@
-import Dashboard from './Dashboard'
-import * as hooks from './hooks'
-import * as types from './types'
+import Dashboard from './components/Dashboard'
 
-export { Dashboard as default, hooks, types }
+export { Dashboard as default }

@@ -1,5 +1,6 @@
-import { useEventListener, useStateRef } from './hooks'
-import { throttle } from './utils'
+import { useEventListener, useStateRef } from '../hooks/hooks'
+import { throttle } from '../utils/utils'
+// @ts-ignore
 import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import Widget from './Widget'
 import {
@@ -9,9 +10,8 @@ import {
   getAllCollisions,
   getLayoutItem,
   moveElement,
-} from './utils'
-import { Area, DashboardItem, DashboardProps, Layout } from './types'
-// import './style.css'
+} from '../utils/utils'
+import '../styles/index.css'
 
 const PLACEHOLDER = {
   id: 'placeholder',
@@ -27,14 +27,20 @@ const PLACEHOLDER = {
  * - Styling (UI)
  * - Mejorar UX.
  *    - Swapping horizontal de los widgets si es posible antes de empujar
+ *    - Restringir el drag y el resize al contenedor
  *    - Que se pueda ocultar el header y se muestre en el hover
  * - Refactor
+ *
+ * @think
+ * - Para los widget staticos necesitamos poder moverlos para colocarlos en el lugar apropiado
  */
 export default function Dashboard({
   widgets,
   columns = 24,
   rowHeight = 100,
   margin = [10, 10],
+  draggableHandle = 'draggable-handle',
+  placeholderClassName = 'widget-placeholder',
   onChange,
   onResize,
 }: DashboardProps): JSX.Element {
@@ -48,7 +54,7 @@ export default function Dashboard({
   const [layout, setLayout, layoutRef] = useStateRef<Layout>([])
   const colWidth = useMemo(
     () => (width - margin[0]) / columns - margin[0],
-    [columns, width, margin]
+    [columns, width, margin],
   )
 
   useEventListener('resize', throttle(onWindowResize, 500))
@@ -82,11 +88,13 @@ export default function Dashboard({
           if (layout.length > originalLayout.current.length) {
             originalLayout.current = originalLayout.current.concat(diff)
           } else {
-            originalLayout.current = originalLayout.current.filter((obj) => {
-              return !diff.some((obj2: DashboardItem) => {
-                return obj.id === obj2.id
-              })
-            })
+            originalLayout.current = originalLayout.current.filter(
+              (obj: WidgetProps) => {
+                return !diff.some((obj2: WidgetProps) => {
+                  return obj.id === obj2.id
+                })
+              },
+            )
           }
         }
       }
@@ -100,31 +108,21 @@ export default function Dashboard({
     const item = getLayoutItem(layoutRef.current, widget.id)
     if (item === undefined || item === null) return
 
+    const newLayout = moveElement(
+      layoutRef.current,
+      item,
+      widget.x,
+      widget.y,
+      true,
+    )
+    const compactLayout = compact(newLayout) as Layout
+    const compactItem = compactLayout.find(
+      (c: WidgetProps) => c.id === widget.id,
+    ) as WidgetProps
+
+    if (!compactItem) return
+
     if (eventName === 'mousedown' || eventName === 'mousemove') {
-      setIsDragging(true)
-    }
-
-    if (eventName === 'mousemove' || eventName === 'mouseup') {
-      const newLayout = moveElement(
-        layoutRef.current,
-        item,
-        widget.x,
-        widget.y,
-        true
-      )
-      const compactLayout = compact(newLayout) as Layout
-
-      setLayout(compactLayout)
-      onChange?.(compactLayout)
-      layoutUpdate()
-      updateHeight()
-
-      const compactItem = compactLayout.find(
-        (c: DashboardItem) => c.id === widget.id
-      ) as DashboardItem
-
-      if (!compactItem) return
-
       setPlaceholder({
         ...placeholder,
         x: compactItem.x,
@@ -132,6 +130,17 @@ export default function Dashboard({
         width: compactItem.width,
         height: compactItem.height,
       })
+    }
+
+    if (eventName === 'mousemove') {
+      setIsDragging(true)
+    }
+
+    if (eventName === 'mousemove' || eventName === 'mouseup') {
+      setLayout(compactLayout)
+      onChange?.(compactLayout)
+      layoutUpdate()
+      updateHeight()
     }
 
     if (eventName === 'mouseup') {
@@ -162,7 +171,7 @@ export default function Dashboard({
               collision[0],
               collision[0].x,
               widget.height,
-              false
+              false,
             )
           : layoutRef.current
       const compactLayout = compact(newLayout) as Layout
@@ -187,12 +196,10 @@ export default function Dashboard({
   }
 
   const handleRemoveWidget = (id: string) => {
-    const newLayout = layoutRef.current.filter(
-      (w: DashboardItem) => w.id !== id
-    )
+    const newLayout = layoutRef.current.filter((w: WidgetProps) => w.id !== id)
     const compactLayout = compact(newLayout) as Layout
 
-    setLayout(compactLayout)
+    // setLayout(compactLayout)
     onChange?.(compactLayout)
     layoutUpdate()
     updateHeight()
@@ -209,6 +216,7 @@ export default function Dashboard({
           rowHeight={rowHeight}
           dashboardWidth={width}
           padding={margin}
+          draggableHandle={draggableHandle}
           onDrag={handleWidgetDrag}
           onResize={handleWidgetResize}
           onRemove={handleRemoveWidget}
@@ -224,7 +232,7 @@ export default function Dashboard({
           rowHeight={rowHeight}
           dashboardWidth={width}
           padding={margin}
-          placeholderClassName='dashboard-placeholder'
+          placeholderClassName={placeholderClassName}
           onDrag={handleWidgetDrag}
           onResize={handleWidgetResize}
         />

@@ -1,5 +1,4 @@
-import { useStateRef } from './hooks'
-import React, {
+import {
   CSSProperties,
   MouseEvent as RMouseEvent,
   useCallback,
@@ -7,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from 'react'
+import { useStateRef } from '../hooks/hooks'
 import {
   calcPosition,
   calcPositionInPx,
@@ -15,8 +15,8 @@ import {
   getControlPosition,
   getNewPosition,
   setWidgetStyle,
-} from './utils'
-import { Area, DashboardWidgetProps } from './types'
+} from '../utils/utils'
+import WidgetTopBar from './WidgetTopBar'
 
 /**
  * La idea de este componente es que solo se encargue de 'pintarse' a si mismo, la lógica
@@ -47,13 +47,17 @@ export default function Widget({
   removible = true,
   title,
   component,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   options,
+  hideTopbar = false,
   columns,
   colWidth,
   rowHeight,
   dashboardWidth,
   padding,
-  draggableHandle = 'draggable-handle',
+  draggableHandle,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  moved,
   placeholderClassName,
   onDrag,
   onResize,
@@ -139,7 +143,7 @@ export default function Widget({
       innerH.current,
       colW.current,
       rowHeight,
-      padding
+      padding,
     )
 
     if (isDraggingRef.current && draggingArea.current) {
@@ -223,7 +227,7 @@ export default function Widget({
           lastX.current,
           lastY.current,
           position.x,
-          position.y
+          position.y,
         )
         area.x = draggingArea.current.x + coreEvent.deltaX / 1
         area.y = draggingArea.current.y + coreEvent.deltaY / 1
@@ -242,7 +246,7 @@ export default function Widget({
       colW.current,
       rowHeight,
       columns,
-      padding
+      padding,
     )
 
     lastX.current = position.x
@@ -296,7 +300,7 @@ export default function Widget({
       innerH.current,
       colW.current,
       rowHeight,
-      padding
+      padding,
     )
 
     switch (event.type) {
@@ -336,7 +340,7 @@ export default function Widget({
           lastW.current,
           lastH.current,
           position.x,
-          position.y
+          position.y,
         )
         newSize.width = resizingArea.current.width + coreEvent.deltaX / 1
         newSize.height = resizingArea.current.height + coreEvent.deltaY / 1
@@ -355,7 +359,7 @@ export default function Widget({
       colW.current,
       rowHeight,
       columns,
-      padding
+      padding,
     )
 
     if (size.w < minWidth) {
@@ -399,7 +403,7 @@ export default function Widget({
       ref={widget}
       className={`
         widget
-        ${placeholderClassName}
+        ${placeholderClassName || ''}
         ${draggable && !stationary ? 'draggable' : ''}
         ${resizable && !stationary ? 'resizable' : ''}
         ${isDragging ? 'dragging' : ''}
@@ -409,43 +413,14 @@ export default function Widget({
       {/** 🗒️ @note si es el placeholder no renderizamos el contenido */}
       {placeholderClassName === undefined && (
         <>
-          <div className='draggable-handle'>
-            <p className='title'>{title}</p>
+          {!hideTopbar && (
+            <WidgetTopBar
+              title={title}
+              removible={removible}
+              onWidgetRemove={handleWidgetRemove}
+            />
+          )}
 
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-              {/* {options?.map((option: DashboardItemOption, index: number) => (
-                <Tooltip key={index} text={option.title || ''}>
-                  <IconButton
-                    size='small'
-                    color='transparent'
-                    className='dashboard-item-option'
-                    onClick={option.action}
-                  >
-                    {option.icon}
-                  </IconButton>
-                </Tooltip>
-              ))} */}
-
-              {removible && (
-                <button
-                  className='widget-remove--button'
-                  onClick={handleWidgetRemove}
-                >
-                  <svg
-                    height='20'
-                    viewBox='0 -960 960 960'
-                    width='20'
-                  >
-                    <path d='M291-253.847 253.847-291l189-189-189-189L291-706.153l189 189 189-189L706.153-669l-189 189 189 189L669-253.847l-189-189-189 189Z' />
-                  </svg>
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* <Text variant='label' size='xx-small'>
-            {id}
-          </Text> */}
           {component}
 
           {resizable && !stationary && (

@@ -1,14 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
-import Dashboard from '../src/Dashboard'
-import { DashboardProps, Layout } from '../src/types'
-import { uuidv4 } from '../src/utils'
+import Dashboard from '../src'
+import { uuidv4 } from '../src/utils/utils'
 import './dashboard.css'
+import { useState } from 'react'
 
-function FakeComponent(): JSX.Element {
+function FakeComponent({ text = 'Content' }: { text?: string }): JSX.Element {
   return (
     <div className='content'>
-      <p>Content</p>
+      <p>{text}</p>
     </div>
   )
 }
@@ -18,7 +17,7 @@ const FAKE_WIDGETS: Layout = [
     id: uuidv4(),
     x: 0,
     y: 2,
-    width: 1,
+    width: 3,
     height: 2,
     title: 'Widget 1 (not draggable)',
     draggable: false,
@@ -70,16 +69,16 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 4',
     component: <FakeComponent />,
   },
-  {
-    id: uuidv4(),
-    x: 3,
-    y: 2,
-    width: 4,
-    height: 3,
-    title: 'Widget 5 (stationary)',
-    stationary: true,
-    component: <FakeComponent />,
-  },
+  // {
+  //   id: uuidv4(),
+  //   x: 3,
+  //   y: 2,
+  //   width: 4,
+  //   height: 3,
+  //   title: 'Widget 5 (stationary)',
+  //   stationary: true,
+  //   component: <FakeComponent />,
+  // },
   {
     id: uuidv4(),
     x: 7,
@@ -110,7 +109,8 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 8 (no resizable)',
     resizable: false,
-    component: <FakeComponent />,
+    component: <FakeComponent text='No topbar' />,
+    hideTopbar: true,
   },
 ]
 
@@ -120,15 +120,83 @@ const dashboard: Meta<typeof Dashboard> = {
   title: 'Dashboard',
   component: Dashboard,
   tags: ['autodocs'],
-  layout: 'fullscreen',
-  parameters: {
-    docs: {
-      page: null,
-      description: {
-        component: `This component is under development. Please **play with it!** 🤹‍♀️`,
+  argTypes: {
+    widgets: {
+      type: { name: 'string', required: false },
+      defaultValue: undefined,
+      description: 'A collection of DashboardItem',
+      table: {
+        type: { summary: 'Layout<DashboardItem>[]' },
+        defaultValue: { summary: undefined },
       },
-      source: {
-        language: 'tsx',
+      control: {
+        type: 'object',
+      },
+    },
+    columns: {
+      type: { name: 'number', required: false },
+      defaultValue: 12,
+      description: 'The number for a dashboards columns',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: 12 },
+      },
+      control: {
+        type: 'number',
+      },
+    },
+    rowHeight: {
+      type: { name: 'number', required: false },
+      defaultValue: 100,
+      description: 'The height for a dashboards rows',
+      table: {
+        type: { summary: 'number' },
+        defaultValue: { summary: 100 },
+      },
+      control: {
+        type: 'number',
+      },
+    },
+    margin: {
+      type: { name: 'number', required: false },
+      defaultValue: [10, 10],
+      description: 'The margin between widgets',
+      table: {
+        type: { summary: '[number, number]' },
+        defaultValue: { summary: [10, 10] },
+      },
+      control: {
+        type: 'number',
+      },
+    },
+    draggableHandle: {
+      type: { name: 'string', required: false },
+      defaultValue: undefined,
+      description: 'The element from which the widget will be dragged',
+      table: {
+        type: { summary: 'JSX.Element' },
+        defaultValue: { summary: undefined },
+      },
+      control: {
+        type: 'number',
+      },
+    },
+    onChange: {
+      type: { name: 'function', required: false },
+      defaultValue: undefined,
+      description: 'The callback function when a widget is moved or resized',
+      table: {
+        type: { summary: 'onChange?: (widgets: Layout) => void' },
+        defaultValue: { summary: undefined },
+      },
+    },
+    onResize: {
+      type: { name: 'function', required: false },
+      defaultValue: undefined,
+      description: 'The callback function when the dashboard is resized',
+      table: {
+        type: { summary: 'onResize?: () => void' },
+        defaultValue: { summary: undefined },
       },
     },
   },
@@ -151,7 +219,7 @@ export const Default: Story = {
       const { args } = props
       const [widgets, setWidgets] = useState(args.widgets)
       const handleChange = (dashboard: Layout) => {
-        // setWidgets(dashboard)
+        setWidgets(dashboard)
       }
 
       return (
