@@ -28,7 +28,7 @@
     "pack": "npm run build && npm pack",
     "publish": "npm publish --access public",
     "postinstall": "npm exec -y husky install",
-    "build-storybook": "storybook build -o /docs",
+    "build-storybook": "storybook build -o ./docs",
     "deploy-storybook": "gh-pages -d storybook-static"
   },
   "keywords": [
