@@ -8,24 +8,24 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
-
 <br>
 
 This library provides a set of highly customizable and performant **React** components specifically designed for creating interactive dashboards. With a focus on simplicity and flexibility, this library empowers developers to effortlessly build stunning dashboard interfaces.
 
 🚨 **IMPORTANT**: This component are under development. Is not ready for production!
 
-<video src='./assets/dashup.mov' width='600' autoplay loop />
+<img src="./assets/dashup-screen-recording.gif" width="800px" />
 
 ## Features
 
-#### 100% React & TypeScript 
+#### 100% React & TypeScript
 
 The components are built using React and TypeScript, ensuring type safety and a seamless integration with your existing React projects.
 
 #### Zero dependencies
 
 The library has no external dependencies, making it lightweight and easy to manage.
+
 #### Draggable and resizable widgets
 
 Intuitively drag and rearrange widgets within the dashboard to suit your needs. Resize widgets dynamically to optimize the layout and maximize content visibility.
@@ -34,12 +34,12 @@ Intuitively drag and rearrange widgets within the dashboard to suit your needs. 
 
 Create static widgets for displaying non-interactive information or visual elements.
 
-
 #### Serialized layout
 
 Save and load the dashboard layout effortlessly using a serialized format.
 
 #### Fully customizable
+
 Customize the appearance, behavior, and styling of the components to match your application's branding and requirements.
 
 #### High performance
@@ -50,11 +50,11 @@ Utilizing the best practices of React performance optimization, the library ensu
 
 Utilize the power of [Storybook](https://storybook.js.org/) for easy development and interactive documentation.
 
-
 ## Requirements
 
 - React >= 18
 - ReactDOM >= 18
+
 ## Usage
 
 Getting started with the **Dashup** is quick and straightforward. Follow the steps below to install the package and begin using the components in your project.
@@ -62,7 +62,6 @@ Getting started with the **Dashup** is quick and straightforward. Follow the ste
 ### Installation
 
 To install the **Dashup**, use the package manager of your choice:
-
 
 #### NPM
 
@@ -86,7 +85,6 @@ pnpm install dashup
 
 The `<Dashboard />` component exposes a simple but effective API:
 
-
 - `widgets: Layout`
 - `columns?: number` default `12`
 - `rowHeight?: number` default `100`
@@ -94,7 +92,6 @@ The `<Dashboard />` component exposes a simple but effective API:
 - `draggableHandle?: string`
 - `onChange?: (widgets: Layout) => void`
 - `onResize?: () => void`
-
 
 ```tsx
 const widget: WidgetProps = {
@@ -159,6 +156,7 @@ interface WidgetProps {
 ```
 
 #### WidgetOption
+
 ```ts
 type WidgetOption = {
   title?: string // To show in the Tooltip
@@ -166,7 +164,6 @@ type WidgetOption = {
   icon: JSX.Element
 }
 ```
-
 
 ## Todo's
 
@@ -178,13 +175,12 @@ type WidgetOption = {
 - [ ] Test
 - [x] Publish package beta
 
-
 ## Contributing
 
 Please, help me for test the component 🙏🏻
 
 I welcome contributions from the community! If you'd like to contribute to this project, please review the [contribution guidelines](CONTRIBUTING.md) and submit a pull request.
 
-
 ## License
+
 This project is licensed under the [MIT](LICENSE.md) License.
