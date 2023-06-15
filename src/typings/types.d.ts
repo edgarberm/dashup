@@ -9,7 +9,7 @@ interface Area {
 /**
  * @prop {string} title
  */
-type DashboardItemOption = {
+type WidgetOption = {
   /** to show in the Tooltip */
   title?: string
   /** action */
@@ -18,7 +18,7 @@ type DashboardItemOption = {
   icon: JSX.Element
 }
 
-interface DashboardItem {
+interface WidgetProps {
   id: string
   /** In columns */
   x: number
@@ -38,14 +38,13 @@ interface DashboardItem {
   draggable?: boolean
   resizable?: boolean
   removible?: boolean
-  moved?: boolean // NOTE: no se expone en `DashboardWidgetProps`puesto que no se utiliza en el componente
   title?: string
   component?: JSX.Element
   hideTopbar?: boolean
-  options?: DashboardItemOption[]
+  options?: WidgetOption[]
 }
 
-type Layout = DashboardItem[]
+type Layout = WidgetProps[]
 
 interface DashboardProps {
   /** The widget list */
@@ -66,7 +65,7 @@ interface DashboardProps {
   onResize?: () => void
 }
 
-interface DashboardWidgetProps extends DashboardItem {
+interface DashboardWidgetProps extends WidgetProps {
   columns: number
   colWidth: number
   rowHeight: number
@@ -74,6 +73,7 @@ interface DashboardWidgetProps extends DashboardItem {
   padding: [number, number]
   draggableHandle?: string
   /** user internally */
+  moved?: boolean
   placeholderClassName?: string
   onDrag: (eventName: string, widget: Area) => void
   onResize: (eventName: string, widget: Area) => void

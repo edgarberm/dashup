@@ -56,6 +56,8 @@ export default function Widget({
   dashboardWidth,
   padding,
   draggableHandle,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  moved,
   placeholderClassName,
   onDrag,
   onResize,

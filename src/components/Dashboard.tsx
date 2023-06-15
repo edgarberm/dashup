@@ -89,8 +89,8 @@ export default function Dashboard({
             originalLayout.current = originalLayout.current.concat(diff)
           } else {
             originalLayout.current = originalLayout.current.filter(
-              (obj: DashboardItem) => {
-                return !diff.some((obj2: DashboardItem) => {
+              (obj: WidgetProps) => {
+                return !diff.some((obj2: WidgetProps) => {
                   return obj.id === obj2.id
                 })
               },
@@ -117,8 +117,8 @@ export default function Dashboard({
     )
     const compactLayout = compact(newLayout) as Layout
     const compactItem = compactLayout.find(
-      (c: DashboardItem) => c.id === widget.id,
-    ) as DashboardItem
+      (c: WidgetProps) => c.id === widget.id,
+    ) as WidgetProps
 
     if (!compactItem) return
 
@@ -197,7 +197,7 @@ export default function Dashboard({
 
   const handleRemoveWidget = (id: string) => {
     const newLayout = layoutRef.current.filter(
-      (w: DashboardItem) => w.id !== id,
+      (w: WidgetProps) => w.id !== id,
     )
     const compactLayout = compact(newLayout) as Layout
 

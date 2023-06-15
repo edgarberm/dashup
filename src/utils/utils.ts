@@ -162,7 +162,7 @@ function getStatics(layout: Layout): Layout {
  */
 function sortLayoutItemsByRowCol(layout: Layout): Layout {
   const dashboard = [...layout]
-  return dashboard.sort((a: DashboardItem, b: DashboardItem) => {
+  return dashboard.sort((a: WidgetProps, b: WidgetProps) => {
     if (a.y === b.y && a.x === b.x) {
       return 0
     }
@@ -196,7 +196,7 @@ export function findLayoutsDifference(
  *
  * @return {boolean}
  */
-function collides(w1: DashboardItem, w2: DashboardItem): boolean {
+function collides(w1: WidgetProps, w2: WidgetProps): boolean {
   if (w1 === w2) return false
   if (w1.x + w1.width <= w2.x) return false // w1 is to the left of w2
   if (w1.x >= w2.x + w2.width) return false // w1 is to the right of w2
@@ -209,13 +209,13 @@ function collides(w1: DashboardItem, w2: DashboardItem): boolean {
  * Return the first element with which it collides
  * 🚨 We don't care about the order, although this may not be accurate
  *
- * @param  {DashboardItem} layoutItem Layout item.
- * @return {DashboardItem|undefined}  A colliding layout item, or undefined.
+ * @param  {WidgetProps} layoutItem Layout item.
+ * @return {WidgetProps|undefined}  A colliding layout item, or undefined.
  */
 function getFirstCollision(
   layout: Layout,
-  layoutItem: DashboardItem,
-): DashboardItem | undefined {
+  layoutItem: WidgetProps,
+): WidgetProps | undefined {
   for (let i = 0, len = layout.length; i < len; i++) {
     if (collides(layout[i], layoutItem)) return layout[i]
   }
@@ -223,15 +223,15 @@ function getFirstCollision(
 
 export function getAllCollisions(
   layout: Layout,
-  layoutItem: DashboardItem,
-): DashboardItem[] {
+  layoutItem: WidgetProps,
+): WidgetProps[] {
   return [...layout].filter((l) => collides(l, layoutItem))
 }
 
 export function compactItem(
   compareWith: Layout,
-  widget: DashboardItem,
-): DashboardItem {
+  widget: WidgetProps,
+): WidgetProps {
   // Move the widget upwards as much as possible without colliding
   while (widget.y > 0 && !getFirstCollision(compareWith, widget)) {
     widget.y = widget.y - 1
@@ -340,7 +340,7 @@ export function createCoreData(
 export function getLayoutItem(
   layout: Layout,
   id: string,
-): DashboardItem | undefined {
+): WidgetProps | undefined {
   for (let i = 0, len = layout.length; i < len; i++) {
     if (layout[i].id === id) return layout[i]
   }
@@ -351,14 +351,14 @@ export function getLayoutItem(
  * It is also responsible for cascading the movement of the other elements
  *
  * @param  {Layout}      layout
- * @param  {DashboardItem} widget
+ * @param  {WidgetProps} widget
  * @param  {number}     x in grid units
  * @param  {number}     y in grid units
  * @param  {boolean}    isUserAction Indicate if the element being moved is being dragged/resized by the user
  */
 export function moveElement(
   layout: Layout,
-  widget: DashboardItem,
+  widget: WidgetProps,
   x?: number,
   y?: number,
   isUserAction?: boolean,
@@ -376,9 +376,9 @@ export function moveElement(
   if (typeof y === 'number') widget.y = y
   widget.moved = true
 
-  let dashboard: DashboardItem[] = [...layout]
+  let dashboard: WidgetProps[] = [...layout]
   // If it collides with something, we move it
-  let sorted: DashboardItem[] = sortLayoutItemsByRowCol(dashboard)
+  let sorted: WidgetProps[] = sortLayoutItemsByRowCol(dashboard)
   // We need to reorder the elements we compare with to ensure that in the
   // case of having multiple collisions, we obtain the closest collision
   if (movingUp) sorted = sorted.reverse()
@@ -435,8 +435,8 @@ export function moveElement(
  */
 function moveElementAwayFromCollision(
   layout: Layout,
-  collidesWith: DashboardItem,
-  itemToMove: DashboardItem,
+  collidesWith: WidgetProps,
+  itemToMove: WidgetProps,
   isUserAction?: boolean,
 ): Layout {
   const preventCollision = false // we're already colliding
@@ -446,7 +446,7 @@ function moveElementAwayFromCollision(
   // otherwise we may enter an infinite loop.
   if (isUserAction) {
     // We make a copy of the original to avoid modifying it
-    const fakeItem: DashboardItem = {
+    const fakeItem: WidgetProps = {
       x: itemToMove.x,
       y: itemToMove.y,
       width: itemToMove.width,

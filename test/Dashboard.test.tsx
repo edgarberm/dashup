@@ -74,6 +74,6 @@ describe('Dashboard component ', () => {
     const dashboard = container.querySelector('.dashboard') as HTMLElement
     expect(dashboard.children.length).toBe(2)
 
-    debug()
+    // debug()
   })
 })
