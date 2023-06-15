@@ -1,38 +1,51 @@
-name: Storybook GitHub Pages
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy Storybook to Pages
 
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - main  # Set a branch name to trigger deployment
-  pull_request:
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Install and Build
-        run: |
-          npm ci
-          npm run build-storybook
-
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
+      - name: Set up Node
+        uses: actions/setup-node@v3
         with:
-          github_token: ${{ secrets.STORYBOOK_SECRET_KEY }}
-          publish_branch: gh-pages
-          publish_dir: ./public
-          allow_empty_commit: true
-
-      # - name: Deploy
-      #   uses: JamesIves/github-pages-deploy-action@3.6.2
-      #   with:
-      #     branch: gh-pages
-      #     folder: docs # output folder from `npm run build-storybook`
+          node-version: 18
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build-storybook
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          # Upload dist repository
+          path: './docs'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
