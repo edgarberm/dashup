@@ -196,9 +196,7 @@ export default function Dashboard({
   }
 
   const handleRemoveWidget = (id: string) => {
-    const newLayout = layoutRef.current.filter(
-      (w: WidgetProps) => w.id !== id,
-    )
+    const newLayout = layoutRef.current.filter((w: WidgetProps) => w.id !== id)
     const compactLayout = compact(newLayout) as Layout
 
     // setLayout(compactLayout)

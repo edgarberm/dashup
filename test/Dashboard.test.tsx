@@ -39,7 +39,7 @@ describe('Dashboard component ', () => {
   })
 
   test('should render widgets correctly', async () => {
-    const { container, debug } = render(
+    const { container } = render(
       <Wrapper>
         <Dashboard
           columns={12}
@@ -73,7 +73,5 @@ describe('Dashboard component ', () => {
 
     const dashboard = container.querySelector('.dashboard') as HTMLElement
     expect(dashboard.children.length).toBe(2)
-
-    // debug()
   })
 })
