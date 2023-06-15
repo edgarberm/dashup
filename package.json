@@ -29,7 +29,7 @@
     "publish": "npm publish --access public",
     "postinstall": "npm exec -y husky install",
     "build-storybook": "storybook build -o ./docs",
-    "deploy-storybook": "gh-pages -d storybook-static"
+    "deploy-storybook": "gh-pages -d docs"
   },
   "keywords": [
     "ui",
