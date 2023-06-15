@@ -1,6 +1,6 @@
 name: Storybook
 on:
-  pull_request:
+  push:
     branches:
       - main
 
@@ -18,3 +18,8 @@ jobs:
           npm ci
           npm run build-storybook
           npm run deploy-storybook
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          branch: gh-pages
+          folder: docs # output folder from `npm run build-storybook`
