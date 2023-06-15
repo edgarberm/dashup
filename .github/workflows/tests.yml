@@ -22,10 +22,10 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Lint code
-        run: pnpm run lint
+        run: npm run lint
 
       - name: Run tests
-        run: pnpm run test
+        run: npm run test
