@@ -4,3 +4,5 @@ node_modules
 coverage
 
 *.tgz
+gh-pages
+gh-pages.pub
