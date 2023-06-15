@@ -9,7 +9,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: write
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -25,8 +26,9 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
-          github_token: ${{ secrets.STORYBOOK_SECRET_KEY }}
-          publish_dir: ./docs
+          github_token: ${{ secrets.STORYBOOK_DEPLOY_KEY }}
+          publish_dir: ./public
+          enable_jekyll: false
 
       # - name: Deploy
       #   uses: JamesIves/github-pages-deploy-action@3.6.2
