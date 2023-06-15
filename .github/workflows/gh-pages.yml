@@ -26,9 +26,10 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
         with:
-          github_token: ${{ secrets.STORYBOOK_DEPLOY_KEY }}
+          github_token: ${{ secrets.STORYBOOK_SECRET_KEY }}
+          publish_branch: gh-pages
           publish_dir: ./public
-          enable_jekyll: false
+          allow_empty_commit: true
 
       # - name: Deploy
       #   uses: JamesIves/github-pages-deploy-action@3.6.2
