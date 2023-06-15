@@ -55,7 +55,11 @@ Utilize the power of [Storybook](https://storybook.js.org/) for easy development
 - ReactDOM >= 18
 ## Usage
 
-Install **Dashup** by running:
+Getting started with the **Dashup** is quick and straightforward. Follow the steps below to install the package and begin using the components in your project.
+
+### Installation
+
+To install the **Dashup**, use the package manager of your choice:
 
 
 #### NPM
@@ -78,6 +82,9 @@ pnpm install dashup
 
 ## Properties
 
+The `<Dashboard />` component exposes a simple but effective API:
+
+
 - `widgets: Layout`
 - `columns?: number` default `12`
 - `rowHeight?: number` default `100`
@@ -86,23 +93,22 @@ pnpm install dashup
 - `onChange?: (widgets: Layout) => void`
 - `onResize?: () => void`
 
+
 ```tsx
-// The `Array` of widgets (layout)
-const widgets: Layout = [
-  {
-    id: uuidv4(),
-    x: 0,
-    y: 2,
-    width: 3,
-    height: 2,
-    title: 'Widget 1',
-    draggable: true,
-    removible: true,
-    stationary: false,
-    component: <ComponentForWidget />,
-  },
-  ....
-]
+const widget: WidgetProps = {
+  id: uuidv4(),
+  x: 0,
+  y: 2,
+  width: 3,
+  height: 2,
+  title: 'Widget 1',
+  draggable: true,
+  removible: true,
+  stationary: false,
+  component: <ComponentForWidget />,
+}
+
+const widgets: Layout = [widget, ...]
 
 <Dashboard
   widgets={widgets}
@@ -112,12 +118,10 @@ const widgets: Layout = [
 />
 ```
 
-#### Layout
-
-The `Layout` interface aonly wraps an `Array` of `DashboardItem`.
+#### Widget props
 
 ```ts
-interface DashboardItem {
+interface WidgetProps {
   id: string
   /** in column units */
   x: number
@@ -135,18 +139,26 @@ interface DashboardItem {
   maxWidth?: number
   /** in row units */
   maxHeight?: number
+  /** static widget */
   stationary?: boolean
+  /** draggable widget */
   draggable?: boolean
+  /** resizable widget */
   resizable?: boolean
+  /** removible widget */
   removible?: boolean
+  /** the widget title */
   title?: string
+  /** the widget content */
   component?: JSX.Element
-  options?: DashboardItemOption[]
+  /** the widget options (in development) */
+  options?: WidgetOption[]
 }
 ```
 
+#### WidgetOption
 ```ts
-type DashboardItemOption = {
+type WidgetOption = {
   title?: string // To show in the Tooltip
   action: () => void
   icon: JSX.Element
@@ -156,17 +168,20 @@ type DashboardItemOption = {
 
 ## Todo's
 
-- [x] Code refactor
+- [ ] Code refactor
 - [ ] Extra features
 - [ ] More Storybook examples and customizations
 - [ ] Docuentation
 - [ ] Test
-- [ ] Publish package
+- [x] Publish package beta
 
 
 ## Contributing
 
-We welcome contributions from the community! If you'd like to contribute to this project, please review our contribution guidelines and submit a pull request.
+
+Please, help me for test the component 🙏🏻
+
+I welcome contributions from the community! If you'd like to contribute to this project, please review the [contribution guidelines](CONTRIBUTING.md) and submit a pull request.
 
 License
 This project is licensed under the MIT License.
