@@ -1,5 +1,5 @@
 import terser from '@rollup/plugin-terser'
-import typescript from '@rollup/plugin-typescript'
+// import typescript from '@rollup/plugin-typescript'
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
