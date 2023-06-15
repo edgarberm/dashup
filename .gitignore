@@ -1,7 +1,8 @@
 dist
 docs
-node_modules
 coverage
+node_modules
+public
 
 *.tgz
 gh-pages
