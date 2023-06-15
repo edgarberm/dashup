@@ -18,8 +18,15 @@ jobs:
           npm ci
           npm run build-storybook
           npm run deploy-storybook
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@3.6.2
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          folder: docs # output folder from `npm run build-storybook`
+          github_token: ${{ secrets.STORYBOOK }}
+          publish_dir: ./docs
+
+      # - name: Deploy
+      #   uses: JamesIves/github-pages-deploy-action@3.6.2
+      #   with:
+      #     branch: gh-pages
+      #     folder: docs # output folder from `npm run build-storybook`
