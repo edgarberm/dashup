@@ -1,11 +1,17 @@
 // @ts-ignore
 import { Meta, StoryObj } from '@storybook/react'
+import { useState } from 'react'
 import Dashboard from '../src'
 import { uuidv4 } from '../src/utils/utils'
 import './dashboard.css'
-import { useState } from 'react'
 
-function FakeComponent({ text = 'Content', extra }: { text?: string, extra?: string }): JSX.Element {
+function FakeComponent({
+  text = 'Content',
+  extra,
+}: {
+  text?: string
+  extra?: string
+}): JSX.Element {
   return (
     <div className='content'>
       <p>{text}</p>
@@ -28,7 +34,8 @@ const STATIC_WIDGET: WidgetProps = {
   component: (
     <FakeComponent
       text={`This is a stationary widget. You can't move it or resize it, and the other widgets can't.`}
-    />)
+    />
+  ),
 }
 
 const NOT_DRAGGABLE_WIDGET: WidgetProps = {
@@ -74,11 +81,7 @@ const NOT_REMOVIBLE_WIDGET: WidgetProps = {
   resizable: true,
   removible: false,
   stationary: false,
-  component: (
-    <FakeComponent
-      text={`This can't be removed from the layout.`}
-    />
-  ),
+  component: <FakeComponent text={`This can't be removed from the layout.`} />,
 }
 
 const MIN_MAX_WIDGET_SIZE: WidgetProps = {
@@ -261,46 +264,6 @@ const FAKE_WIDGETS: Layout = [
   //       icon: <svg />,
   //     },
   //   ],
-  // },
-  // {
-  //   id: uuidv4(),
-  //   x: 8,
-  //   y: 0,
-  //   width: 4,
-  //   height: 1,
-  //   title: 'Widget 3',
-  //   component: <FakeComponent />,
-  // },
-  // {
-  //   id: uuidv4(),
-  //   x: 0,
-  //   y: 0,
-  //   width: 4,
-  //   height: 2,
-  //   title: 'Widget 4',
-  //   component: <FakeComponent />,
-  // },
-  // {
-  //   id: uuidv4(),
-  //   x: 7,
-  //   y: 2,
-  //   width: 5,
-  //   height: 2,
-  //   maxWidth: 5,
-  //   maxHeight: 3,
-  //   minWidth: 3,
-  //   minHeight: 2,
-  //   title: 'Widget 6',
-  //   component: <FakeComponent />,
-  // },
-  // {
-  //   id: uuidv4(),
-  //   x: 7,
-  //   y: 4,
-  //   width: 2,
-  //   height: 2,
-  //   title: 'Widget 7',
-  //   component: <FakeComponent />,
   // },
   // {
   //   id: uuidv4(),
@@ -514,7 +477,6 @@ export const NotDraggableWidget: Story = {
   ],
 }
 
-
 const FAKE_RESIZABLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
@@ -550,7 +512,6 @@ export const NotResizableWidget: Story = {
   ],
 }
 
-
 const FAKE_REMOVIBLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
@@ -585,7 +546,6 @@ export const NotRemovibleWidget: Story = {
     },
   ],
 }
-
 
 const FAKE_MIN_MAX = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
