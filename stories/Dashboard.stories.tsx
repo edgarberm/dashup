@@ -279,13 +279,19 @@ const dashboard: Meta<typeof Dashboard> = {
     draggableHandle: {
       type: { name: 'string', required: false },
       defaultValue: undefined,
-      description: 'The element from which the widget will be dragged',
+      description: 'The class name for the draggable handle',
       table: {
-        type: { summary: 'JSX.Element' },
-        defaultValue: { summary: undefined },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'draggable-handle' },
       },
-      control: {
-        type: 'number',
+    },
+    placeholderClassName: {
+      type: { name: 'string', required: false },
+      defaultValue: undefined,
+      description: 'The class name for the placeholder',
+      table: {
+        type: { summary: 'string' },
+        defaultValue: { summary: 'widget-placeholder' },
       },
     },
     onChange: {
