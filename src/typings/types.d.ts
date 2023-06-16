@@ -74,6 +74,8 @@ interface DashboardWidgetProps extends WidgetProps {
   draggableHandle?: string
   /** user internally */
   moved?: boolean
+  /** user internally */
+  layoutItemProps?: WidgetProps
   placeholderClassName?: string
   onDrag: (eventName: string, widget: Area) => void
   onResize: (eventName: string, widget: Area) => void

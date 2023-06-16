@@ -211,6 +211,7 @@ export default function Dashboard({
         <Widget
           key={w.id}
           {...w}
+          layoutItemProps={w}
           columns={columns}
           colWidth={colWidth}
           rowHeight={rowHeight}

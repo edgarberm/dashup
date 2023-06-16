@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Meta, StoryObj } from '@storybook/react'
 import Dashboard from '../src'
 import { uuidv4 } from '../src/utils/utils'
@@ -12,106 +13,212 @@ function FakeComponent({ text = 'Content' }: { text?: string }): JSX.Element {
   )
 }
 
+const STATIC_WIDGET: WidgetProps = {
+  id: uuidv4(),
+  x: 3,
+  y: 0,
+  width: 6,
+  height: 2,
+  title: 'Widget 2 (stationary)',
+  draggable: true,
+  removible: true,
+  stationary: true,
+  component: (
+    <FakeComponent
+      text={`This is a stationary widget. You can't move it or resize it, and the other widgets can't move it.`}
+    />
+  ),
+}
+
 const FAKE_WIDGETS: Layout = [
   {
     id: uuidv4(),
     x: 0,
-    y: 2,
+    y: 0,
     width: 3,
     height: 2,
-    title: 'Widget 1 (not draggable)',
-    draggable: false,
-    removible: false,
+    title: 'Widget 1',
+    draggable: true,
+    removible: true,
     component: <FakeComponent />,
   },
   {
     id: uuidv4(),
-    x: 4,
+    x: 3,
     y: 0,
-    width: 4,
+    width: 6,
     height: 2,
     title: 'Widget 2',
+    draggable: true,
+    removible: true,
     component: <FakeComponent />,
-    options: [
-      {
-        title: 'Option 1',
-        action: () => {
-          // eslint-disable-next-line no-console
-          console.log('Option 1')
-        },
-        icon: <svg />,
-      },
-      {
-        title: 'Option 2',
-        action: () => {
-          // eslint-disable-next-line no-console
-          console.log('Option 2')
-        },
-        icon: <svg />,
-      },
-    ],
   },
   {
     id: uuidv4(),
-    x: 8,
+    x: 9,
     y: 0,
-    width: 4,
-    height: 1,
+    width: 3,
+    height: 2,
     title: 'Widget 3',
+    draggable: true,
+    removible: true,
     component: <FakeComponent />,
   },
   {
     id: uuidv4(),
     x: 0,
-    y: 0,
-    width: 4,
-    height: 2,
-    title: 'Widget 4',
-    component: <FakeComponent />,
-  },
-  // {
-  //   id: uuidv4(),
-  //   x: 3,
-  //   y: 2,
-  //   width: 4,
-  //   height: 3,
-  //   title: 'Widget 5 (stationary)',
-  //   stationary: true,
-  //   component: <FakeComponent />,
-  // },
-  {
-    id: uuidv4(),
-    x: 7,
     y: 2,
-    width: 5,
-    height: 2,
-    maxWidth: 5,
-    maxHeight: 3,
-    minWidth: 3,
-    minHeight: 2,
-    title: 'Widget 6',
+    width: 6,
+    height: 3,
+    title: 'Widget 4',
+    draggable: true,
+    removible: true,
     component: <FakeComponent />,
   },
   {
     id: uuidv4(),
-    x: 7,
-    y: 4,
-    width: 2,
+    x: 6,
+    y: 2,
+    width: 3,
     height: 2,
+    title: 'Widget 5',
+    draggable: true,
+    removible: true,
+    component: <FakeComponent />,
+  },
+  {
+    id: uuidv4(),
+    x: 9,
+    y: 2,
+    width: 3,
+    height: 2,
+    title: 'Widget 6',
+    draggable: true,
+    removible: true,
+    component: <FakeComponent />,
+  },
+  {
+    id: uuidv4(),
+    x: 6,
+    y: 4,
+    width: 6,
+    height: 1,
     title: 'Widget 7',
+    draggable: true,
+    removible: true,
     component: <FakeComponent />,
   },
   {
     id: uuidv4(),
     x: 0,
     y: 6,
+    width: 6,
+    height: 2,
+    title: 'Widget 8',
+    draggable: true,
+    removible: true,
+    component: <FakeComponent />,
+  },
+  {
+    id: uuidv4(),
+    x: 6,
+    y: 6,
     width: 3,
     height: 2,
-    title: 'Widget 8 (no resizable)',
-    resizable: false,
-    component: <FakeComponent text='No topbar' />,
-    hideTopbar: true,
+    title: 'Widget 9',
+    draggable: true,
+    removible: true,
+    component: <FakeComponent />,
   },
+  {
+    id: uuidv4(),
+    x: 9,
+    y: 6,
+    width: 3,
+    height: 2,
+    title: 'Widget 10',
+    draggable: true,
+    removible: true,
+    component: <FakeComponent />,
+  },
+  // {
+  //   id: uuidv4(),
+  //   x: 4,
+  //   y: 0,
+  //   width: 4,
+  //   height: 2,
+  //   title: 'Widget 2',
+  //   component: <FakeComponent />,
+  //   options: [
+  //     {
+  //       title: 'Option 1',
+  //       action: () => {
+  //         // eslint-disable-next-line no-console
+  //         console.log('Option 1')
+  //       },
+  //       icon: <svg />,
+  //     },
+  //     {
+  //       title: 'Option 2',
+  //       action: () => {
+  //         // eslint-disable-next-line no-console
+  //         console.log('Option 2')
+  //       },
+  //       icon: <svg />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: uuidv4(),
+  //   x: 8,
+  //   y: 0,
+  //   width: 4,
+  //   height: 1,
+  //   title: 'Widget 3',
+  //   component: <FakeComponent />,
+  // },
+  // {
+  //   id: uuidv4(),
+  //   x: 0,
+  //   y: 0,
+  //   width: 4,
+  //   height: 2,
+  //   title: 'Widget 4',
+  //   component: <FakeComponent />,
+  // },
+  // {
+  //   id: uuidv4(),
+  //   x: 7,
+  //   y: 2,
+  //   width: 5,
+  //   height: 2,
+  //   maxWidth: 5,
+  //   maxHeight: 3,
+  //   minWidth: 3,
+  //   minHeight: 2,
+  //   title: 'Widget 6',
+  //   component: <FakeComponent />,
+  // },
+  // {
+  //   id: uuidv4(),
+  //   x: 7,
+  //   y: 4,
+  //   width: 2,
+  //   height: 2,
+  //   title: 'Widget 7',
+  //   component: <FakeComponent />,
+  // },
+  // {
+  //   id: uuidv4(),
+  //   x: 0,
+  //   y: 6,
+  //   width: 3,
+  //   height: 2,
+  //   title: 'Widget 8 (no resizable)',
+  //   resizable: false,
+  //   component: <FakeComponent text='No topbar' />,
+  //   hideTopbar: true,
+  // },
 ]
 
 type Story = StoryObj<typeof Dashboard>
@@ -224,19 +331,41 @@ export const Default: Story = {
 
       return (
         <div style={{ height: '100%', minHeight: 800 }}>
-          {/* <div className='summary'>
-            {widgets.map((widget: DashboardItem) => (
-              <div key={widget.id}>
-                <p>{widget.title}</p>
-                <div>
-                  <p>
-                    [{widget.x}, {widget.y}, {widget.width}, {widget.height}]
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div> */}
+          <Dashboard
+            {...props.args}
+            widgets={widgets}
+            columns={props.args.columns}
+            rowHeight={props.args.rowHeight}
+            onChange={handleChange}
+          />
+        </div>
+      )
+    },
+  ],
+}
 
+const FAKE_STATIONARY = FAKE_WIDGETS.filter((w, i) => i !== 1)
+
+/**
+ * This example shows how to use the Stationary Widgets.
+ *
+ * Note that unlike non-draggable or non-resizable widgets, which can be moved by other widgets, this type will not be moved.
+ */
+export const StationaryWidget: Story = {
+  args: {
+    widgets: [...FAKE_STATIONARY, STATIC_WIDGET],
+  },
+  decorators: [
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (StoryFn: any, props: any) => {
+      const { args } = props
+      const [widgets, setWidgets] = useState(args.widgets)
+      const handleChange = (dashboard: Layout) => {
+        setWidgets(dashboard)
+      }
+
+      return (
+        <div style={{ height: '100%', minHeight: 800 }}>
           <Dashboard
             {...props.args}
             widgets={widgets}

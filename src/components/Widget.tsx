@@ -1,6 +1,7 @@
 import {
   CSSProperties,
   MouseEvent as RMouseEvent,
+  cloneElement,
   useCallback,
   useEffect,
   useRef,
@@ -59,6 +60,7 @@ export default function Widget({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   moved,
   placeholderClassName,
+  layoutItemProps,
   onDrag,
   onResize,
   onRemove,
@@ -421,7 +423,7 @@ export default function Widget({
             />
           )}
 
-          {component}
+          {component && cloneElement(component, layoutItemProps)}
 
           {resizable && !stationary && (
             <span ref={resizeHandle} className='resizable-handle'></span>
