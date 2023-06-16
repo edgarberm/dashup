@@ -10,13 +10,29 @@
 
 <br>
 
-This library provides a set of highly customizable and performant **React** components specifically designed for creating interactive dashboards. With a focus on simplicity and flexibility, this library empowers developers to effortlessly build stunning dashboard interfaces.
+Highly customizable and performant **React** components specifically designed for creating interactive dashboards. With a focus on simplicity and flexibility, this library empowers developers to effortlessly build stunning dashboard interfaces.
 
 🚨 **IMPORTANT**: This component are under development. Is not ready for production!
 
 <img src="./assets/dashup-screen-recording.gif" width="800px" />
 
+<br>
+
+## Examples
+
+See in action in the [Storybook](https://builtbyedgar.github.io/dashup/)
+
+##### More examples
+
+- Codesandbox
+- Stackblitz
+
 ## Features
+
+Dashup provides a simple and versatile solution for building interactive dashboards in your **React** applications. With its intuitive API and extensive customization options, you can create dynamic and visually appealing dashboards in no time.
+
+Whether you need draggable and resizable widgets for flexible layout arrangements, static widgets for displaying static information or visual elements, or a serialized layout for saving and loading dashboard configurations, this component library has you covered.
+
 
 #### 100% React & TypeScript
 
@@ -170,10 +186,10 @@ type WidgetOption = {
 - [ ] Code refactor
 - [ ] Extra features
 - [ ] More Storybook examples and customizations
-- [ ] Codesandbox examples
+- [ ] Codesandbox and Stackblitz examples
 - [ ] Docuentation
 - [ ] Test
-- [x] Publish package beta
+- [x] Publish package (beta)
 
 ## Contributing
 

@@ -28,7 +28,8 @@
     "pack": "npm run build && npm pack",
     "publish": "npm publish --access public",
     "postinstall": "npm exec -y husky install",
-    "build-storybook": "storybook build -o ./public"
+    "build-storybook": "storybook build -o ./public",
+    "storybook-assets": "cp -r ./assets ./public/src"
   },
   "keywords": [
     "ui",
@@ -56,8 +57,10 @@
     "@storybook/addon-interactions": "^7.0.18",
     "@storybook/addon-links": "^7.0.18",
     "@storybook/blocks": "^7.0.18",
+    "@storybook/manager-api": "^7.0.21",
     "@storybook/react": "^7.0.18",
     "@storybook/react-vite": "^7.0.18",
+    "@storybook/theming": "^7.0.21",
     "@testing-library/dom": "^9.3.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
