@@ -5,8 +5,10 @@ const THEME = create({
   base: 'dark',
   brandTitle: 'My custom Storybook',
   brandUrl: 'https://github.com/builtbyedgar/dashup/',
-  brandImage: process.env.ASSETS_URL + '/Icon-24.png',
+  brandImage: process.env.ASSETS_URL + '/sb-logo.png',
   brandTarget: '_self',
+  fontBase: `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
+  fontCode: 'monospace',
 
   //
   // colorPrimary: '#3A10E5',
