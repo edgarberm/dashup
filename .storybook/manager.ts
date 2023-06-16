@@ -3,7 +3,7 @@ import { create } from '@storybook/theming/create'
 
 const THEME = create({
   base: 'dark',
-  brandTitle: 'My custom Storybook',
+  brandTitle: 'Dashup',
   brandUrl: 'https://github.com/builtbyedgar/dashup/',
   brandImage: process.env.ASSETS_URL + '/sb-logo.png',
   brandTarget: '_self',
