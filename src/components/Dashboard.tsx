@@ -34,7 +34,7 @@ const PLACEHOLDER = {
  * @think
  * - Para los widget staticos necesitamos poder moverlos para colocarlos en el lugar apropiado
  */
-export default function Dashboard({
+export function Dashboard({
   widgets,
   columns = 24,
   rowHeight = 100,

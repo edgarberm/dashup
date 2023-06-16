@@ -1,9 +1,9 @@
 // @ts-ignore
 import { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
-import Dashboard from '../src'
 import { uuidv4 } from '../src/utils/utils'
 import './dashboard.css'
+import { Dashboard, DashboardProps, Layout, WidgetProps } from '../src'
 
 function FakeComponent({
   text = 'Content',

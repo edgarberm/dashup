@@ -1,7 +1,4 @@
-import terser from '@rollup/plugin-terser'
-// import typescript from '@rollup/plugin-typescript'
 import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   test: {
@@ -26,37 +23,6 @@ export default defineConfig({
         'src/styles',
         'src/types.d.ts',
       ],
-    },
-  },
-  build: {
-    cssCodeSplit: true,
-    cssMinify: true,
-    sourcemap: 'inline',
-    copyPublicDir: false,
-    lib: {
-      entry: '/dist/index.js',
-      name: 'dashup',
-      formats: ['es', 'cjs'],
-      fileName: (format) => `index${format !== 'cjs' ? '.' + format : ''}.js`,
-      // fileName: `index`,
-    },
-    rollupOptions: {
-      input: '/src/index.ts',
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
-      plugins: [
-        react({
-          jsxRuntime: 'classic',
-        }),
-      ],
-      output: {
-        sourcemap: true,
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          'react/jsx-runtime': 'react/jsx-runtime',
-        },
-        plugins: [terser()],
-      },
     },
   },
 })

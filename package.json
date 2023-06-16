@@ -1,6 +1,6 @@
 {
   "name": "dashup",
-  "version": "1.0.0-beta.50",
+  "version": "1.0.0-beta.68",
   "description": "A React Dashboard Component.",
   "repository": {
     "type": "git",
@@ -9,7 +9,6 @@
   "author": "Edgar Bermejo",
   "license": "MIT",
   "homepage": "http://builtbyedgar.github.io/dashup",
-  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "unpkg": "dist/index.min.js",
@@ -24,9 +23,7 @@
     "precommit": "lint-staged && test",
     "test": "vitest",
     "storybook": "storybook dev -p 6006",
-    "build": "npm run clean && vite build && npm run typings",
-    "roll": "rm -rf dist && rollup -c",
-    "typings": "cp ./src/typings/types.d.ts ./dist",
+    "build": "rm -rf dist && rollup -c",
     "clean": "rm -rf dist && rm -rf public",
     "pack": "npm run roll && npm pack",
     "publish": "npm publish --access public",
