@@ -32,11 +32,13 @@ export default defineConfig({
     cssCodeSplit: true,
     cssMinify: true,
     sourcemap: 'inline',
+    copyPublicDir: false,
     lib: {
       entry: '/dist/index.js',
       name: 'redashify',
-      fileName: 'index',
-      formats: ['es', 'umd'],
+      formats: ['umd'],
+      fileName: () => `index.js`,
+      // fileName: `index`,
     },
     rollupOptions: {
       input: '/src/index.ts',

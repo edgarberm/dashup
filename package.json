@@ -1,6 +1,6 @@
 {
   "name": "dashup",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0-beta.28",
   "description": "A React Dashboard Component.",
   "repository": {
     "type": "git",
@@ -10,9 +10,10 @@
   "license": "MIT",
   "homepage": "http://builtbyedgar.github.io/dashup",
   "type": "module",
-  "main": "dist/index.umd.js",
+  "main": "dist/index.js",
   "module": "dist/index.js",
-  "types": "dist/types.d.ts",
+  "unpkg": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -23,11 +24,10 @@
     "test": "vitest",
     "storybook": "storybook dev -p 6006",
     "build": "npm run clean && vite build && npm run typings",
-    "typings": "cp ./src/typings/types.d.ts ./dist",
+    "typings": "cp ./src/typings/index.d.ts ./dist",
     "clean": "rm -rf dist",
     "pack": "npm run build && npm pack",
     "publish": "npm publish --access public",
-    "postinstall": "npm exec -y husky install",
     "build-storybook": "storybook build -o ./public",
     "storybook-assets": "cp -r ./assets ./public/src"
   },
