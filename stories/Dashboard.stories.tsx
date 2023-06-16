@@ -136,6 +136,38 @@ const HIDE_TOOLBAR_WIDGET: WidgetProps = {
   component: <FakeComponent text={`This widget has no toolbar`} />,
 }
 
+const CUSTOM_OPTIONS_WIDGET: WidgetProps = {
+  id: uuidv4(),
+  x: 3,
+  y: 0,
+  width: 6,
+  height: 2,
+  title: 'Widget 2',
+  draggable: true,
+  resizable: true,
+  removible: true,
+  stationary: false,
+  component: <FakeComponent />,
+  options: [
+    {
+      title: 'Option 1',
+      action: () => {
+        // eslint-disable-next-line no-console
+        console.log('Option 1')
+      },
+      icon: <svg />,
+    },
+    {
+      title: 'Option 2',
+      action: () => {
+        // eslint-disable-next-line no-console
+        console.log('Option 2')
+      },
+      icon: <svg />,
+    },
+  ],
+}
+
 const FAKE_WIDGETS: Layout = [
   {
     id: uuidv4(),
@@ -267,44 +299,6 @@ const FAKE_WIDGETS: Layout = [
     stationary: false,
     component: <FakeComponent />,
   },
-  // {
-  //   id: uuidv4(),
-  //   x: 4,
-  //   y: 0,
-  //   width: 4,
-  //   height: 2,
-  //   title: 'Widget 2',
-  //   component: <FakeComponent />,
-  //   options: [
-  //     {
-  //       title: 'Option 1',
-  //       action: () => {
-  //         // eslint-disable-next-line no-console
-  //         console.log('Option 1')
-  //       },
-  //       icon: <svg />,
-  //     },
-  //     {
-  //       title: 'Option 2',
-  //       action: () => {
-  //         // eslint-disable-next-line no-console
-  //         console.log('Option 2')
-  //       },
-  //       icon: <svg />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   id: uuidv4(),
-  //   x: 0,
-  //   y: 6,
-  //   width: 3,
-  //   height: 2,
-  //   title: 'Widget 8 (no resizable)',
-  //   resizable: false,
-  //   component: <FakeComponent text='No topbar' />,
-  //   hideTopbar: true,
-  // },
 ]
 
 type Story = StoryObj<typeof Dashboard>
@@ -500,5 +494,16 @@ export const MinMaxWidgetSize: Story = {
 export const CustomToolbarWidget: Story = {
   args: {
     widgets: [...FILTER, HIDE_TOOLBAR_WIDGET],
+  },
+}
+
+/**
+ * This example shows how to use the Not Resizable Widgets.
+ *
+ * This property make the widget not resizable, but the other widgets can move it.
+ */
+export const CustomOptionsWidget: Story = {
+  args: {
+    widgets: [...FILTER, CUSTOM_OPTIONS_WIDGET],
   },
 }

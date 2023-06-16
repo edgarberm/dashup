@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react'
 import { useStateRef } from '../hooks/hooks'
+import { Area, DashboardWidgetProps } from '../typings/types'
 import {
   calcPosition,
   calcPositionInPx,
@@ -18,7 +19,6 @@ import {
   setWidgetStyle,
 } from '../utils/utils'
 import WidgetTopBar from './WidgetTopBar'
-import { Area, DashboardWidgetProps } from '../typings/types'
 
 /**
  * La idea de este componente es que solo se encargue de 'pintarse' a si mismo, la lógica
@@ -82,8 +82,6 @@ export default function Widget({
   const [style, setStyle] = useState<CSSProperties>({})
   const [isDragging, setIsDragging, isDraggingRef] = useStateRef<boolean>(false)
   const [isResizing, setIsResizing, isResizingRef] = useStateRef<boolean>(false)
-  console.log(layoutItemProps);
-
 
   /**
    * La primera vez que se renderiza el componente decidimos si el evento de drag lo
@@ -402,7 +400,6 @@ export default function Widget({
 
     onRemove?.(id)
   }
-
 
   return (
     <div
