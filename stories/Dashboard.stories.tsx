@@ -5,10 +5,11 @@ import { uuidv4 } from '../src/utils/utils'
 import './dashboard.css'
 import { useState } from 'react'
 
-function FakeComponent({ text = 'Content' }: { text?: string }): JSX.Element {
+function FakeComponent({ text = 'Content', extra }: { text?: string, extra?: string }): JSX.Element {
   return (
     <div className='content'>
       <p>{text}</p>
+      {extra && <p style={{ fontWeight: 'bold' }}>{extra}</p>}
     </div>
   )
 }
@@ -58,6 +59,47 @@ const NOT_RESIZABLE_WIDGET: WidgetProps = {
   component: (
     <FakeComponent
       text={`This is a stationary widget. You can't move it or resize it, and the other widgets can't.`}
+    />
+  ),
+}
+
+const NOT_REMOVIBLE_WIDGET: WidgetProps = {
+  id: uuidv4(),
+  x: 3,
+  y: 0,
+  width: 6,
+  height: 2,
+  title: 'Widget 2 (not removible)',
+  draggable: true,
+  resizable: true,
+  removible: false,
+  stationary: false,
+  component: (
+    <FakeComponent
+      text={`This can't be removed from the layout.`}
+    />
+  ),
+}
+
+const MIN_MAX_WIDGET_SIZE: WidgetProps = {
+  id: uuidv4(),
+  x: 3,
+  y: 0,
+  width: 6,
+  height: 2,
+  minWidth: 3,
+  maxWidth: 6,
+  minHeight: 1,
+  maxHeight: 4,
+  title: 'Widget 2 (min/max size)',
+  draggable: true,
+  resizable: true,
+  removible: false,
+  stationary: false,
+  component: (
+    <FakeComponent
+      text={`This widget has a max/min size values (in layout units).`}
+      extra={`minWidth: 3, maxWidth: 6, minHeight: 1, maxHeight: 4.`}
     />
   ),
 }
@@ -483,6 +525,78 @@ const FAKE_RESIZABLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
 export const NotResizableWidget: Story = {
   args: {
     widgets: [...FAKE_RESIZABLE, NOT_RESIZABLE_WIDGET],
+  },
+  decorators: [
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (StoryFn: any, props: any) => {
+      const { args } = props
+      const [widgets, setWidgets] = useState(args.widgets)
+      const handleChange = (dashboard: Layout) => {
+        setWidgets(dashboard)
+      }
+
+      return (
+        <div style={{ height: '100%', minHeight: 800 }}>
+          <Dashboard
+            {...props.args}
+            widgets={widgets}
+            columns={props.args.columns}
+            rowHeight={props.args.rowHeight}
+            onChange={handleChange}
+          />
+        </div>
+      )
+    },
+  ],
+}
+
+
+const FAKE_REMOVIBLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
+
+/**
+ * This example shows how to use the Not Resizable Widgets.
+ *
+ * This property make the widget not resizable, but the other widgets can move it.
+ */
+export const NotRemovibleWidget: Story = {
+  args: {
+    widgets: [...FAKE_REMOVIBLE, NOT_REMOVIBLE_WIDGET],
+  },
+  decorators: [
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (StoryFn: any, props: any) => {
+      const { args } = props
+      const [widgets, setWidgets] = useState(args.widgets)
+      const handleChange = (dashboard: Layout) => {
+        setWidgets(dashboard)
+      }
+
+      return (
+        <div style={{ height: '100%', minHeight: 800 }}>
+          <Dashboard
+            {...props.args}
+            widgets={widgets}
+            columns={props.args.columns}
+            rowHeight={props.args.rowHeight}
+            onChange={handleChange}
+          />
+        </div>
+      )
+    },
+  ],
+}
+
+
+const FAKE_MIN_MAX = FAKE_WIDGETS.filter((w, i) => i !== 1)
+
+/**
+ * This example shows how to use the Not Resizable Widgets.
+ *
+ * This property make the widget not resizable, but the other widgets can move it.
+ */
+export const MinMaxWidgetSize: Story = {
+  args: {
+    widgets: [...FAKE_MIN_MAX, MIN_MAX_WIDGET_SIZE],
   },
   decorators: [
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
