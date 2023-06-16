@@ -51,7 +51,7 @@ export default function Widget({
   component,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   options,
-  hideTopbar = false,
+  toolbar,
   columns,
   colWidth,
   rowHeight,
@@ -82,6 +82,8 @@ export default function Widget({
   const [style, setStyle] = useState<CSSProperties>({})
   const [isDragging, setIsDragging, isDraggingRef] = useStateRef<boolean>(false)
   const [isResizing, setIsResizing, isResizingRef] = useStateRef<boolean>(false)
+  console.log(layoutItemProps);
+
 
   /**
    * La primera vez que se renderiza el componente decidimos si el evento de drag lo
@@ -401,6 +403,7 @@ export default function Widget({
     onRemove?.(id)
   }
 
+
   return (
     <div
       ref={widget}
@@ -416,7 +419,12 @@ export default function Widget({
       {/** 🗒️ @note si es el placeholder no renderizamos el contenido */}
       {placeholderClassName === undefined && (
         <>
-          {!hideTopbar && (
+          {toolbar ? (
+            cloneElement(toolbar, {
+              ...layoutItemProps,
+              className: 'draggable-handle',
+            })
+          ) : (
             <WidgetTopBar
               title={title}
               removible={removible}

@@ -20,6 +20,20 @@ function FakeComponent({
   )
 }
 
+function FakeToolbar(props: any): JSX.Element {
+  return (
+    <div
+      className={props.className}
+      style={{
+        height: 42,
+        paddingLeft: 12,
+      }}
+    >
+      <p style={{ fontSize: 18 }}>{props.title}</p>
+    </div>
+  )
+}
+
 const STATIC_WIDGET: WidgetProps = {
   id: uuidv4(),
   x: 3,
@@ -105,6 +119,21 @@ const MIN_MAX_WIDGET_SIZE: WidgetProps = {
       extra={`minWidth: 3, maxWidth: 6, minHeight: 1, maxHeight: 4.`}
     />
   ),
+}
+
+const HIDE_TOOLBAR_WIDGET: WidgetProps = {
+  id: uuidv4(),
+  x: 3,
+  y: 0,
+  width: 6,
+  height: 2,
+  title: 'Widget 2 (with custom toolbar)',
+  draggable: true,
+  resizable: true,
+  removible: true,
+  stationary: false,
+  toolbar: <FakeToolbar />,
+  component: <FakeComponent text={`This widget has no toolbar`} />,
 }
 
 const FAKE_WIDGETS: Layout = [
@@ -378,11 +407,6 @@ const dashboard: Meta<typeof Dashboard> = {
     onChange: () => {},
     onResize: () => {},
   } as DashboardProps,
-} as Meta<typeof Dashboard>
-
-export default dashboard
-
-export const Default: Story = {
   decorators: [
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (StoryFn: any, props: any) => {
@@ -405,9 +429,13 @@ export const Default: Story = {
       )
     },
   ],
-}
+} as Meta<typeof Dashboard>
 
-const FAKE_STATIONARY = FAKE_WIDGETS.filter((w, i) => i !== 1)
+export default dashboard
+
+export const Default: Story = {}
+
+const FILTER = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
  * This example shows how to use the Stationary Widgets.
@@ -416,33 +444,9 @@ const FAKE_STATIONARY = FAKE_WIDGETS.filter((w, i) => i !== 1)
  */
 export const StationaryWidget: Story = {
   args: {
-    widgets: [...FAKE_STATIONARY, STATIC_WIDGET],
+    widgets: [...FILTER, STATIC_WIDGET],
   },
-  decorators: [
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (StoryFn: any, props: any) => {
-      const { args } = props
-      const [widgets, setWidgets] = useState(args.widgets)
-      const handleChange = (dashboard: Layout) => {
-        setWidgets(dashboard)
-      }
-
-      return (
-        <div style={{ height: '100%', minHeight: 800 }}>
-          <Dashboard
-            {...props.args}
-            widgets={widgets}
-            columns={props.args.columns}
-            rowHeight={props.args.rowHeight}
-            onChange={handleChange}
-          />
-        </div>
-      )
-    },
-  ],
 }
-
-const FAKE_DRAGGABLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
  * This example shows how to use the Not Draggable Widgets.
@@ -451,33 +455,9 @@ const FAKE_DRAGGABLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
  */
 export const NotDraggableWidget: Story = {
   args: {
-    widgets: [...FAKE_DRAGGABLE, NOT_DRAGGABLE_WIDGET],
+    widgets: [...FILTER, NOT_DRAGGABLE_WIDGET],
   },
-  decorators: [
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (StoryFn: any, props: any) => {
-      const { args } = props
-      const [widgets, setWidgets] = useState(args.widgets)
-      const handleChange = (dashboard: Layout) => {
-        setWidgets(dashboard)
-      }
-
-      return (
-        <div style={{ height: '100%', minHeight: 800 }}>
-          <Dashboard
-            {...props.args}
-            widgets={widgets}
-            columns={props.args.columns}
-            rowHeight={props.args.rowHeight}
-            onChange={handleChange}
-          />
-        </div>
-      )
-    },
-  ],
 }
-
-const FAKE_RESIZABLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
  * This example shows how to use the Not Resizable Widgets.
@@ -486,33 +466,9 @@ const FAKE_RESIZABLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
  */
 export const NotResizableWidget: Story = {
   args: {
-    widgets: [...FAKE_RESIZABLE, NOT_RESIZABLE_WIDGET],
+    widgets: [...FILTER, NOT_RESIZABLE_WIDGET],
   },
-  decorators: [
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (StoryFn: any, props: any) => {
-      const { args } = props
-      const [widgets, setWidgets] = useState(args.widgets)
-      const handleChange = (dashboard: Layout) => {
-        setWidgets(dashboard)
-      }
-
-      return (
-        <div style={{ height: '100%', minHeight: 800 }}>
-          <Dashboard
-            {...props.args}
-            widgets={widgets}
-            columns={props.args.columns}
-            rowHeight={props.args.rowHeight}
-            onChange={handleChange}
-          />
-        </div>
-      )
-    },
-  ],
 }
-
-const FAKE_REMOVIBLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
  * This example shows how to use the Not Resizable Widgets.
@@ -521,33 +477,9 @@ const FAKE_REMOVIBLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
  */
 export const NotRemovibleWidget: Story = {
   args: {
-    widgets: [...FAKE_REMOVIBLE, NOT_REMOVIBLE_WIDGET],
+    widgets: [...FILTER, NOT_REMOVIBLE_WIDGET],
   },
-  decorators: [
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (StoryFn: any, props: any) => {
-      const { args } = props
-      const [widgets, setWidgets] = useState(args.widgets)
-      const handleChange = (dashboard: Layout) => {
-        setWidgets(dashboard)
-      }
-
-      return (
-        <div style={{ height: '100%', minHeight: 800 }}>
-          <Dashboard
-            {...props.args}
-            widgets={widgets}
-            columns={props.args.columns}
-            rowHeight={props.args.rowHeight}
-            onChange={handleChange}
-          />
-        </div>
-      )
-    },
-  ],
 }
-
-const FAKE_MIN_MAX = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
  * This example shows how to use the Not Resizable Widgets.
@@ -556,28 +488,17 @@ const FAKE_MIN_MAX = FAKE_WIDGETS.filter((w, i) => i !== 1)
  */
 export const MinMaxWidgetSize: Story = {
   args: {
-    widgets: [...FAKE_MIN_MAX, MIN_MAX_WIDGET_SIZE],
+    widgets: [...FILTER, MIN_MAX_WIDGET_SIZE],
   },
-  decorators: [
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (StoryFn: any, props: any) => {
-      const { args } = props
-      const [widgets, setWidgets] = useState(args.widgets)
-      const handleChange = (dashboard: Layout) => {
-        setWidgets(dashboard)
-      }
+}
 
-      return (
-        <div style={{ height: '100%', minHeight: 800 }}>
-          <Dashboard
-            {...props.args}
-            widgets={widgets}
-            columns={props.args.columns}
-            rowHeight={props.args.rowHeight}
-            onChange={handleChange}
-          />
-        </div>
-      )
-    },
-  ],
+/**
+ * This example shows how to use the Not Resizable Widgets.
+ *
+ * This property make the widget not resizable, but the other widgets can move it.
+ */
+export const CustomToolbarWidget: Story = {
+  args: {
+    widgets: [...FILTER, HIDE_TOOLBAR_WIDGET],
+  },
 }

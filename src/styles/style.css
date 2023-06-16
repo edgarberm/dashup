@@ -32,6 +32,7 @@
 .dashup-widget:hover .resizable-handle {
   opacity: 1;
 }
+.dashup-widget.draggable.draggable-handle,
 .dashup-widget.draggable .draggable-handle {
   cursor: grab;
 }

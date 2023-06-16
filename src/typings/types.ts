@@ -42,7 +42,7 @@ export interface WidgetProps {
   removible?: boolean
   title?: string
   component?: JSX.Element
-  hideTopbar?: boolean
+  toolbar?: JSX.Element
   options?: WidgetOption[]
   /** user internally */
   moved?: boolean
