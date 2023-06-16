@@ -1,4 +1,6 @@
-interface Area {
+import { MouseEvent } from 'react'
+
+export interface Area {
   id: string
   x: number
   y: number
@@ -9,7 +11,7 @@ interface Area {
 /**
  * @prop {string} title
  */
-type WidgetOption = {
+export type WidgetOption = {
   /** to show in the Tooltip */
   title?: string
   /** action */
@@ -18,7 +20,7 @@ type WidgetOption = {
   icon: JSX.Element
 }
 
-interface WidgetProps {
+export interface WidgetProps {
   id: string
   /** In columns */
   x: number
@@ -42,11 +44,13 @@ interface WidgetProps {
   component?: JSX.Element
   hideTopbar?: boolean
   options?: WidgetOption[]
+  /** user internally */
+  moved?: boolean
 }
 
-type Layout = WidgetProps[]
+export type Layout = WidgetProps[]
 
-interface DashboardProps {
+export interface DashboardProps {
   /** The widget list */
   widgets: Layout
   /** number of columns */
@@ -65,7 +69,7 @@ interface DashboardProps {
   onResize?: () => void
 }
 
-interface DashboardWidgetProps extends WidgetProps {
+export interface DashboardWidgetProps extends WidgetProps {
   columns: number
   colWidth: number
   rowHeight: number
@@ -82,19 +86,8 @@ interface DashboardWidgetProps extends WidgetProps {
   onRemove?: (id: string) => void
 }
 
-interface WidgetTopBarProps {
+export interface WidgetTopBarProps {
   title?: string
   removible?: boolean
   onWidgetRemove?: (event: MouseEvent<HTMLButtonElement>) => void
 }
-
-declare function Dashboard({
-  widgets,
-  columns,
-  rowHeight,
-  margin,
-  draggableHandle,
-  placeholderClassName,
-  onChange,
-  onResize,
-}: DashboardProps): JSX.Element

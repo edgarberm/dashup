@@ -18,6 +18,7 @@ import {
   setWidgetStyle,
 } from '../utils/utils'
 import WidgetTopBar from './WidgetTopBar'
+import { Area, DashboardWidgetProps } from '../typings/types'
 
 /**
  * La idea de este componente es que solo se encargue de 'pintarse' a si mismo, la lógica
@@ -404,7 +405,7 @@ export default function Widget({
     <div
       ref={widget}
       className={`
-        widget
+        dashup-widget
         ${placeholderClassName || ''}
         ${draggable && !stationary ? 'draggable' : ''}
         ${resizable && !stationary ? 'resizable' : ''}

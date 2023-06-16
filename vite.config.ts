@@ -35,9 +35,9 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: '/dist/index.js',
-      name: 'redashify',
-      formats: ['umd'],
-      fileName: () => `index.js`,
+      name: 'dashup',
+      formats: ['es', 'cjs'],
+      fileName: (format) => `index${format !== 'cjs' ? '.' + format : ''}.js`,
       // fileName: `index`,
     },
     rollupOptions: {

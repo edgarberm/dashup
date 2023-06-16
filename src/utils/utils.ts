@@ -1,3 +1,5 @@
+import { Layout, WidgetProps } from '../typings/types'
+
 export function uuidv4() {
   // @ts-ignore
   const pattern = [1e7] + -1e3 + -4e3 + -8e3 + -1e11

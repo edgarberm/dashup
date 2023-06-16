@@ -11,7 +11,7 @@ import {
   getLayoutItem,
   moveElement,
 } from '../utils/utils'
-import '../styles/index.css'
+import { Area, DashboardProps, Layout, WidgetProps } from '../typings/types'
 
 const PLACEHOLDER = {
   id: 'placeholder',
@@ -206,7 +206,11 @@ export default function Dashboard({
   }
 
   return (
-    <div ref={dashboardRef} className='dashboard' style={mergedStyle}>
+    <div
+      ref={dashboardRef}
+      className='dashup dashup-dashboard'
+      style={mergedStyle}
+    >
       {layout.map((w) => (
         <Widget
           key={w.id}

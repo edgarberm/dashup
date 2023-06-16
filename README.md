@@ -8,12 +8,12 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
-
 <br>
 
 Highly customizable and performant **React** components specifically designed for creating interactive dashboards. With a focus on simplicity and flexibility, this library empowers developers to effortlessly build stunning dashboard interfaces.
 
 #### Built with 🖤 and lots of
+
 <div style="display: flex; flex-direction: row;">
   <img align="left" alt="react" width="28px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
   <img align="left" alt="typescript" width="28px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
