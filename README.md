@@ -8,21 +8,32 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
+
 <br>
 
 Highly customizable and performant **React** components specifically designed for creating interactive dashboards. With a focus on simplicity and flexibility, this library empowers developers to effortlessly build stunning dashboard interfaces.
 
-🚨 **IMPORTANT**: This component are under development. Is not ready for production!
+#### Built with 🖤 and lots of
+<div style="display: flex; flex-direction: row;">
+  <img align="left" alt="react" width="28px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
+  <img align="left" alt="typescript" width="28px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
+</div>
+
+<br>
 
 <img src="./assets/dashup-screen-recording.gif" width="800px" />
 
 <br>
 
+### 🚨 Important Notice
+
+This component are under development. Is not ready for production!
+
 ## Examples
 
 See in action in the [Storybook](https://builtbyedgar.github.io/dashup/)
 
-##### More examples
+#### More examples (soon)
 
 - Codesandbox
 - Stackblitz
@@ -33,20 +44,19 @@ Dashup provides a simple and versatile solution for building interactive dashboa
 
 Whether you need draggable and resizable widgets for flexible layout arrangements, static widgets for displaying static information or visual elements, or a serialized layout for saving and loading dashboard configurations, this component library has you covered.
 
-
-#### 100% React & TypeScript
+#### ⚛️ 100% React & TypeScript
 
 The components are built using React and TypeScript, ensuring type safety and a seamless integration with your existing React projects.
 
-#### Zero dependencies
+#### 🍿 Zero dependencies
 
 The library has no external dependencies, making it lightweight and easy to manage.
 
-#### Draggable and resizable widgets
+#### 🎛️ Draggable and resizable widgets
 
 Intuitively drag and rearrange widgets within the dashboard to suit your needs. Resize widgets dynamically to optimize the layout and maximize content visibility.
 
-#### Static widgets
+#### ⏸️ Static widgets
 
 Create static widgets for displaying non-interactive information or visual elements.
 
@@ -54,15 +64,15 @@ Create static widgets for displaying non-interactive information or visual eleme
 
 Save and load the dashboard layout effortlessly using a serialized format.
 
-#### Fully customizable
+#### 🎨 Fully customizable
 
 Customize the appearance, behavior, and styling of the components to match your application's branding and requirements.
 
-#### High performance
+#### 🔋 High performance
 
 Utilizing the best practices of React performance optimization, the library ensures smooth rendering and fluid user experiences.
 
-#### Storybook integration
+#### 📘 Storybook integration
 
 Utilize the power of [Storybook](https://storybook.js.org/) for easy development and interactive documentation.
 
@@ -183,13 +193,15 @@ type WidgetOption = {
 
 ## Todo's
 
-- [ ] Code refactor
-- [ ] Extra features
-- [ ] More Storybook examples and customizations
-- [ ] Codesandbox and Stackblitz examples
-- [ ] Docuentation
-- [ ] Test
-- [x] Publish package (beta)
+I'm actively seeking help to ensure the quality and reliability of the library through comprehensive testing. If you have experience with testing React components and would like to contribute, I would greatly appreciate your assistance. Whether it's writing unit tests, integration tests, or providing feedback on existing tests, your contributions will make a significant impact.
+
+- [ ] ♻️ Code refactor
+- [ ] ⚡️ Extra features
+- [ ] 📘 More Storybook examples and customizations
+- [ ] 💻 Codesandbox and Stackblitz examples
+- [ ] 📄 Docuentation
+- [ ] 🔬 Test
+- [x] 📦 Publish package (beta)
 
 ## Contributing
 
