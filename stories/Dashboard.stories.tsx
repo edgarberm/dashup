@@ -21,11 +21,43 @@ const STATIC_WIDGET: WidgetProps = {
   height: 2,
   title: 'Widget 2 (stationary)',
   draggable: true,
+  resizable: true,
   removible: true,
   stationary: true,
   component: (
     <FakeComponent
-      text={`This is a stationary widget. You can't move it or resize it, and the other widgets can't move it.`}
+      text={`This is a stationary widget. You can't move it or resize it, and the other widgets can't.`}
+    />)
+}
+
+const NOT_DRAGGABLE_WIDGET: WidgetProps = {
+  id: uuidv4(),
+  x: 3,
+  y: 0,
+  width: 6,
+  height: 2,
+  title: 'Widget 2 (not draggable)',
+  draggable: false,
+  resizable: true,
+  removible: true,
+  stationary: false,
+  component: <FakeComponent text={`This is a not draggable widget.`} />,
+}
+
+const NOT_RESIZABLE_WIDGET: WidgetProps = {
+  id: uuidv4(),
+  x: 3,
+  y: 0,
+  width: 6,
+  height: 2,
+  title: 'Widget 2 (not resizable)',
+  draggable: true,
+  resizable: false,
+  removible: true,
+  stationary: false,
+  component: (
+    <FakeComponent
+      text={`This is a stationary widget. You can't move it or resize it, and the other widgets can't.`}
     />
   ),
 }
@@ -39,7 +71,9 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 1',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -50,7 +84,9 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 2',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -61,7 +97,9 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 3',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -72,7 +110,9 @@ const FAKE_WIDGETS: Layout = [
     height: 3,
     title: 'Widget 4',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -83,7 +123,9 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 5',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -94,7 +136,9 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 6',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -105,7 +149,9 @@ const FAKE_WIDGETS: Layout = [
     height: 1,
     title: 'Widget 7',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -116,7 +162,9 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 8',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -127,7 +175,9 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 9',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   {
@@ -138,7 +188,9 @@ const FAKE_WIDGETS: Layout = [
     height: 2,
     title: 'Widget 10',
     draggable: true,
+    resizable: true,
     removible: true,
+    stationary: false,
     component: <FakeComponent />,
   },
   // {
@@ -355,11 +407,82 @@ const FAKE_STATIONARY = FAKE_WIDGETS.filter((w, i) => i !== 1)
 /**
  * This example shows how to use the Stationary Widgets.
  *
- * Note that unlike non-draggable or non-resizable widgets, which can be moved by other widgets, this type will not be moved.
+ * This property make the widget not draggable and not resizable. Also the other widgets can't move it.
  */
 export const StationaryWidget: Story = {
   args: {
     widgets: [...FAKE_STATIONARY, STATIC_WIDGET],
+  },
+  decorators: [
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (StoryFn: any, props: any) => {
+      const { args } = props
+      const [widgets, setWidgets] = useState(args.widgets)
+      const handleChange = (dashboard: Layout) => {
+        setWidgets(dashboard)
+      }
+
+      return (
+        <div style={{ height: '100%', minHeight: 800 }}>
+          <Dashboard
+            {...props.args}
+            widgets={widgets}
+            columns={props.args.columns}
+            rowHeight={props.args.rowHeight}
+            onChange={handleChange}
+          />
+        </div>
+      )
+    },
+  ],
+}
+
+const FAKE_DRAGGABLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
+
+/**
+ * This example shows how to use the Not Draggable Widgets.
+ *
+ * This property make the widget not draggable, but the other widgets can move it.
+ */
+export const NotDraggableWidget: Story = {
+  args: {
+    widgets: [...FAKE_DRAGGABLE, NOT_DRAGGABLE_WIDGET],
+  },
+  decorators: [
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (StoryFn: any, props: any) => {
+      const { args } = props
+      const [widgets, setWidgets] = useState(args.widgets)
+      const handleChange = (dashboard: Layout) => {
+        setWidgets(dashboard)
+      }
+
+      return (
+        <div style={{ height: '100%', minHeight: 800 }}>
+          <Dashboard
+            {...props.args}
+            widgets={widgets}
+            columns={props.args.columns}
+            rowHeight={props.args.rowHeight}
+            onChange={handleChange}
+          />
+        </div>
+      )
+    },
+  ],
+}
+
+
+const FAKE_RESIZABLE = FAKE_WIDGETS.filter((w, i) => i !== 1)
+
+/**
+ * This example shows how to use the Not Resizable Widgets.
+ *
+ * This property make the widget not resizable, but the other widgets can move it.
+ */
+export const NotResizableWidget: Story = {
+  args: {
+    widgets: [...FAKE_RESIZABLE, NOT_RESIZABLE_WIDGET],
   },
   decorators: [
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
