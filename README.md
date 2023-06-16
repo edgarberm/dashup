@@ -4,7 +4,7 @@
 
 <p>&nbsp;</p>
 
-![version](https://img.shields.io/badge/version-1.0.0@beta.5-brightgreen.svg)
+![version](https://img.shields.io/badge/version-1.0.0@beta.6-brightgreen.svg)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
