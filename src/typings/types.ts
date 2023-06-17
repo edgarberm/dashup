@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react'
+import { ReactElement } from 'react'
 
 export interface Area {
   id: string
@@ -8,7 +8,10 @@ export interface Area {
   height: number
 }
 
+export const DraggableHandleClassName = 'draggable-handle'
+
 /**
+ * @deprecated
  * @prop {string} title
  */
 export type WidgetOption = {
@@ -39,11 +42,9 @@ export interface WidgetProps {
   stationary?: boolean
   draggable?: boolean
   resizable?: boolean
-  removible?: boolean
-  title?: string
+  title: string
   component?: JSX.Element
-  toolbar?: JSX.Element
-  options?: WidgetOption[]
+  toolbar?: ReactElement
   /** user internally */
   moved?: boolean
 }
@@ -59,8 +60,6 @@ export interface DashboardProps {
   rowHeight?: number
   /** the margin between widgets */
   margin?: [number, number]
-  /** The className for the draggable handle */
-  draggableHandle?: string
   /** the className for the placeholder (ghost) */
   placeholderClassName?: string
   /** callback method when a widget is moved, resized or deleted */
@@ -75,6 +74,7 @@ export interface DashboardWidgetProps extends WidgetProps {
   rowHeight: number
   dashboardWidth: number
   padding: [number, number]
+  /** @deprecated */
   draggableHandle?: string
   /** user internally */
   moved?: boolean
@@ -86,8 +86,12 @@ export interface DashboardWidgetProps extends WidgetProps {
   onRemove?: (id: string) => void
 }
 
-export interface WidgetTopBarProps {
+export interface WidgetToolbarProps {
   title?: string
-  removible?: boolean
-  onWidgetRemove?: (event: MouseEvent<HTMLButtonElement>) => void
+}
+
+export interface CustomToolbarProps {
+  id?: string
+  title?: string
+  className?: string
 }

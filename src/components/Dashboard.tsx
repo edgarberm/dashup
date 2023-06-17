@@ -39,7 +39,6 @@ export function Dashboard({
   columns = 24,
   rowHeight = 100,
   margin = [10, 10],
-  draggableHandle = 'draggable-handle',
   placeholderClassName = 'widget-placeholder',
   onChange,
   onResize,
@@ -221,7 +220,6 @@ export function Dashboard({
           rowHeight={rowHeight}
           dashboardWidth={width}
           padding={margin}
-          draggableHandle={draggableHandle}
           onDrag={handleWidgetDrag}
           onResize={handleWidgetResize}
           onRemove={handleRemoveWidget}
@@ -231,6 +229,7 @@ export function Dashboard({
       {(isDragging || isResizing) && (
         <Widget
           {...placeholder}
+          title=''
           maxWidth={columns}
           columns={columns}
           colWidth={colWidth}

@@ -7,3 +7,41 @@
 .docs-story > div {
   padding: 0;
 }
+
+.custom-toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 38px;
+}
+
+.custom-toolbar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: 1px solid #e2e8ee;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.custom-toolbar-button:not(:last-of-type) {
+  margin-right: 8px;
+}
+
+.custom-toolbar-button span {
+  padding: 0 8px;
+}
+
+.custom-toolbar-link {
+  width: auto;
+  cursor: pointer;
+  color: cornflowerblue;
+  margin-right: 16px;
+}

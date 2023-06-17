@@ -1,6 +1,5 @@
 import {
   CSSProperties,
-  MouseEvent as RMouseEvent,
   cloneElement,
   useCallback,
   useEffect,
@@ -8,7 +7,11 @@ import {
   useState,
 } from 'react'
 import { useStateRef } from '../hooks/hooks'
-import { Area, DashboardWidgetProps } from '../typings/types'
+import {
+  Area,
+  DashboardWidgetProps,
+  DraggableHandleClassName,
+} from '../typings/types'
 import {
   calcPosition,
   calcPositionInPx,
@@ -18,7 +21,7 @@ import {
   getNewPosition,
   setWidgetStyle,
 } from '../utils/utils'
-import WidgetTopBar from './WidgetTopBar'
+import WidgetToolbar from './WidgetToolbar'
 
 /**
  * La idea de este componente es que solo se encargue de 'pintarse' a si mismo, la lógica
@@ -46,25 +49,20 @@ export default function Widget({
   stationary = false,
   draggable = true,
   resizable = true,
-  removible = true,
   title,
   component,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options,
   toolbar,
   columns,
   colWidth,
   rowHeight,
   dashboardWidth,
   padding,
-  draggableHandle,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   moved,
   placeholderClassName,
   layoutItemProps,
   onDrag,
   onResize,
-  onRemove,
 }: DashboardWidgetProps): JSX.Element {
   const widget = useRef<HTMLDivElement>(null)
   const resizeHandle = useRef<HTMLSpanElement>(null)
@@ -85,14 +83,14 @@ export default function Widget({
 
   /**
    * La primera vez que se renderiza el componente decidimos si el evento de drag lo
-   * dispara el propio widget o bien pasándole la clase del componente que se defina
-   * en la prop `draggableHandle` del componente ´Dashboard´
+   * dispara el propio widget o bien la toolbar
    */
   useEffect(() => {
-    const dragger =
-      draggableHandle && widget.current
-        ? (widget.current.querySelector(`.${draggableHandle}`) as HTMLElement)
-        : widget.current
+    const dragger = widget.current
+      ? (widget.current.querySelector(
+          `.${DraggableHandleClassName}`,
+        ) as HTMLElement)
+      : widget.current
     const resizer = resizeHandle.current
 
     if (dragger) {
@@ -394,13 +392,6 @@ export default function Widget({
     createStyle()
   }
 
-  const handleWidgetRemove = (event: RMouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    onRemove?.(id)
-  }
-
   return (
     <div
       ref={widget}
@@ -418,15 +409,12 @@ export default function Widget({
         <>
           {toolbar ? (
             cloneElement(toolbar, {
-              ...layoutItemProps,
-              className: 'draggable-handle',
+              id,
+              title,
+              className: DraggableHandleClassName,
             })
           ) : (
-            <WidgetTopBar
-              title={title}
-              removible={removible}
-              onWidgetRemove={handleWidgetRemove}
-            />
+            <WidgetToolbar title={title} />
           )}
 
           {component && cloneElement(component, layoutItemProps)}
