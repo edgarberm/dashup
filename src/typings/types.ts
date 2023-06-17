@@ -1,4 +1,6 @@
-interface Area {
+import { ReactElement } from 'react'
+
+export interface Area {
   id: string
   x: number
   y: number
@@ -6,10 +8,13 @@ interface Area {
   height: number
 }
 
+export const DraggableHandleClassName = 'draggable-handle'
+
 /**
+ * @deprecated
  * @prop {string} title
  */
-type WidgetOption = {
+export type WidgetOption = {
   /** to show in the Tooltip */
   title?: string
   /** action */
@@ -18,7 +23,7 @@ type WidgetOption = {
   icon: JSX.Element
 }
 
-interface WidgetProps {
+export interface WidgetProps {
   id: string
   /** In columns */
   x: number
@@ -34,19 +39,19 @@ interface WidgetProps {
   minHeight?: number
   maxWidth?: number
   maxHeight?: number
-  stationary?: boolean
+  fixed?: boolean
   draggable?: boolean
   resizable?: boolean
-  removible?: boolean
-  title?: string
+  title: string
   component?: JSX.Element
-  hideTopbar?: boolean
-  options?: WidgetOption[]
+  toolbar?: ReactElement
+  /** user internally */
+  moved?: boolean
 }
 
-type Layout = WidgetProps[]
+export type Layout = WidgetProps[]
 
-interface DashboardProps {
+export interface DashboardProps {
   /** The widget list */
   widgets: Layout
   /** number of columns */
@@ -55,8 +60,6 @@ interface DashboardProps {
   rowHeight?: number
   /** the margin between widgets */
   margin?: [number, number]
-  /** The className for the draggable handle */
-  draggableHandle?: string
   /** the className for the placeholder (ghost) */
   placeholderClassName?: string
   /** callback method when a widget is moved, resized or deleted */
@@ -65,34 +68,30 @@ interface DashboardProps {
   onResize?: () => void
 }
 
-interface DashboardWidgetProps extends WidgetProps {
+export interface DashboardWidgetProps extends WidgetProps {
   columns: number
   colWidth: number
   rowHeight: number
   dashboardWidth: number
   padding: [number, number]
+  /** @deprecated */
   draggableHandle?: string
   /** user internally */
   moved?: boolean
+  /** user internally */
+  layoutItemProps?: WidgetProps
   placeholderClassName?: string
   onDrag: (eventName: string, widget: Area) => void
   onResize: (eventName: string, widget: Area) => void
   onRemove?: (id: string) => void
 }
 
-interface WidgetTopBarProps {
+export interface WidgetToolbarProps {
   title?: string
-  removible?: boolean
-  onWidgetRemove?: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-declare function Dashboard({
-  widgets,
-  columns,
-  rowHeight,
-  margin,
-  draggableHandle,
-  placeholderClassName,
-  onChange,
-  onResize,
-}: DashboardProps): JSX.Element
+export interface CustomToolbarProps {
+  id?: string
+  title?: string
+  className?: string
+}
