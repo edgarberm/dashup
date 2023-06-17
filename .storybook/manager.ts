@@ -7,7 +7,7 @@ const THEME = create({
   brandUrl: 'https://github.com/builtbyedgar/dashup/',
   brandImage: process.env.ASSETS_URL + '/sb-logo.png',
   brandTarget: '_self',
-  fontBase: `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
+  fontBase: `'SF Pro Display', 'SF Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif`,
   fontCode: 'monospace',
 
   //

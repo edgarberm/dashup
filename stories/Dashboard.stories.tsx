@@ -294,7 +294,7 @@ const FAKE_WIDGETS: Layout = [
 type Story = StoryObj<typeof Dashboard>
 
 const dashboard: Meta<typeof Dashboard> = {
-  title: 'Dashboard',
+  title: 'Examples',
   component: Dashboard,
   tags: ['autodocs'],
   argTypes: {
