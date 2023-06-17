@@ -27,8 +27,7 @@
     "clean": "rm -rf dist && rm -rf public",
     "pack": "npm run build && npm pack",
     "publish": "npm publish --access public",
-    "build-storybook": "storybook build -o ./public",
-    "storybook-assets": "cp -r ./assets ./public/src"
+    "build-storybook": "storybook build -o ./public"
   },
   "keywords": [
     "ui",
