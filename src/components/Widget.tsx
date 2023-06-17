@@ -46,7 +46,7 @@ export default function Widget({
   minHeight = 1,
   maxWidth = 12,
   maxHeight = Infinity,
-  stationary = false,
+  fixed = false,
   draggable = true,
   resizable = true,
   title,
@@ -95,13 +95,13 @@ export default function Widget({
 
     if (dragger) {
       // NOTE: añadir `&& isResizingRef.current === false`?
-      if (draggable && !stationary) {
+      if (draggable && !fixed) {
         dragger.addEventListener('mousedown', handleDragEvents, false)
       }
     }
 
     if (resizer) {
-      if (resizable && !stationary) {
+      if (resizable && !fixed) {
         resizer.addEventListener('mousedown', handleResizeEvents, false)
       }
     }
@@ -109,11 +109,11 @@ export default function Widget({
     createStyle()
 
     return () => {
-      if (draggable && !stationary) {
+      if (draggable && !fixed) {
         dragger?.removeEventListener('mousedown', handleDragEvents, false)
       }
 
-      if (resizable && !stationary) {
+      if (resizable && !fixed) {
         resizer?.removeEventListener('mousedown', handleResizeEvents, false)
       }
     }
@@ -171,7 +171,7 @@ export default function Widget({
 
     if (
       (event.target as HTMLElement).nodeName === 'BUTTON' ||
-      stationary ||
+      fixed ||
       isResizingRef.current
     ) {
       return
@@ -275,7 +275,7 @@ export default function Widget({
 
     if (
       (event.target as HTMLElement).nodeName === 'BUTTON' ||
-      stationary ||
+      fixed ||
       isDraggingRef.current
     ) {
       return
@@ -398,8 +398,8 @@ export default function Widget({
       className={`
         dashup-widget
         ${placeholderClassName || ''}
-        ${draggable && !stationary ? 'draggable' : ''}
-        ${resizable && !stationary ? 'resizable' : ''}
+        ${draggable && !fixed ? 'draggable' : ''}
+        ${resizable && !fixed ? 'resizable' : ''}
         ${isDragging ? 'dragging' : ''}
         ${isResizing ? 'resizing' : ''}`}
       style={style}
@@ -419,7 +419,7 @@ export default function Widget({
 
           {component && cloneElement(component, layoutItemProps)}
 
-          {resizable && !stationary && (
+          {resizable && !fixed && (
             <span ref={resizeHandle} className='resizable-handle'></span>
           )}
         </>

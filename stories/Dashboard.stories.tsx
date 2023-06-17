@@ -91,19 +91,19 @@ function FakeToolbarWithOptions({
   )
 }
 
-const STATIC_WIDGET: WidgetProps = {
+const FIXED_WIDGET: WidgetProps = {
   id: uuidv4(),
   x: 3,
   y: 0,
   width: 6,
   height: 2,
-  title: 'Widget 2 (stationary)',
+  title: 'Widget 2 (fixed)',
   draggable: true,
   resizable: true,
-  stationary: true,
+  fixed: true,
   component: (
     <FakeComponent
-      text={`This is a stationary widget. You can't move it or resize it, and the other widgets can't.`}
+      text={`⚠️ This is a fixed widget. You can't move it or resize it. Also the other widgets can't move it.`}
     />
   ),
 }
@@ -117,7 +117,7 @@ const NOT_DRAGGABLE_WIDGET: WidgetProps = {
   title: 'Widget 2 (not draggable)',
   draggable: false,
   resizable: true,
-  stationary: false,
+  fixed: false,
   component: <FakeComponent text={`This is a not draggable widget.`} />,
 }
 
@@ -130,10 +130,10 @@ const NOT_RESIZABLE_WIDGET: WidgetProps = {
   title: 'Widget 2 (not resizable)',
   draggable: true,
   resizable: false,
-  stationary: false,
+  fixed: false,
   component: (
     <FakeComponent
-      text={`This is a stationary widget. You can't move it or resize it, and the other widgets can't.`}
+      text={`This is a fixed widget. You can't move it or resize it, and the other widgets can't.`}
     />
   ),
 }
@@ -147,7 +147,7 @@ const NOT_REMOVIBLE_WIDGET: WidgetProps = {
   title: 'Widget 2 (not removible)',
   draggable: true,
   resizable: true,
-  stationary: false,
+  fixed: false,
   component: <FakeComponent text={`This can't be removed from the layout.`} />,
 }
 
@@ -164,7 +164,7 @@ const MIN_MAX_WIDGET_SIZE: WidgetProps = {
   title: 'Widget 2 (min/max size)',
   draggable: true,
   resizable: true,
-  stationary: false,
+  fixed: false,
   component: (
     <FakeComponent
       text={`This widget has a max/min size values (in layout units).`}
@@ -182,7 +182,7 @@ const HIDE_TOOLBAR_WIDGET: WidgetProps = {
   title: 'Widget 2 (with custom toolbar)',
   draggable: true,
   resizable: true,
-  stationary: false,
+  fixed: false,
   toolbar: <FakeToolbar />,
   component: <FakeComponent text={`This widget has no toolbar`} />,
 }
@@ -197,7 +197,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 1',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -209,7 +209,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 2',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -221,7 +221,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 3',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -233,7 +233,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 4',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -245,7 +245,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 5',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -257,7 +257,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 6',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -269,7 +269,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 7',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -281,7 +281,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 8',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -293,7 +293,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 9',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
   {
@@ -305,7 +305,7 @@ const FAKE_WIDGETS: Layout = [
     title: 'Widget 10',
     draggable: true,
     resizable: true,
-    stationary: false,
+    fixed: false,
     component: <FakeComponent />,
   },
 ]
@@ -422,17 +422,17 @@ export const Default: Story = {}
 const FILTER = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
- * You can set the stationary property to make the widget not draggable and not resizable.
+ * You can set the fixed property to make the widget not draggable and not resizable.
  *
  * ⚠️ Keep in mind that the other widgets can't move it.
  *
  * ```tsx
- * stationary: true
+ * fixed: true
  * ```
  */
-export const StationaryWidget: Story = {
+export const FixedWidget: Story = {
   args: {
-    widgets: [...FILTER, STATIC_WIDGET],
+    widgets: [...FILTER, FIXED_WIDGET],
   },
 }
 

@@ -150,10 +150,10 @@ export function bottom(layout: Layout): number {
 }
 
 /**
- * Get all stationary widgets
+ * Get all fixed widgets
  */
 function getStatics(layout: Layout): Layout {
-  return [...layout].filter((l) => l.stationary)
+  return [...layout].filter((l) => l.fixed)
 }
 
 /**
@@ -269,7 +269,7 @@ export function compact(layout: Layout): Layout {
     let widget = sorted[i]
 
     // We don't move the static widgets
-    if (!widget.stationary) {
+    if (!widget.fixed) {
       widget = compactItem(compareWith, widget)
 
       // We move the previous widgets
@@ -366,7 +366,7 @@ export function moveElement(
   isUserAction?: boolean,
   preventCollision?: boolean,
 ): Layout {
-  if (widget.stationary) return layout
+  if (widget.fixed) return layout
 
   const oldX = widget.x
   const oldY = widget.y
@@ -405,7 +405,7 @@ export function moveElement(
       continue
 
     // We don't move the static widgets
-    if (collision.stationary) {
+    if (collision.fixed) {
       dashboard = moveElementAwayFromCollision(
         layout,
         collision,
@@ -449,6 +449,7 @@ function moveElementAwayFromCollision(
   if (isUserAction) {
     // We make a copy of the original to avoid modifying it
     const fakeItem: WidgetProps = {
+      title: itemToMove.title,
       x: itemToMove.x,
       y: itemToMove.y,
       width: itemToMove.width,

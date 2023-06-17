@@ -39,7 +39,7 @@ export interface WidgetProps {
   minHeight?: number
   maxWidth?: number
   maxHeight?: number
-  stationary?: boolean
+  fixed?: boolean
   draggable?: boolean
   resizable?: boolean
   title: string
