@@ -1,6 +1,6 @@
 {
   "name": "dashup",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-beta.68",
   "description": "A React Dashboard Component.",
   "repository": {
     "type": "git",
@@ -23,13 +23,13 @@
     "precommit": "lint-staged && test",
     "test": "vitest",
     "storybook": "storybook dev -p 6006",
-    "release": "standard-version",
     "build": "rm -rf dist && rollup -c",
     "clean": "rm -rf dist && rm -rf public",
     "pack": "npm run build && npm pack",
     "publish": "npm publish --access public",
     "build-storybook": "storybook build -o ./public",
-    "storybook-assets": "cp -r ./assets ./public/src"
+    "storybook-assets": "cp -r ./assets ./public/src",
+    "release": "release-it"
   },
   "keywords": [
     "ui",
@@ -89,6 +89,7 @@
     "lint-staged": "^13.2.2",
     "postcss-typescript-d-ts": "^1.0.0",
     "prettier": "^2.8.8",
+    "release-it": "^15.11.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-dts": "^5.3.0",
     "rollup-plugin-postcss": "^4.0.2",
@@ -113,6 +114,15 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
+    }
+  },
+  "release-it": {
+    "git": {
+      "requireBranch": "main",
+      "commitMessage": "chore: release v${version}"
+    },
+    "github": {
+      "release": true
     }
   }
 }
