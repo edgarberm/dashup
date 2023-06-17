@@ -118,7 +118,7 @@
   },
   "release-it": {
     "git": {
-      "requireBranch": "main",
+      "requireBranch": "release-first-beta",
       "commitMessage": "chore: release v${version}"
     },
     "github": {
