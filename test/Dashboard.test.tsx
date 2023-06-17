@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react'
 import { describe, expect, test } from 'vitest'
-import Dashboard from '../src/components/Dashboard'
-import '../src/styles/index.css'
+import { Dashboard } from '../src'
 
 /**
  * colWidth = 86.5
@@ -27,14 +26,17 @@ describe('Dashboard component ', () => {
     const { container } = render(
       <Wrapper>
         <Dashboard
-          widgets={[]}
           columns={12}
           rowHeight={100}
           margin={[10, 10]}
+          widgets={[]}
         />
       </Wrapper>,
     )
-    const dashboard = container.querySelector('.dashboard') as HTMLElement
+    const dashboard = container.querySelector(
+      '.dashup-dashboard',
+    ) as HTMLElement
+    expect(dashboard).toBeInTheDocument()
     expect(dashboard.children.length).toBe(0)
   })
 
@@ -54,7 +56,6 @@ describe('Dashboard component ', () => {
               height: 2,
               title: 'Widget 4',
               resizable: true,
-              removible: true,
             },
             {
               id: '123456-ñsdhfasjdkhfa',
@@ -64,14 +65,15 @@ describe('Dashboard component ', () => {
               height: 2,
               title: 'Widget 4',
               resizable: false,
-              removible: false,
             },
           ]}
         />
       </Wrapper>,
     )
 
-    const dashboard = container.querySelector('.dashboard') as HTMLElement
+    const dashboard = container.querySelector(
+      '.dashup-dashboard',
+    ) as HTMLElement
     expect(dashboard.children.length).toBe(2)
   })
 })
