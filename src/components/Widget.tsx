@@ -21,7 +21,6 @@ import {
   getNewPosition,
   setWidgetStyle,
 } from '../utils/utils'
-import WidgetToolbar from './WidgetToolbar'
 
 /**
  * La idea de este componente es que solo se encargue de 'pintarse' a si mismo, la lógica
@@ -406,23 +405,20 @@ export default function Widget({
     >
       {/** 🗒️ @note si es el placeholder no renderizamos el contenido */}
       {placeholderClassName === undefined && (
-        <>
-          {toolbar ? (
+        <div className={!toolbar ? DraggableHandleClassName : 'wrapper'}>
+          {toolbar &&
             cloneElement(toolbar, {
               id,
               title,
               className: DraggableHandleClassName,
-            })
-          ) : (
-            <WidgetToolbar title={title} />
-          )}
+            })}
 
           {component && cloneElement(component, layoutItemProps)}
 
           {resizable && !fixed && (
             <span ref={resizeHandle} className='resizable-handle'></span>
           )}
-        </>
+        </div>
       )}
     </div>
   )

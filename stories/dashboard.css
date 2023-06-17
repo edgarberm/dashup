@@ -13,7 +13,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  min-height: 38px;
+  height: 38px;
+  width: 100%;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--color-dashboard-border);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .custom-toolbar-button {
@@ -44,4 +49,15 @@
   cursor: pointer;
   color: cornflowerblue;
   margin-right: 16px;
+}
+
+.content {
+  padding: 8px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  user-select: none;
+}
+.content p {
+  margin: 0;
 }

@@ -28,14 +28,8 @@ function FakeComponent({
 
 function FakeToolbar({ title, className }: CustomToolbarProps): JSX.Element {
   return (
-    <div
-      className={className}
-      style={{
-        height: 42,
-        paddingLeft: 12,
-      }}
-    >
-      <p style={{ fontSize: 18 }}>{title}</p>
+    <div className={`custom-toolbar ${className}`}>
+      <p>{title}</p>
     </div>
   )
 }
@@ -136,19 +130,6 @@ const NOT_RESIZABLE_WIDGET: WidgetProps = {
       text={`This is a fixed widget. You can't move it or resize it, and the other widgets can't.`}
     />
   ),
-}
-
-const NOT_REMOVIBLE_WIDGET: WidgetProps = {
-  id: uuidv4(),
-  x: 3,
-  y: 0,
-  width: 6,
-  height: 2,
-  title: 'Widget 2 (not removible)',
-  draggable: true,
-  resizable: true,
-  fixed: false,
-  component: <FakeComponent text={`This can't be removed from the layout.`} />,
 }
 
 const MIN_MAX_WIDGET_SIZE: WidgetProps = {
@@ -417,14 +398,47 @@ const dashboard: Meta<typeof Dashboard> = {
 
 export default dashboard
 
+/**
+ * **Dashup** brings you a full featured dashboard with draggable and resizable widgets and much more cool features.
+ *
+ * As you can see in the documentation, the `Dashboard` component is very easy to use and exposes a fairly small collection of props:
+ *
+ * ```tsx
+ * interface DashboardProps {
+ *  widgets: Layout
+ *  columns?: number
+ *  rowHeight?: number
+ *  margin?: [number, number]
+ *  placeholderClassName?: string
+ *  onChange?: (widgets: Layout) => void
+ *  onResize?: () => void
+ * }
+ * ```
+ *
+ * To configure your dashboard and tailor it to your needs, you will need to play with the properties of your widgets.
+ *
+ * In the following examples, we will explore the options available to customize your widgets, but the minimal config is:
+ *
+ * ```tsx
+ * const widgets: Layout = [{
+ *  id: uuidv4(),
+ *  x: 0, // in layout units (columns)
+ *  y: 0, // in layout units (rows)
+ *  width: 3, // in layout units (columns)
+ *  height: 2, // in layout units (rows)
+ *  title: 'Widget title here',
+ *  component: <WidgetCOntentComponent />,
+ * }
+ * ```
+ */
 export const Default: Story = {}
 
 const FILTER = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
- * You can set the fixed property to make the widget not draggable and not resizable.
+ * You can set the `fixed` property to `true` to make the widget not draggable and not resizable.
  *
- * ⚠️ Keep in mind that the other widgets can't move it.
+ * ⚠️ Keep in mind that the other widgets **can't move it**.
  *
  * ```tsx
  * fixed: true
@@ -437,9 +451,13 @@ export const FixedWidget: Story = {
 }
 
 /**
- * This example shows how to use the Not Draggable Widgets.
+ * You can set the `draggable` property to `false` to make the widget not draggable.
  *
- * This property make the widget not draggable, but the other widgets can move it.
+ * ⚠️ Keep in mind that in this case the other widgets **can move it**.
+ *
+ * ```tsx
+ * draggable: false
+ * ```
  */
 export const NotDraggableWidget: Story = {
   args: {
@@ -448,9 +466,13 @@ export const NotDraggableWidget: Story = {
 }
 
 /**
- * This example shows how to use the Not Resizable Widgets.
+ * You can set the `resizable` property to `false` to make the widget not resizable.
  *
- * This property make the widget not resizable, but the other widgets can move it.
+ * ⚠️ Keep in mind that in this case the other widgets **can move it**.
+ *
+ * ```tsx
+ * resizable: false
+ * ```
  */
 export const NotResizableWidget: Story = {
   args: {
@@ -459,24 +481,16 @@ export const NotResizableWidget: Story = {
 }
 
 /**
- * This example shows how to use the Not Resizable Widgets.
+ * You can set minimum and maximum sizes for your widgets.
  *
- * This property make the widget not resizable, but the other widgets can move it.
+ * ⚠️ All sizes in layout units (columns or rows).
  *
  * ```tsx
- * <WidgetProps[removible=false]>
+ * minWidth: 3
+ * minHeight: 1
+ * maxWidth: 6
+ * maxHeight: 4
  * ```
- */
-export const NotRemovibleWidget: Story = {
-  args: {
-    widgets: [...FILTER, NOT_REMOVIBLE_WIDGET],
-  },
-}
-
-/**
- * This example shows how to use the Not Resizable Widgets.
- *
- * This property make the widget not resizable, but the other widgets can move it.
  */
 export const MinMaxWidgetSize: Story = {
   args: {
