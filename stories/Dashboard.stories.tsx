@@ -402,6 +402,17 @@ const dashboard: Meta<typeof Dashboard> = {
     onChange: () => {},
     onResize: () => {},
   } as DashboardProps,
+  render: (args) => {
+    return (
+      <div style={{ height: '100%', minHeight: 800 }}>
+        <Dashboard
+          widgets={args.widgets}
+          columns={args.columns}
+          rowHeight={args.rowHeight}
+        />
+      </div>
+    )
+  },
 } as Meta<typeof Dashboard>
 
 export default dashboard
@@ -411,9 +422,13 @@ export const Default: Story = {}
 const FILTER = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
 /**
- * This example shows how to use the Stationary Widgets.
+ * You can set the stationary property to make the widget not draggable and not resizable.
  *
- * This property make the widget not draggable and not resizable. Also the other widgets can't move it.
+ * ⚠️ Keep in mind that the other widgets can't move it.
+ *
+ * ```tsx
+ * stationary: true
+ * ```
  */
 export const StationaryWidget: Story = {
   args: {
