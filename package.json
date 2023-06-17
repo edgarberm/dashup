@@ -1,6 +1,6 @@
 {
   "name": "dashup",
-  "version": "1.0.0-beta.68",
+  "version": "1.0.0-beta.69",
   "description": "A React Dashboard Component.",
   "repository": {
     "type": "git",
@@ -23,10 +23,9 @@
     "precommit": "lint-staged && test",
     "test": "vitest",
     "storybook": "storybook dev -p 6006",
-    "release": "standard-version",
     "build": "rm -rf dist && rollup -c",
     "clean": "rm -rf dist && rm -rf public",
-    "pack": "npm run roll && npm pack",
+    "pack": "npm run build && npm pack",
     "publish": "npm publish --access public",
     "build-storybook": "storybook build -o ./public",
     "storybook-assets": "cp -r ./assets ./public/src"
@@ -113,6 +112,18 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
+    }
+  },
+  "release-it": {
+    "git": {
+      "requireBranch": "release-first-beta",
+      "commitMessage": "chore: release v${version}"
+    },
+    "npm": {
+      "skipChecks": true,
+      "publish": true,
+      "access": "public",
+      "publishPath": "--registry=https://registry.npmjs.org/dashup"
     }
   }
 }
