@@ -11,7 +11,7 @@ import {
   getLayoutItem,
   moveElement,
 } from '../utils/utils'
-import '../styles/index.css'
+import { Area, DashboardProps, Layout, WidgetProps } from '../typings/types'
 
 const PLACEHOLDER = {
   id: 'placeholder',
@@ -34,12 +34,11 @@ const PLACEHOLDER = {
  * @think
  * - Para los widget staticos necesitamos poder moverlos para colocarlos en el lugar apropiado
  */
-export default function Dashboard({
+export function Dashboard({
   widgets,
   columns = 24,
   rowHeight = 100,
   margin = [10, 10],
-  draggableHandle = 'draggable-handle',
   placeholderClassName = 'widget-placeholder',
   onChange,
   onResize,
@@ -206,17 +205,21 @@ export default function Dashboard({
   }
 
   return (
-    <div ref={dashboardRef} className='dashboard' style={mergedStyle}>
+    <div
+      ref={dashboardRef}
+      className='dashup dashup-dashboard'
+      style={mergedStyle}
+    >
       {layout.map((w) => (
         <Widget
           key={w.id}
           {...w}
+          layoutItemProps={w}
           columns={columns}
           colWidth={colWidth}
           rowHeight={rowHeight}
           dashboardWidth={width}
           padding={margin}
-          draggableHandle={draggableHandle}
           onDrag={handleWidgetDrag}
           onResize={handleWidgetResize}
           onRemove={handleRemoveWidget}
@@ -226,6 +229,7 @@ export default function Dashboard({
       {(isDragging || isResizing) && (
         <Widget
           {...placeholder}
+          title=''
           maxWidth={columns}
           columns={columns}
           colWidth={colWidth}

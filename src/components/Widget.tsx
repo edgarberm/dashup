@@ -1,12 +1,17 @@
 import {
   CSSProperties,
-  MouseEvent as RMouseEvent,
+  cloneElement,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react'
 import { useStateRef } from '../hooks/hooks'
+import {
+  Area,
+  DashboardWidgetProps,
+  DraggableHandleClassName,
+} from '../typings/types'
 import {
   calcPosition,
   calcPositionInPx,
@@ -16,7 +21,6 @@ import {
   getNewPosition,
   setWidgetStyle,
 } from '../utils/utils'
-import WidgetTopBar from './WidgetTopBar'
 
 /**
  * La idea de este componente es que solo se encargue de 'pintarse' a si mismo, la lógica
@@ -41,27 +45,23 @@ export default function Widget({
   minHeight = 1,
   maxWidth = 12,
   maxHeight = Infinity,
-  stationary = false,
+  fixed = false,
   draggable = true,
   resizable = true,
-  removible = true,
   title,
   component,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options,
-  hideTopbar = false,
+  toolbar,
   columns,
   colWidth,
   rowHeight,
   dashboardWidth,
   padding,
-  draggableHandle,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   moved,
   placeholderClassName,
+  layoutItemProps,
   onDrag,
   onResize,
-  onRemove,
 }: DashboardWidgetProps): JSX.Element {
   const widget = useRef<HTMLDivElement>(null)
   const resizeHandle = useRef<HTMLSpanElement>(null)
@@ -82,25 +82,25 @@ export default function Widget({
 
   /**
    * La primera vez que se renderiza el componente decidimos si el evento de drag lo
-   * dispara el propio widget o bien pasándole la clase del componente que se defina
-   * en la prop `draggableHandle` del componente ´Dashboard´
+   * dispara el propio widget o bien la toolbar
    */
   useEffect(() => {
-    const dragger =
-      draggableHandle && widget.current
-        ? (widget.current.querySelector(`.${draggableHandle}`) as HTMLElement)
-        : widget.current
+    const dragger = widget.current
+      ? (widget.current.querySelector(
+          `.${DraggableHandleClassName}`,
+        ) as HTMLElement)
+      : widget.current
     const resizer = resizeHandle.current
 
     if (dragger) {
       // NOTE: añadir `&& isResizingRef.current === false`?
-      if (draggable && !stationary) {
+      if (draggable && !fixed) {
         dragger.addEventListener('mousedown', handleDragEvents, false)
       }
     }
 
     if (resizer) {
-      if (resizable && !stationary) {
+      if (resizable && !fixed) {
         resizer.addEventListener('mousedown', handleResizeEvents, false)
       }
     }
@@ -108,11 +108,11 @@ export default function Widget({
     createStyle()
 
     return () => {
-      if (draggable && !stationary) {
+      if (draggable && !fixed) {
         dragger?.removeEventListener('mousedown', handleDragEvents, false)
       }
 
-      if (resizable && !stationary) {
+      if (resizable && !fixed) {
         resizer?.removeEventListener('mousedown', handleResizeEvents, false)
       }
     }
@@ -170,7 +170,7 @@ export default function Widget({
 
     if (
       (event.target as HTMLElement).nodeName === 'BUTTON' ||
-      stationary ||
+      fixed ||
       isResizingRef.current
     ) {
       return
@@ -274,7 +274,7 @@ export default function Widget({
 
     if (
       (event.target as HTMLElement).nodeName === 'BUTTON' ||
-      stationary ||
+      fixed ||
       isDraggingRef.current
     ) {
       return
@@ -391,42 +391,34 @@ export default function Widget({
     createStyle()
   }
 
-  const handleWidgetRemove = (event: RMouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-
-    onRemove?.(id)
-  }
-
   return (
     <div
       ref={widget}
       className={`
-        widget
+        dashup-widget
         ${placeholderClassName || ''}
-        ${draggable && !stationary ? 'draggable' : ''}
-        ${resizable && !stationary ? 'resizable' : ''}
+        ${draggable && !fixed ? 'draggable' : ''}
+        ${resizable && !fixed ? 'resizable' : ''}
         ${isDragging ? 'dragging' : ''}
         ${isResizing ? 'resizing' : ''}`}
       style={style}
     >
       {/** 🗒️ @note si es el placeholder no renderizamos el contenido */}
       {placeholderClassName === undefined && (
-        <>
-          {!hideTopbar && (
-            <WidgetTopBar
-              title={title}
-              removible={removible}
-              onWidgetRemove={handleWidgetRemove}
-            />
-          )}
+        <div className={!toolbar ? DraggableHandleClassName : 'wrapper'}>
+          {toolbar &&
+            cloneElement(toolbar, {
+              id,
+              title,
+              className: DraggableHandleClassName,
+            })}
 
-          {component}
+          {component && cloneElement(component, layoutItemProps)}
 
-          {resizable && !stationary && (
+          {resizable && !fixed && (
             <span ref={resizeHandle} className='resizable-handle'></span>
           )}
-        </>
+        </div>
       )}
     </div>
   )

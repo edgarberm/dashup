@@ -1,3 +1,5 @@
-import Dashboard from './components/Dashboard'
+// export * as Dashboard from './components/Dashboard'
+export * from './components/Dashboard'
+import './styles/style.css'
 
-export { Dashboard as default }
+export * from './typings/types'
