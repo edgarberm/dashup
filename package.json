@@ -122,7 +122,10 @@
       "commitMessage": "chore: release v${version}"
     },
     "npm": {
-      "publish": true
+      "skipChecks": true,
+      "publish": true,
+      "access": "public",
+      "publishPath": "--registry=https://registry.npmjs.org/dashup"
     }
   }
 }
