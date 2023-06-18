@@ -1,5 +1,8 @@
 import { ReactElement } from 'react'
 
+/**
+ * @internal
+ */
 export interface Area {
   id: string
   x: number
@@ -9,19 +12,6 @@ export interface Area {
 }
 
 export const DraggableHandleClassName = 'draggable-handle'
-
-/**
- * @deprecated
- * @prop {string} title
- */
-export type WidgetOption = {
-  /** to show in the Tooltip */
-  title?: string
-  /** action */
-  action: () => void
-  /** icon for the option */
-  icon: JSX.Element
-}
 
 export interface WidgetProps {
   id: string
@@ -39,11 +29,17 @@ export interface WidgetProps {
   minHeight?: number
   maxWidth?: number
   maxHeight?: number
+  /** make widget fixed */
   fixed?: boolean
+  /** make widget draggable */
   draggable?: boolean
+  /** make widget resizable */
   resizable?: boolean
+  /** the widget title */
   title: string
+  /** the component that will be rendered into the widget */
   component?: JSX.Element
+  /** the component that will be the wiidget toolbar */
   toolbar?: ReactElement
   /** user internally */
   moved?: boolean
@@ -68,6 +64,9 @@ export interface DashboardProps {
   onResize?: () => void
 }
 
+/**
+ * @internal
+ */
 export interface DashboardWidgetProps extends WidgetProps {
   columns: number
   colWidth: number
@@ -84,10 +83,6 @@ export interface DashboardWidgetProps extends WidgetProps {
   onDrag: (eventName: string, widget: Area) => void
   onResize: (eventName: string, widget: Area) => void
   onRemove?: (id: string) => void
-}
-
-export interface WidgetToolbarProps {
-  title?: string
 }
 
 export interface CustomToolbarProps {
