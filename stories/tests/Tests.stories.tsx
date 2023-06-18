@@ -674,9 +674,7 @@ export const NotPackingLayout: Story = {
       </div>
     )
   },
-  play: async ({ args, canvasElement }) => {
-    console.log(args);
-
+  play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const wrapper = await canvas.getByTestId('wrapper')
 
