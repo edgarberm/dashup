@@ -56,9 +56,6 @@ jobs:
   # Storybook tests
   tests:
     needs: deploy
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
@@ -72,4 +69,6 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
       - name: Run Storybook tests
-        run: npm run test:storybook --url ${{ steps.deployment.outputs.page_url }}
+        run: npm run test:storybook
+        env:
+          TARGET_URL: '${{steps.deployment.outputs.page_url }}'
