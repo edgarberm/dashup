@@ -22,8 +22,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Lint code
-        run: npm run lint
-
-      - name: Run tests
-        run: npm run test
+      - name: Storybook test
+        run: npm run test:storybook
