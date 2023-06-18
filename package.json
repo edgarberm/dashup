@@ -29,6 +29,7 @@
     "build-storybook": "storybook build -o ./public",
     "test": "vitest",
     "test:storybook": "test-storybook",
+    "test:storybook-watch": "test-storybook --watch",
     "coverage:storybook": "test-storybook --coverage"
   },
   "keywords": [
