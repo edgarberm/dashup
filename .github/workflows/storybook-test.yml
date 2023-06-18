@@ -1,6 +1,9 @@
 name: Storybook test
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - dev
