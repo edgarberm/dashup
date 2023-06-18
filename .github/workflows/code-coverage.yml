@@ -1,6 +1,9 @@
 name: Lint and test
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - dev
@@ -25,3 +28,6 @@ jobs:
         run: |
           npm install
           npm run coverage:storybook
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
