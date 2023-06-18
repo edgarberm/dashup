@@ -6,7 +6,7 @@
 
 ![version](https://img.shields.io/badge/version-1.0.0@beta.69-brightgreen.svg)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![Coverage Status](https://coveralls.io/repos/github/ModusCreateOrg/budgeting/badge.svg)](https://coveralls.io/github/ModusCreateOrg/budgeting)
+[![Coverage Status](https://coveralls.io/repos/github/builtbyedgar/dashup/badge.svg?branch=main)](https://coveralls.io/github/builtbyedgar/dashup?branch=main)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
