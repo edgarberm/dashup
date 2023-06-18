@@ -416,7 +416,11 @@ export default function Widget({
           {component && cloneElement(component, layoutItemProps)}
 
           {resizable && !fixed && (
-            <span ref={resizeHandle} className='resizable-handle'></span>
+            <span
+              role=''
+              ref={resizeHandle}
+              className='resizable-handle'
+            ></span>
           )}
         </div>
       )}
