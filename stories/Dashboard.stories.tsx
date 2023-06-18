@@ -1,7 +1,7 @@
 // @ts-ignore
 import { expect } from '@storybook/jest'
 import { Meta, StoryObj } from '@storybook/react'
-import { within } from '@storybook/testing-library'
+import { fireEvent, within } from '@storybook/testing-library'
 import { CSSProperties, useState } from 'react'
 import {
   CustomToolbarProps,
@@ -23,6 +23,12 @@ const styleString = (style: CSSProperties) =>
     .map(([k, v]) => `${k}: ${v}`)
     .join('; ')
     .concat(';')
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+const CUSTOM_TOOLBAR_TITLE = 'Widget 2 (with custom toolbar)'
 
 function FakeComponent({
   text = 'Content',
@@ -82,14 +88,28 @@ function FakeToolbarWithOptions({
           href='https://google.com'
           target='_blank'
           rel='noreferrer'
+          data-testid='link'
         >
           link
         </a>
-        <button className='custom-toolbar-button' onClick={handleAction}>
+        <button
+          className='custom-toolbar-button'
+          onClick={handleAction}
+          data-testid='action-button'
+        >
           <span>action</span>
         </button>
-        <button className='custom-toolbar-button' onClick={handleRemove}>
-          <svg height='20' viewBox='0 -960 960 960' width='20'>
+        <button
+          className='custom-toolbar-button'
+          onClick={handleRemove}
+          data-testid='remove-button'
+        >
+          <svg
+            height='20'
+            viewBox='0 -960 960 960'
+            width='20'
+            data-testid='close-icon'
+          >
             <path d='M291-253.847 253.847-291l189-189-189-189L291-706.153l189 189 189-189L706.153-669l-189 189 189 189L669-253.847l-189-189-189 189Z' />
           </svg>
         </button>
@@ -167,18 +187,28 @@ const MIN_MAX_WIDGET_SIZE: WidgetProps = {
   ),
 }
 
-const HIDE_TOOLBAR_WIDGET: WidgetProps = {
+const CUSTOM_TOOLBAR_WIDGET: WidgetProps = {
   id: uuidv4(),
   x: 3,
   y: 0,
   width: 6,
   height: 2,
-  title: 'Widget 2 (with custom toolbar)',
+  title: CUSTOM_TOOLBAR_TITLE,
   draggable: true,
   resizable: true,
   fixed: false,
   toolbar: <FakeToolbar />,
   component: <FakeComponent text={`This widget has no toolbar`} />,
+}
+
+const CUSTOM_OPTIONS_WIDGET: WidgetProps = {
+  id: uuidv4(),
+  x: 3,
+  y: 0,
+  width: 6,
+  height: 2,
+  title: CUSTOM_TOOLBAR_TITLE,
+  component: <FakeComponent />,
 }
 
 const FAKE_WIDGETS: Layout = [
@@ -399,7 +429,7 @@ const dashboard: Meta<typeof Dashboard> = {
   render: (args) => {
     return (
       <div
-        style={{ width: 1200, height: '100%', minHeight: 800 }}
+        style={{ width: '100%', height: '100%', minHeight: 800 }}
         data-testid='wrapper'
       >
         <Dashboard
@@ -449,15 +479,13 @@ export default dashboard
  */
 export const Default: Story = {
   play: async ({ args, canvasElement, step }) => {
-    const columns = args.columns || 12
-    const margin = args.margin || [10, 10]
-    const dashWidth = 1200
-    const columnWidth = (dashWidth - 10) / columns - margin[0]
-    const rowHeight = 100
     const canvas = within(canvasElement)
     const wrapper = canvas.getByTestId('wrapper')
-    wrapper.style.width = `${dashWidth}px`
-    wrapper.style.height = `auto`
+    const columns = args.columns || 12
+    const margin = args.margin || [10, 10]
+    const dashWidth = wrapper.getBoundingClientRect().width
+    const columnWidth = (dashWidth - 10) / columns - margin[0]
+    const rowHeight = 100
     const dashboard = wrapper.querySelector('.dashup.dashup-dashboard')
 
     await step('Render the dashboard and the widgets', async () => {
@@ -612,54 +640,18 @@ export const MinMaxWidgetSize: Story = {
 /**
  * @todo
  */
-export const CustomToolbarWidget: Story = {
-  args: {
-    widgets: [...FILTER, HIDE_TOOLBAR_WIDGET],
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement)
-
-    await step('Render widget with custom toolbar correctly', async () => {
-      const toolbar = await canvas.findByTestId('fake-toolbar')
-
-      expect(toolbar).toBeInTheDocument()
-      expect(toolbar).toHaveClass('custom-toolbar')
-    })
-
-    await step('Custom toolbar has dragable class', async () => {
-      const toolbar = await canvas.findByTestId('fake-toolbar')
-      expect(toolbar).toHaveClass('draggable-handle')
-    })
-
-    await step('Custom toolbar render title correctly', async () => {
-      const test = await canvas.findByText(HIDE_TOOLBAR_WIDGET.title)
-      expect(test).toBeInTheDocument()
-    })
-  },
-}
-/**
- * @todo
- */
 export const ToolbarWithOptionsWidget: Story = {
   decorators: [
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (StoryFn: any, props: any) => {
-      const CUSTOM_OPTIONS_WIDGET: WidgetProps = {
-        id: uuidv4(),
-        x: 3,
-        y: 0,
-        width: 6,
-        height: 2,
-        title: 'Widget 22',
-        toolbar: (
-          <FakeToolbarWithOptions
-            onAction={handleAction}
-            onRemove={handleRemove}
-          />
-        ),
-        component: <FakeComponent />,
-      }
-      const [widgets, setWidgets] = useState([...FILTER, CUSTOM_OPTIONS_WIDGET])
+      CUSTOM_OPTIONS_WIDGET.toolbar = (
+        <FakeToolbarWithOptions
+          onAction={handleAction}
+          onRemove={handleRemove}
+        />
+      )
+      const WS = [...FILTER, CUSTOM_OPTIONS_WIDGET]
+      const [widgets, setWidgets] = useState(WS)
       const handleChange = (dashboard: Layout) => {
         setWidgets(dashboard)
       }
@@ -700,8 +692,87 @@ export const ToolbarWithOptionsWidget: Story = {
     })
 
     await step('Custom toolbar render title correctly', async () => {
-      const test = await canvas.findByText(HIDE_TOOLBAR_WIDGET.title)
+      const test = await canvas.findByText(CUSTOM_TOOLBAR_TITLE)
       expect(test).toBeInTheDocument()
     })
+
+    await step('Custom toolbar render options correctly', async () => {
+      const action = await canvas.findByTestId('action-button')
+      const remove = await canvas.findByTestId('remove-button')
+      const link = await canvas.findByTestId('link')
+
+      expect(action).toBeInTheDocument()
+      expect(remove).toBeInTheDocument()
+      expect(link).toBeInTheDocument()
+    })
+  },
+}
+
+export const DragWidgetInteraction: Story = {
+  args: {
+    widgets: [...FILTER, CUSTOM_TOOLBAR_WIDGET],
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const wrapper = await canvas.getByTestId('wrapper')
+    const columns = args.columns || 12
+    const margin = args.margin || [10, 10]
+    const dashWidth = wrapper.getBoundingClientRect().width
+    const columnWidth = (dashWidth - 10) / columns - margin[0]
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+
+    await sleep(1000)
+    await fireEvent.mouseDown(toolbar)
+
+    await sleep(500)
+    await fireEvent.mouseMove(toolbar, {
+      clientX: -(columnWidth * 2.8),
+      clientY: 0,
+    })
+
+    await sleep(1000)
+    await fireEvent.mouseUp(toolbar, {
+      clientX: -(columnWidth * 2.8),
+      clientY: 0,
+    })
+
+    expect(args.widgets[9].x).toBe(0)
+  },
+}
+
+export const ResizeWidgetInteraction: Story = {
+  args: {
+    widgets: [...FILTER, CUSTOM_TOOLBAR_WIDGET],
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const wrapper = await canvas.getByTestId('wrapper')
+    const columns = args.columns || 12
+    const margin = args.margin || [10, 10]
+    const dashWidth = wrapper.getBoundingClientRect().width
+    const columnWidth = (dashWidth - 10) / columns - margin[0]
+    const rowHeight = 100
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+    const resizer = (await toolbar.parentElement?.querySelector(
+      '.resizable-handle',
+    )) as HTMLElement
+
+    await sleep(1000)
+    await fireEvent.mouseDown(resizer)
+
+    await sleep(500)
+    await fireEvent.mouseMove(resizer, {
+      clientX: -(columnWidth * 3),
+      clientY: rowHeight,
+    })
+
+    await sleep(1000)
+    await fireEvent.mouseUp(resizer, {
+      clientX: -(columnWidth * 3),
+      clientY: rowHeight,
+    })
+
+    expect(args.widgets[9].width).toBe(3)
+    expect(args.widgets[9].height).toBe(3)
   },
 }
