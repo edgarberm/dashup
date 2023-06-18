@@ -777,7 +777,7 @@ export const ResizeWidgetInteraction: Story = {
       clientY: 100,
     })
 
-    expect(args.widgets[9].width).toBe(3)
+    expect(args.widgets[9].width).toBe(5)
     expect(args.widgets[9].height).toBe(3)
   },
 }
