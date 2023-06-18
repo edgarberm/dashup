@@ -26,7 +26,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Build Storybook
-        run: npm run storybook build -o ./public --quiet
+        run: npm run storybook build --quiet -o ./public
 
       - name: Serve Storybook and run tests
         run: |
