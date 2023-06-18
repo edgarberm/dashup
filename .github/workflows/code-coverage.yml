@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  lint-and-test:
+  code-coverage:
     runs-on: ubuntu-latest
 
     steps:

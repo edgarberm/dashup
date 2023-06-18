@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  lint-and-test:
+  storybook-test:
     runs-on: ubuntu-latest
 
     steps:
