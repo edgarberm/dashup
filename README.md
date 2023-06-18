@@ -2,24 +2,20 @@
 
 <img src="./assets/Icon.png" width="120px" height="120px" />
 
-<p>&nbsp;</p>
+<div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 24px">
+  <h2 style="margin-right: 12px;">A React Dashboard component uilt with 🖤 and some lines of</h2>
+  <img align="left" alt="react" width="24px" height="24px" style="padding-right: 12px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
+  <img align="left" alt="typescript" width="24px" height="24px" style="padding-right: 12px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
+</div>
 
-![version](https://img.shields.io/badge/version-1.0.0@beta.69-brightgreen.svg)
+[![npm version](https://badge.fury.io/js/dashup.svg)](https://badge.fury.io/js/dashup)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Coverage Status](https://coveralls.io/repos/github/builtbyedgar/dashup/badge.svg?branch=main)](https://coveralls.io/github/builtbyedgar/dashup?branch=main)
-![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
 <br>
 
 Highly customizable and performant **React** components specifically designed for creating interactive dashboards. With a focus on simplicity and flexibility, this library empowers developers to effortlessly build stunning dashboard interfaces.
-
-#### Built with 🖤 and some lines of
-
-<div style="display: flex; flex-direction: row; margin-bottom: 24px">
-  <img align="left" alt="react" width="28px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
-  <img align="left" alt="typescript" width="28px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
-</div>
 
 <img src="./assets/dashup-screen-recording.gif" width="800px" />
 
@@ -159,36 +155,42 @@ const widgets: Layout = [widget, ...]
 ```ts
 interface WidgetProps {
   id: string
-  /** in column units */
+  /** In columns */
   x: number
-  /** in row units */
+  /** In rows */
   y: number
-  /** in column units */
+  /** In columns */
   width: number
-  /** in row units */
+  /** In rows */
   height: number
-  /** in column units */
+  /** In columns */
   minWidth?: number
-  /** in row units */
+  /** In rows */
   minHeight?: number
-  /** in column units */
   maxWidth?: number
-  /** in row units */
   maxHeight?: number
-  /** static widget */
-  stationary?: boolean
-  /** draggable widget */
+  /** make widget fixed */
+  fixed?: boolean
+  /** make widget draggable */
   draggable?: boolean
-  /** resizable widget */
+  /** make widget resizable */
   resizable?: boolean
-  /** removible widget */
-  removible?: boolean
   /** the widget title */
-  title?: string
-  /** the widget content */
+  title: string
+  /** the component that will be rendered into the widget */
   component?: JSX.Element
-  /** the widget options (in development) */
-  options?: WidgetOption[]
+  /** the component that will be the wiidget toolbar */
+  toolbar?: ReactElement
+}
+```
+
+#### Custom toolbar props
+
+```ts
+interface CustomToolbarProps {
+  id?: string
+  title?: string
+  className?: string
 }
 ```
 

@@ -5,8 +5,11 @@ import Logo from './components/Logo.tsx'
 
 <Logo />
 
-![version](https://img.shields.io/badge/version-1.0.0@beta.69-brightgreen.svg)
-![license](https://img.shields.io/badge/license-MIT-blue.svg)
+#### Built with 🖤 and some lines of React and TypeScript
+
+[![npm version](https://badge.fury.io/js/dashup.svg)](https://badge.fury.io/js/dashup)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Coverage Status](https://coveralls.io/repos/github/builtbyedgar/dashup/badge.svg?branch=main)](https://coveralls.io/github/builtbyedgar/dashup?branch=main)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
 
@@ -17,16 +20,24 @@ Highly customizable and performant **React** components specifically designed fo
 
 This component are under development. Is not ready for production!
 
+## Examples
+
+See in action in the [Storybook](https://builtbyedgar.github.io/dashup/)
+
+#### More examples (soon)
+
+- Codesandbox
+- Stackblitz
 
 ## Features
 
-Dashup provides a simple and versatile solution for building interactive dashboards in your **React** applications. With its intuitive API and extensive customization options, you can create dynamic and visually appealing dashboards in no time.
+Dashup provides a simple and versatile solution for building interactive dashboards in your **React** applications. With its intuitive API and extensive customization options, you can create dynamic and visually dope dashboards in no time.
 
-Whether you need draggable and resizable widgets for flexible layout arrangements, static widgets for displaying static information or visual elements, or a serialized layout for saving and loading dashboard configurations, this component library has you covered.
+Whether you need draggable and resizable widgets for flexible layout arrangements, fixed widgets, or a serialized layout for saving and loading dashboard configurations, this component library has you covered.
 
 #### ⚛️ 100% React & TypeScript
 
-The components are built using React and TypeScript, ensuring type safety and a seamless integration with your existing React projects.
+The components are built using [React v18](https://github.com/facebook/react/) and [TypeScript](https://www.typescriptlang.org/), ensuring type safety and a seamless integration with your existing projects.
 
 #### 🍿 Zero dependencies
 
@@ -34,13 +45,13 @@ The library has no external dependencies, making it lightweight and easy to mana
 
 #### 🎛️ Draggable and resizable widgets
 
-Intuitively drag and rearrange widgets within the dashboard to suit your needs. Resize widgets dynamically to optimize the layout and maximize content visibility.
+Intuitively drag and rearrange widgets within the dashboard to suit your needs. Resize widgets to optimize the layout and maximize content visibility.
 
-#### ⏸️ Static widgets
+#### ⏸️ Fixes widgets
 
-Create static widgets for displaying non-interactive information or visual elements.
+Create widgets that can't be resized or moved, not even by other widgets!
 
-#### Serialized layout
+#### 🗂️ Serialized layout
 
 Save and load the dashboard layout effortlessly using a serialized format.
 
@@ -50,27 +61,147 @@ Customize the appearance, behavior, and styling of the components to match your 
 
 #### 🔋 High performance
 
-Utilizing the best practices of React performance optimization, the library ensures smooth rendering and fluid user experiences.
+Using the best practices for React performance optimization, the library ensures smooth rendering and fluid user experiences.
 
 #### 📘 Storybook integration
 
-Utilize the power of [Storybook](https://storybook.js.org/) for easy development and interactive documentation.
+Uses the power of [Storybook](https://storybook.js.org/) for easy development and interactive documentation.
 
 ## Requirements
 
 - React >= 18
 - ReactDOM >= 18
 
+## Usage
+
+Getting started with the **Dashup** is quick and straightforward. Follow the steps below to install the package and begin using the components in your project.
+
+### Installation
+
+To install the **Dashup**, use the package manager of your choice:
+
+#### NPM
+
+```bash
+npm install dashup
+```
+
+#### Yarn
+
+```bash
+yarn add dashup
+```
+
+#### PNPM
+
+```bash
+pnpm install dashup
+```
+
+### Dashboard component
+
+The `<Dashboard />` component exposes a simple but effective API:
+
+```ts
+interface DashboardProps {
+  /** The widget list WidgetProps[] */
+  widgets: Layout
+  /** number of columns */
+  columns?: number
+  /** the rows height */
+  rowHeight?: number
+  /** the margin between widgets */
+  margin?: [number, number]
+  /** the className for the placeholder (ghost) */
+  placeholderClassName?: string
+  /** callback method when a widget is moved, resized or deleted */
+  onChange?: (widgets: Layout) => void
+  /** callback method when the dashboard (or window) is resized */
+  onResize?: () => void
+}
+```
+
+```tsx
+const widget: WidgetProps = {
+  id: uuidv4(),
+  x: 0,
+  y: 2,
+  width: 3,
+  height: 2,
+  title: 'Widget 1',
+  draggable: true,
+  removible: true,
+  stationary: false,
+  component: <ComponentForWidget />,
+}
+
+const widgets: Layout = [widget, ...]
+
+<Dashboard
+  widgets={widgets}
+  columns={12}
+  rowHeight={100}
+  onChange={handleDashboardChange}
+/>
+```
+
+#### Widget props
+
+```ts
+interface WidgetProps {
+  id: string
+  /** In columns */
+  x: number
+  /** In rows */
+  y: number
+  /** In columns */
+  width: number
+  /** In rows */
+  height: number
+  /** In columns */
+  minWidth?: number
+  /** In rows */
+  minHeight?: number
+  maxWidth?: number
+  maxHeight?: number
+  /** make widget fixed */
+  fixed?: boolean
+  /** make widget draggable */
+  draggable?: boolean
+  /** make widget resizable */
+  resizable?: boolean
+  /** the widget title */
+  title: string
+  /** the component that will be rendered into the widget */
+  component?: JSX.Element
+  /** the component that will be the wiidget toolbar */
+  toolbar?: ReactElement
+}
+```
+
+#### Custom toolbar props
+
+```ts
+interface CustomToolbarProps {
+  id?: string
+  title?: string
+  className?: string
+}
+```
 
 ## Todo's
 
-I'm actively seeking help to ensure the quality and reliability of the library through comprehensive testing. If you have experience with testing React components and would like to contribute, I would greatly appreciate your assistance. Whether it's writing unit tests, integration tests, or providing feedback on existing tests, your contributions will make a significant impact.
+I'm actively seeking help to ensure the quality and reliability of the library through comprehensive testing. If you have experience with testing React components and would like to contribute, I would greatly appreciate your assistance. Whether it's writing unit tests, integration tests, or providing feedback on existing tests.
 
-- [ ] ♻️ Code refactor
+As you can see, there are quite a few tasks on the to-do list... Feel like helping me out with one?
+
+Your contributions will be welcome!
+
 - [ ] ⚡️ Extra features
 - [ ] 📘 More Storybook examples and customizations
 - [ ] 💻 Codesandbox and Stackblitz examples
 - [ ] 📄 Docuentation
+- [ ] 📄 Contributing
 - [ ] 🔬 Test
 - [x] 📦 Publish package (beta)
 
