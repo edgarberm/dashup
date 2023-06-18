@@ -5,7 +5,8 @@
 <p>&nbsp;</p>
 
 ![version](https://img.shields.io/badge/version-1.0.0@beta.69-brightgreen.svg)
-
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Coverage Status](https://coveralls.io/repos/github/ModusCreateOrg/budgeting/badge.svg)](https://coveralls.io/github/ModusCreateOrg/budgeting)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![GitHub issues](https://img.shields.io/github/issues/builtbyedgar/dashup)
 
@@ -13,14 +14,12 @@
 
 Highly customizable and performant **React** components specifically designed for creating interactive dashboards. With a focus on simplicity and flexibility, this library empowers developers to effortlessly build stunning dashboard interfaces.
 
-#### Built with 🖤 and lots of
+#### Built with 🖤 and some lines of
 
-<div style="display: flex; flex-direction: row;">
+<div style="display: flex; flex-direction: row; margin-bottom: 24px">
   <img align="left" alt="react" width="28px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
   <img align="left" alt="typescript" width="28px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
 </div>
-
-<br>
 
 <img src="./assets/dashup-screen-recording.gif" width="800px" />
 
@@ -41,13 +40,13 @@ See in action in the [Storybook](https://builtbyedgar.github.io/dashup/)
 
 ## Features
 
-Dashup provides a simple and versatile solution for building interactive dashboards in your **React** applications. With its intuitive API and extensive customization options, you can create dynamic and visually appealing dashboards in no time.
+Dashup provides a simple and versatile solution for building interactive dashboards in your **React** applications. With its intuitive API and extensive customization options, you can create dynamic and visually dope dashboards in no time.
 
-Whether you need draggable and resizable widgets for flexible layout arrangements, static widgets for displaying static information or visual elements, or a serialized layout for saving and loading dashboard configurations, this component library has you covered.
+Whether you need draggable and resizable widgets for flexible layout arrangements, fixed widgets, or a serialized layout for saving and loading dashboard configurations, this component library has you covered.
 
 #### ⚛️ 100% React & TypeScript
 
-The components are built using React and TypeScript, ensuring type safety and a seamless integration with your existing React projects.
+The components are built using [React v18](https://github.com/facebook/react/) and [TypeScript](https://www.typescriptlang.org/), ensuring type safety and a seamless integration with your existing projects.
 
 #### 🍿 Zero dependencies
 
@@ -55,13 +54,13 @@ The library has no external dependencies, making it lightweight and easy to mana
 
 #### 🎛️ Draggable and resizable widgets
 
-Intuitively drag and rearrange widgets within the dashboard to suit your needs. Resize widgets dynamically to optimize the layout and maximize content visibility.
+Intuitively drag and rearrange widgets within the dashboard to suit your needs. Resize widgets to optimize the layout and maximize content visibility.
 
-#### ⏸️ Static widgets
+#### ⏸️ Fixes widgets
 
-Create static widgets for displaying non-interactive information or visual elements.
+Create widgets that can't be resized or moved, not even by other widgets!
 
-#### Serialized layout
+#### 🗂️ Serialized layout
 
 Save and load the dashboard layout effortlessly using a serialized format.
 
@@ -71,11 +70,11 @@ Customize the appearance, behavior, and styling of the components to match your 
 
 #### 🔋 High performance
 
-Utilizing the best practices of React performance optimization, the library ensures smooth rendering and fluid user experiences.
+Using the best practices for React performance optimization, the library ensures smooth rendering and fluid user experiences.
 
 #### 📘 Storybook integration
 
-Utilize the power of [Storybook](https://storybook.js.org/) for easy development and interactive documentation.
+Uses the power of [Storybook](https://storybook.js.org/) for easy development and interactive documentation.
 
 ## Requirements
 
@@ -108,17 +107,28 @@ yarn add dashup
 pnpm install dashup
 ```
 
-## Properties
+### Dashboard component
 
 The `<Dashboard />` component exposes a simple but effective API:
 
-- `widgets: Layout`
-- `columns?: number` default `12`
-- `rowHeight?: number` default `100`
-- `margin?: [number, number]` default `[10, 10]`
-- `draggableHandle?: string`
-- `onChange?: (widgets: Layout) => void`
-- `onResize?: () => void`
+```ts
+interface DashboardProps {
+  /** The widget list WidgetProps[] */
+  widgets: Layout
+  /** number of columns */
+  columns?: number
+  /** the rows height */
+  rowHeight?: number
+  /** the margin between widgets */
+  margin?: [number, number]
+  /** the className for the placeholder (ghost) */
+  placeholderClassName?: string
+  /** callback method when a widget is moved, resized or deleted */
+  onChange?: (widgets: Layout) => void
+  /** callback method when the dashboard (or window) is resized */
+  onResize?: () => void
+}
+```
 
 ```tsx
 const widget: WidgetProps = {
@@ -182,25 +192,19 @@ interface WidgetProps {
 }
 ```
 
-#### WidgetOption
-
-```ts
-type WidgetOption = {
-  title?: string // To show in the Tooltip
-  action: () => void
-  icon: JSX.Element
-}
-```
-
 ## Todo's
 
-I'm actively seeking help to ensure the quality and reliability of the library through comprehensive testing. If you have experience with testing React components and would like to contribute, I would greatly appreciate your assistance. Whether it's writing unit tests, integration tests, or providing feedback on existing tests, your contributions will make a significant impact.
+I'm actively seeking help to ensure the quality and reliability of the library through comprehensive testing. If you have experience with testing React components and would like to contribute, I would greatly appreciate your assistance. Whether it's writing unit tests, integration tests, or providing feedback on existing tests.
 
-- [ ] ♻️ Code refactor
+As you can see, there are quite a few tasks on the to-do list... Feel like helping me out with one?
+
+Your contributions will be welcome!
+
 - [ ] ⚡️ Extra features
 - [ ] 📘 More Storybook examples and customizations
 - [ ] 💻 Codesandbox and Stackblitz examples
 - [ ] 📄 Docuentation
+- [ ] 📄 Contributing
 - [ ] 🔬 Test
 - [x] 📦 Publish package (beta)
 
