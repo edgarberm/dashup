@@ -1,4 +1,4 @@
-name: Lint and test
+name: Storybook test
 
 on:
   pull_request:
