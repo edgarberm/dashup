@@ -475,7 +475,11 @@ export default dashboard
  * }
  * ```
  */
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    packing: true,
+  },
+}
 
 const FILTER = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
@@ -505,6 +509,7 @@ export const FixedWidget: Story = {
  */
 export const NotDraggableWidget: Story = {
   args: {
+    packing: true,
     widgets: [...FILTER, NOT_DRAGGABLE_WIDGET],
   },
 }
@@ -520,6 +525,7 @@ export const NotDraggableWidget: Story = {
  */
 export const NotResizableWidget: Story = {
   args: {
+    packing: true,
     widgets: [...FILTER, NOT_RESIZABLE_WIDGET],
   },
 }
@@ -541,12 +547,16 @@ export const NotResizableWidget: Story = {
  */
 export const MinMaxWidgetSize: Story = {
   args: {
+    packing: true,
     widgets: [...FILTER, MIN_MAX_WIDGET_SIZE],
   },
 }
 
 /**
- * @todo
+ * Not packing layout.
+ *
+ *```tsx
+ * packing: false
  */
 export const NotPackingLayout: Story = {
   args: {
@@ -559,6 +569,9 @@ export const NotPackingLayout: Story = {
  * @todo
  */
 export const ToolbarWithOptionsWidget: Story = {
+  args: {
+    packing: true,
+  },
   decorators: [
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (StoryFn: any, props: any) => {
@@ -599,24 +612,28 @@ export const ToolbarWithOptionsWidget: Story = {
 
 export const DragWidgetInteraction: Story = {
   args: {
+    packing: true,
     widgets: [...FILTER, CUSTOM_TOOLBAR_WIDGET],
   },
 }
 
 export const ResizeWidgetInteraction: Story = {
   args: {
+    packing: true,
     widgets: [...FILTER, CUSTOM_TOOLBAR_WIDGET],
   },
 }
 
 export const MaxResizeWidgetInteraction: Story = {
   args: {
+    packing: true,
     widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
   },
 }
 
 export const MinResizeWidgetInteraction: Story = {
   args: {
+    packing: true,
     widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
   },
 }
