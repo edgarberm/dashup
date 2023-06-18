@@ -3,7 +3,7 @@
 <img src="./assets/Icon.png" width="120px" height="120px" />
 
 <div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 24px">
-  <h2 style="margin-right: 12px;">A React Dashboard component uilt with 🖤 and some lines of</h2>
+  <h2 style="margin-right: 12px; border-bottom: none;">A React Dashboard component uilt with 🖤 and some lines of</h2>
   <img align="left" alt="react" width="24px" height="24px" style="padding-right: 12px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />
   <img align="left" alt="typescript" width="24px" height="24px" style="padding-right: 12px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
 </div>
