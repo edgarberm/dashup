@@ -9,6 +9,7 @@
 </div>
 
 <br>
+<br>
 
 [![npm version](https://badge.fury.io/js/dashup.svg)](https://badge.fury.io/js/dashup)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
