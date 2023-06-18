@@ -2,7 +2,7 @@
 import { expect } from '@storybook/jest'
 import { Meta, StoryObj } from '@storybook/react'
 import { fireEvent, within } from '@storybook/testing-library'
-import { CSSProperties, useState } from 'react'
+import { CSSProperties, MouseEvent, useState } from 'react'
 import {
   CustomToolbarProps,
   Dashboard,
@@ -65,10 +65,12 @@ function FakeToolbarWithOptions({
   onRemove,
   onAction,
 }: FakeToolbarWithOptionsProps): JSX.Element {
-  const handleRemove = () => {
+  const handleRemove = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
     onRemove(id)
   }
-  const handleAction = () => {
+  const handleAction = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
     onAction(id)
   }
 
@@ -607,7 +609,7 @@ export const NotResizableWidget: Story = {
     const dashboard = wrapper.querySelector('.dashup.dashup-dashboard')
 
     await step('Render not resizable widget correctly', async () => {
-      await new Promise((resolve) => setTimeout(resolve, 200))
+      await sleep(200)
       const widget = dashboard?.querySelectorAll(
         '.dashup-widget',
       )[9] as HTMLElement
@@ -657,7 +659,8 @@ export const ToolbarWithOptionsWidget: Story = {
       }
 
       function handleAction(id: string) {
-        alert(`You fired the action for widget: \n ${id}`)
+        // eslint-disable-next-line no-console
+        console.log(`You fired the action for widget: \n ${id}`)
       }
       function handleRemove(id: string) {
         const newWidgets = widgets.filter((w) => w.id !== id)
@@ -678,16 +681,14 @@ export const ToolbarWithOptionsWidget: Story = {
   ],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement)
+    const toolbar = await canvas.findByTestId('fake-toolbar')
 
     await step('Render widget with toolbar options correctly', async () => {
-      const toolbar = await canvas.findByTestId('fake-toolbar')
-
       expect(toolbar).toBeInTheDocument()
       expect(toolbar).toHaveClass('custom-toolbar')
     })
 
     await step('Custom toolbar has dragable class', async () => {
-      const toolbar = await canvas.findByTestId('fake-toolbar')
       expect(toolbar).toHaveClass('draggable-handle')
     })
 
@@ -704,6 +705,16 @@ export const ToolbarWithOptionsWidget: Story = {
       expect(action).toBeInTheDocument()
       expect(remove).toBeInTheDocument()
       expect(link).toBeInTheDocument()
+    })
+
+    await step('prevent drag if target is not toolbar', async () => {
+      const widget = (await toolbar.parentElement) as HTMLElement
+      const action = await canvas.findByTestId('action-button')
+
+      await sleep(100)
+      await fireEvent.click(action)
+      // Chrome console will be log a message saying: You fired the action for widget ${id}
+      expect(widget).not.toHaveClass('dragging')
     })
   },
 }
@@ -746,12 +757,6 @@ export const ResizeWidgetInteraction: Story = {
   },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
-    const wrapper = await canvas.getByTestId('wrapper')
-    const columns = args.columns || 12
-    const margin = args.margin || [10, 10]
-    const dashWidth = wrapper.getBoundingClientRect().width
-    const columnWidth = (dashWidth - 10) / columns - margin[0]
-    const rowHeight = 100
     const toolbar = await canvas.findByTestId('fake-toolbar')
     const resizer = (await toolbar.parentElement?.querySelector(
       '.resizable-handle',
@@ -760,19 +765,81 @@ export const ResizeWidgetInteraction: Story = {
     await sleep(1000)
     await fireEvent.mouseDown(resizer)
 
-    await sleep(500)
+    await sleep(300)
     await fireEvent.mouseMove(resizer, {
-      clientX: -(columnWidth * 3),
-      clientY: rowHeight,
+      clientX: -100,
+      clientY: 100,
     })
 
-    await sleep(1000)
+    await sleep(400)
     await fireEvent.mouseUp(resizer, {
-      clientX: -(columnWidth * 3),
-      clientY: rowHeight,
+      clientX: -100,
+      clientY: 100,
     })
 
     expect(args.widgets[9].width).toBe(3)
     expect(args.widgets[9].height).toBe(3)
+  },
+}
+
+export const MaxResizeWidgetInteraction: Story = {
+  args: {
+    widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+    const resizer = (await toolbar.parentElement?.querySelector(
+      '.resizable-handle',
+    )) as HTMLElement
+
+    await sleep(1000)
+    await fireEvent.mouseDown(resizer)
+
+    await sleep(300)
+    await fireEvent.mouseMove(resizer, {
+      clientX: 800,
+      clientY: 800,
+    })
+
+    await sleep(400)
+    await fireEvent.mouseUp(resizer, {
+      clientX: 800,
+      clientY: 800,
+    })
+
+    expect(args.widgets[9].width).toBe(6)
+    expect(args.widgets[9].height).toBe(4)
+  },
+}
+
+export const MinResizeWidgetInteraction: Story = {
+  args: {
+    widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+    const resizer = (await toolbar.parentElement?.querySelector(
+      '.resizable-handle',
+    )) as HTMLElement
+
+    await sleep(1000)
+    await fireEvent.mouseDown(resizer)
+
+    await sleep(300)
+    await fireEvent.mouseMove(resizer, {
+      clientX: -800,
+      clientY: -800,
+    })
+
+    await sleep(400)
+    await fireEvent.mouseUp(resizer, {
+      clientX: -800,
+      clientY: -800,
+    })
+
+    expect(args.widgets[9].width).toBe(3)
+    expect(args.widgets[9].height).toBe(1)
   },
 }

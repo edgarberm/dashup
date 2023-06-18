@@ -171,6 +171,7 @@ export default function Widget({
       fixed ||
       isResizingRef.current
     ) {
+      /* istanbul ignore next */
       return
     }
 
@@ -392,7 +393,7 @@ export default function Widget({
   return (
     <div
       ref={widget}
-      id={id}
+      id={`widget-${id}`}
       className={`
         dashup-widget
         ${placeholderClassName || ''}

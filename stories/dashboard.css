@@ -12,6 +12,10 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 0;
 }
 
+.sidebar-container .sidebar-item  {
+  margin-bottom: 24px;
+}
+
 #storybook-docs h1  {
   letter-spacing: -0.02em;
 }
