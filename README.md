@@ -8,6 +8,8 @@
   <img align="left" alt="typescript" width="24px" height="24px" style="padding-right: 12px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/typescript/typescript.png" />
 </div>
 
+<br>
+
 [![npm version](https://badge.fury.io/js/dashup.svg)](https://badge.fury.io/js/dashup)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Coverage Status](https://coveralls.io/repos/github/builtbyedgar/dashup/badge.svg?branch=main)](https://coveralls.io/github/builtbyedgar/dashup?branch=main)
