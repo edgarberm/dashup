@@ -105,8 +105,6 @@ export default function Widget({
       }
     }
 
-    createStyle()
-
     return () => {
       if (draggable && !fixed) {
         dragger?.removeEventListener('mousedown', handleDragEvents, false)
@@ -394,11 +392,13 @@ export default function Widget({
   return (
     <div
       ref={widget}
+      id={id}
       className={`
         dashup-widget
         ${placeholderClassName || ''}
         ${draggable && !fixed ? 'draggable' : ''}
         ${resizable && !fixed ? 'resizable' : ''}
+        ${fixed ? 'fixed' : ''}
         ${isDragging ? 'dragging' : ''}
         ${isResizing ? 'resizing' : ''}`}
       style={style}
