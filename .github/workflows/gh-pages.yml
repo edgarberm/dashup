@@ -66,6 +66,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
+      - name: Lint
+        run: npm run lint
       - name: Install Playwright
         run: npx playwright install --with-deps
       - name: Run Storybook tests
