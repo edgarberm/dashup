@@ -434,6 +434,9 @@ const dashboard: Meta<typeof Dashboard> = {
           widgets={args.widgets}
           columns={args.columns}
           rowHeight={args.rowHeight}
+          margin={args.margin}
+          packing={args.packing}
+          placeholderClassName={args.placeholderClassName}
         />
       </div>
     )
@@ -475,11 +478,7 @@ export default dashboard
  * }
  * ```
  */
-export const Default: Story = {
-  args: {
-    packing: true,
-  },
-}
+export const Default: Story = {}
 
 const FILTER = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
@@ -509,7 +508,6 @@ export const FixedWidget: Story = {
  */
 export const NotDraggableWidget: Story = {
   args: {
-    packing: true,
     widgets: [...FILTER, NOT_DRAGGABLE_WIDGET],
   },
 }
@@ -525,7 +523,6 @@ export const NotDraggableWidget: Story = {
  */
 export const NotResizableWidget: Story = {
   args: {
-    packing: true,
     widgets: [...FILTER, NOT_RESIZABLE_WIDGET],
   },
 }
@@ -547,7 +544,6 @@ export const NotResizableWidget: Story = {
  */
 export const MinMaxWidgetSize: Story = {
   args: {
-    packing: true,
     widgets: [...FILTER, MIN_MAX_WIDGET_SIZE],
   },
 }
@@ -561,7 +557,10 @@ export const MinMaxWidgetSize: Story = {
 export const NotPackingLayout: Story = {
   args: {
     packing: false,
-    widgets: [...FILTER, FIXED_WIDGET],
+    widgets: [...FILTER, FIXED_WIDGET].map((w, i) => ({
+      ...w,
+      y: i > 2 ? w.y + Math.floor(Math.random() * (3 - 3 + 1) + 3) : w.y,
+    })),
   },
 }
 
@@ -569,9 +568,6 @@ export const NotPackingLayout: Story = {
  * @todo
  */
 export const ToolbarWithOptionsWidget: Story = {
-  args: {
-    packing: true,
-  },
   decorators: [
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (StoryFn: any, props: any) => {
@@ -602,6 +598,7 @@ export const ToolbarWithOptionsWidget: Story = {
             widgets={widgets}
             columns={props.args.columns}
             rowHeight={props.args.rowHeight}
+            packing={props.args.packing}
             onChange={handleChange}
           />
         </div>
@@ -612,28 +609,24 @@ export const ToolbarWithOptionsWidget: Story = {
 
 export const DragWidgetInteraction: Story = {
   args: {
-    packing: true,
     widgets: [...FILTER, CUSTOM_TOOLBAR_WIDGET],
   },
 }
 
 export const ResizeWidgetInteraction: Story = {
   args: {
-    packing: true,
     widgets: [...FILTER, CUSTOM_TOOLBAR_WIDGET],
   },
 }
 
 export const MaxResizeWidgetInteraction: Story = {
   args: {
-    packing: true,
     widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
   },
 }
 
 export const MinResizeWidgetInteraction: Story = {
   args: {
-    packing: true,
     widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
   },
 }

@@ -22,23 +22,14 @@ const PLACEHOLDER = {
 }
 
 /**
- *  @todos
- * - Fix: la animación del plceholder en el repintado. (CSS transfor tansition)
- * - Styling (UI)
- * - Mejorar UX.
- *    - Swapping horizontal de los widgets si es posible antes de empujar
- *    - Restringir el drag y el resize al contenedor
- *    - Que se pueda ocultar el header y se muestre en el hover
- * - Refactor
- *
- * @think
- * - Para los widget staticos necesitamos poder moverlos para colocarlos en el lugar apropiado
+ *  The Dashboard component.
  */
 export function Dashboard({
   widgets,
   columns = 24,
   rowHeight = 100,
   margin = [10, 10],
+  packing = true,
   placeholderClassName = 'widget-placeholder',
   onChange,
   onResize,
@@ -61,7 +52,7 @@ export function Dashboard({
   useEffect(() => {
     onWindowResize()
 
-    const newWidgets = compact(widgets) as Layout
+    const newWidgets = packing ? compact(widgets) : widgets
     setLayout(newWidgets)
     layoutUpdate()
   }, [widgets]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -114,7 +105,7 @@ export function Dashboard({
       widget.y,
       true,
     )
-    const compactLayout = compact(newLayout) as Layout
+    const compactLayout = packing ? compact(newLayout) : newLayout
     const compactItem = compactLayout.find(
       (c: WidgetProps) => c.id === widget.id,
     ) as WidgetProps
@@ -173,7 +164,7 @@ export function Dashboard({
               false,
             )
           : layoutRef.current
-      const compactLayout = compact(newLayout) as Layout
+      const compactLayout = packing ? compact(newLayout) : newLayout
 
       setLayout(compactLayout)
       onChange?.(compactLayout)
@@ -196,7 +187,7 @@ export function Dashboard({
 
   const handleRemoveWidget = (id: string) => {
     const newLayout = layoutRef.current.filter((w: WidgetProps) => w.id !== id)
-    const compactLayout = compact(newLayout) as Layout
+    const compactLayout = packing ? compact(newLayout) : newLayout
 
     // setLayout(compactLayout)
     onChange?.(compactLayout)

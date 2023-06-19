@@ -56,7 +56,7 @@ export interface DashboardProps {
   rowHeight?: number
   /** the margin between widgets */
   margin?: [number, number]
-  /** the margin between widgets */
+  /** packing the layout */
   packing?: boolean
   /** the className for the placeholder (ghost) */
   placeholderClassName?: string
