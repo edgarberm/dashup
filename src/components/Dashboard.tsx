@@ -92,19 +92,20 @@ export function Dashboard({
   }
 
   /**
-   * Aquí se ejecuta la magia del grid, casi toda la lógica está en `ùtils'
+   * Here is where the magic of the grid happens, most of the logic is in `utils`.
    */
   const handleWidgetDrag = (eventName: string, widget: Area) => {
     const item = getLayoutItem(layoutRef.current, widget.id)
     if (item === undefined || item === null) return
 
-    const newLayout = moveElement(
-      layoutRef.current,
-      item,
-      widget.x,
-      widget.y,
-      true,
-    )
+    const newLayout = moveElement({
+      layout: layoutRef.current,
+      widget: item,
+      x: widget.x,
+      y: widget.y,
+      preventCollision: true,
+      packing,
+    })
     const compactLayout = packing ? compact(newLayout) : newLayout
     const compactItem = compactLayout.find(
       (c: WidgetProps) => c.id === widget.id,
@@ -156,13 +157,13 @@ export function Dashboard({
       const collision = getAllCollisions(layoutRef.current, item) as Layout
       const newLayout =
         collision.length > 0
-          ? moveElement(
-              layoutRef.current,
-              collision[0],
-              collision[0].x,
-              widget.height,
-              false,
-            )
+          ? moveElement({
+              layout: layoutRef.current,
+              widget: collision[0],
+              x: collision[0].x,
+              y: widget.height,
+              packing,
+            })
           : layoutRef.current
       const compactLayout = packing ? compact(newLayout) : newLayout
 
@@ -189,7 +190,6 @@ export function Dashboard({
     const newLayout = layoutRef.current.filter((w: WidgetProps) => w.id !== id)
     const compactLayout = packing ? compact(newLayout) : newLayout
 
-    // setLayout(compactLayout)
     onChange?.(compactLayout)
     layoutUpdate()
     updateHeight()

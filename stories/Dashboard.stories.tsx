@@ -559,7 +559,10 @@ export const NotPackingLayout: Story = {
     packing: false,
     widgets: [...FILTER, FIXED_WIDGET].map((w, i) => ({
       ...w,
-      y: i > 2 ? w.y + Math.floor(Math.random() * (3 - 3 + 1) + 3) : w.y,
+      y:
+        i > 2 && !w.fixed
+          ? w.y + Math.floor(Math.random() * (3 - 3 + 1) + 3)
+          : w.y,
     })),
   },
 }
