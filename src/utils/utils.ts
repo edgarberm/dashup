@@ -40,9 +40,6 @@ export function throttle<Args extends unknown[]>(
   return throttled
 }
 
-/**
- * Esta función se encarga
- */
 export function calcPosition(
   x: number,
   y: number,
@@ -106,8 +103,8 @@ export function calcSizeInPx(
 }
 
 /**
- * Normaliza la posición del componente utilizando el bounding client rect del
- * `Dashboard`. Se utiliza tanto en el evento `mousedown` como en `mousemove`.
+ * Normalize the component's position using the bounding client rect of the Dashboard.
+ * It is used in both the mousedown and mousemove events.
  */
 export function getNewPosition(
   position: { x: number; y: number },
@@ -132,7 +129,7 @@ export function getNewPosition(
 }
 
 /**
- * Obtiene la coordenada inferior del  layout.
+ * Obtains the bottom coordinate of the layout.
  *
  * @param  {Layout} layout Layout array.
  * @return {number} Bottom coordinate.

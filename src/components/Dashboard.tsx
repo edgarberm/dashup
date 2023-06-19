@@ -1,6 +1,5 @@
 import { useEventListener, useStateRef } from '../hooks/hooks'
 import { throttle } from '../utils/utils'
-// @ts-ignore
 import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import Widget from './Widget'
 import {
