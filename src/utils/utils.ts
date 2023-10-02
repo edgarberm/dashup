@@ -40,9 +40,6 @@ export function throttle<Args extends unknown[]>(
   return throttled
 }
 
-/**
- * Esta función se encarga
- */
 export function calcPosition(
   x: number,
   y: number,
@@ -106,8 +103,8 @@ export function calcSizeInPx(
 }
 
 /**
- * Normaliza la posición del componente utilizando el bounding client rect del
- * `Dashboard`. Se utiliza tanto en el evento `mousedown` como en `mousemove`.
+ * Normalize the component's position using the bounding client rect of the Dashboard.
+ * It is used in both the mousedown and mousemove events.
  */
 export function getNewPosition(
   position: { x: number; y: number },
@@ -132,7 +129,7 @@ export function getNewPosition(
 }
 
 /**
- * Obtiene la coordenada inferior del  layout.
+ * Obtains the bottom coordinate of the layout.
  *
  * @param  {Layout} layout Layout array.
  * @return {number} Bottom coordinate.
@@ -358,14 +355,23 @@ export function getLayoutItem(
  * @param  {number}     y in grid units
  * @param  {boolean}    isUserAction Indicate if the element being moved is being dragged/resized by the user
  */
-export function moveElement(
-  layout: Layout,
-  widget: WidgetProps,
-  x?: number,
-  y?: number,
-  isUserAction?: boolean,
-  preventCollision?: boolean,
-): Layout {
+export function moveElement({
+  layout,
+  widget,
+  x,
+  y,
+  isUserAction = true,
+  preventCollision = true,
+  packing,
+}: {
+  layout: Layout
+  widget: WidgetProps
+  x?: number
+  y?: number
+  isUserAction?: boolean
+  preventCollision?: boolean
+  packing?: boolean
+}): Layout {
   if (widget.fixed) return layout
 
   const oldX = widget.x
@@ -380,19 +386,21 @@ export function moveElement(
 
   let dashboard: WidgetProps[] = [...layout]
   // If it collides with something, we move it
-  let sorted: WidgetProps[] = sortLayoutItemsByRowCol(dashboard)
+  let sorted: WidgetProps[] = packing
+    ? sortLayoutItemsByRowCol(dashboard)
+    : dashboard
   // We need to reorder the elements we compare with to ensure that in the
   // case of having multiple collisions, we obtain the closest collision
-  if (movingUp) sorted = sorted.reverse()
+  if (movingUp && packing) sorted = sorted.reverse()
   const collisions = getAllCollisions(sorted, widget)
 
-  // NOTE: to be able to lock the dashboard in the future (currently does nothing).
-  if (preventCollision && collisions.length) {
+  if (preventCollision && collisions.length && !packing) {
     widget.x = oldX
     widget.y = oldY
     widget.moved = false
-    return layout
   }
+
+  if (packing === false) return dashboard
 
   // We move each colliding element
   const len = collisions.length
@@ -411,6 +419,7 @@ export function moveElement(
         collision,
         widget,
         isUserAction,
+        packing,
       )
     } else {
       dashboard = moveElementAwayFromCollision(
@@ -418,6 +427,7 @@ export function moveElement(
         widget,
         collision,
         isUserAction,
+        packing,
       )
     }
   }
@@ -440,6 +450,7 @@ function moveElementAwayFromCollision(
   collidesWith: WidgetProps,
   itemToMove: WidgetProps,
   isUserAction?: boolean,
+  packing?: boolean,
 ): Layout {
   const preventCollision = false // we're already colliding
 
@@ -460,21 +471,22 @@ function moveElementAwayFromCollision(
     fakeItem.y = Math.max(collidesWith.y - itemToMove.height, 0)
 
     if (!getFirstCollision(layout, fakeItem)) {
-      return moveElement(
+      return moveElement({
         layout,
-        itemToMove,
-        undefined,
-        fakeItem.y,
+        widget: itemToMove,
+        x: undefined,
+        y: fakeItem.y,
         preventCollision,
-      )
+        packing,
+      })
     }
   }
-
-  return moveElement(
+  return moveElement({
     layout,
-    itemToMove,
-    undefined,
-    itemToMove.y + 1,
+    widget: itemToMove,
+    x: undefined,
+    y: itemToMove.y + 1,
     preventCollision,
-  )
+    packing,
+  })
 }

@@ -1,6 +1,9 @@
 export default function Logo(): JSX.Element {
-  // @ts-ignore
-  const URL = import.meta.env.MODE === 'development' ? '../../assets' : './'
+  const URL =
+    // @ts-ignore
+    import.meta.env.MODE === 'development'
+      ? '../../assets'
+      : 'https://edgarberm.github.io/dashup'
 
   return (
     <div style={{ marginBottom: 24 }}>
