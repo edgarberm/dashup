@@ -1,5 +1,4 @@
 export default function Logo(): JSX.Element {
-  // @ts-ignore
   const URL = import.meta.env.VITE_ASSETS_URL
 
   return (
