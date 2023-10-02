@@ -1,15 +1,32 @@
 // @ts-ignore
+import { expect } from '@storybook/jest'
 import { Meta, StoryObj } from '@storybook/react'
-import { MouseEvent, useState } from 'react'
+import { fireEvent, within } from '@storybook/testing-library'
+import { CSSProperties, MouseEvent, useState } from 'react'
 import {
   CustomToolbarProps,
   Dashboard,
   DashboardProps,
   Layout,
   WidgetProps,
-} from '../src'
-import { uuidv4 } from '../src/utils/utils'
-import './dashboard.css'
+} from '../../src'
+import { calcPosition, setWidgetStyle, uuidv4 } from '../../src/utils/utils'
+import '../dashboard.css'
+
+/**
+ * This utility method returns a string representation of the CSS properties
+ *
+ * @param style {CSSProperties}
+ */
+const styleString = (style: CSSProperties) =>
+  Object.entries(style)
+    .map(([k, v]) => `${k}: ${v}`)
+    .join('; ')
+    .concat(';')
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
 
 const CUSTOM_TOOLBAR_TITLE = 'Widget 2 (with custom toolbar)'
 
@@ -321,10 +338,9 @@ const FAKE_WIDGETS: Layout = [
 
 type Story = StoryObj<typeof Dashboard>
 
-const dashboard: Meta<typeof Dashboard> = {
-  title: 'Examples',
+const tests: Meta<typeof Dashboard> = {
+  title: 'Tests',
   component: Dashboard,
-  tags: ['autodocs'],
   argTypes: {
     widgets: {
       type: { name: 'string', required: false },
@@ -434,16 +450,13 @@ const dashboard: Meta<typeof Dashboard> = {
           widgets={args.widgets}
           columns={args.columns}
           rowHeight={args.rowHeight}
-          margin={args.margin}
-          packing={args.packing}
-          placeholderClassName={args.placeholderClassName}
         />
       </div>
     )
   },
 } as Meta<typeof Dashboard>
 
-export default dashboard
+export default tests
 
 /**
  * **Dashup** brings you a full featured dashboard with draggable and resizable widgets and much more cool features.
@@ -478,7 +491,58 @@ export default dashboard
  * }
  * ```
  */
-export const Default: Story = {}
+export const Default: Story = {
+  play: async ({ args, canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    const wrapper = canvas.getByTestId('wrapper')
+    const columns = args.columns || 12
+    const margin = args.margin || [10, 10]
+    const dashWidth = wrapper.getBoundingClientRect().width
+    const columnWidth = (dashWidth - 10) / columns - margin[0]
+    const rowHeight = 100
+    const dashboard = wrapper.querySelector('.dashup.dashup-dashboard')
+
+    await step('Render the dashboard and the widgets', async () => {
+      await expect(dashboard).toBeInTheDocument()
+
+      await new Promise((resolve) => setTimeout(resolve, 200))
+      const widgets = dashboard?.querySelectorAll('.dashup-widget')
+      expect(widgets).toHaveLength(10)
+
+      const array = Array.from(widgets || [])
+
+      const widget = array.at(0) as HTMLElement
+      expect(widget).toHaveClass('dashup-widget')
+    })
+
+    await step('Widgets are render correctly', async () => {
+      await new Promise((resolve) => setTimeout(resolve, 200))
+      dashboard?.querySelectorAll('.dashup-widget').forEach((widget, index) => {
+        expect(widget).toHaveClass('dashup-widget')
+
+        const props = args.widgets[index]
+        const { x, y, width, height } = calcPosition(
+          props.x,
+          props.y,
+          props.width,
+          props.height,
+          columnWidth,
+          rowHeight,
+          margin,
+        )
+        const newStyle = setWidgetStyle(x, y, width, height)
+        const returnedStyle = styleString(newStyle).concat(
+          ` transform: matrix(1, 0, 0, 1, ${x}, ${y});`,
+        )
+        const widgetStyle = JSON.stringify(widget.getAttribute('style'))
+        const calculatedStyle = JSON.stringify(styleString(newStyle))
+
+        expect(widget).toHaveStyle(returnedStyle)
+        expect(widgetStyle).toBe(calculatedStyle)
+      })
+    })
+  },
+}
 
 const FILTER = FAKE_WIDGETS.filter((w, i) => i !== 1)
 
@@ -495,6 +559,19 @@ export const FixedWidget: Story = {
   args: {
     widgets: [...FILTER, FIXED_WIDGET],
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    const wrapper = canvas.getByTestId('wrapper')
+    const dashboard = wrapper.querySelector('.dashup.dashup-dashboard')
+
+    await step('Render fixed widget correctly', async () => {
+      await new Promise((resolve) => setTimeout(resolve, 200))
+      const widget = dashboard?.querySelectorAll(
+        '.dashup-widget',
+      )[9] as HTMLElement
+      expect(widget).toHaveClass('fixed')
+    })
+  },
 }
 
 /**
@@ -510,6 +587,19 @@ export const NotDraggableWidget: Story = {
   args: {
     widgets: [...FILTER, NOT_DRAGGABLE_WIDGET],
   },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    const wrapper = canvas.getByTestId('wrapper')
+    const dashboard = wrapper.querySelector('.dashup.dashup-dashboard')
+
+    await step('Render not draggable widget correctly', async () => {
+      await new Promise((resolve) => setTimeout(resolve, 200))
+      const widget = dashboard?.querySelectorAll(
+        '.dashup-widget',
+      )[9] as HTMLElement
+      expect(widget).not.toHaveClass('draggable')
+    })
+  },
 }
 
 /**
@@ -524,6 +614,19 @@ export const NotDraggableWidget: Story = {
 export const NotResizableWidget: Story = {
   args: {
     widgets: [...FILTER, NOT_RESIZABLE_WIDGET],
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    const wrapper = canvas.getByTestId('wrapper')
+    const dashboard = wrapper.querySelector('.dashup.dashup-dashboard')
+
+    await step('Render not resizable widget correctly', async () => {
+      await sleep(200)
+      const widget = dashboard?.querySelectorAll(
+        '.dashup-widget',
+      )[9] as HTMLElement
+      expect(widget).not.toHaveClass('resizable')
+    })
   },
 }
 
@@ -549,21 +652,33 @@ export const MinMaxWidgetSize: Story = {
 }
 
 /**
- * Not packing layout.
- *
- *```tsx
- * packing: false
+ * @todo
  */
 export const NotPackingLayout: Story = {
   args: {
     packing: false,
-    widgets: [...FILTER, FIXED_WIDGET].map((w, i) => ({
-      ...w,
-      y:
-        i > 2 && !w.fixed
-          ? w.y + Math.floor(Math.random() * (3 - 3 + 1) + 3)
-          : w.y,
-    })),
+    widgets: [...FILTER, FIXED_WIDGET],
+  },
+  render: (args) => {
+    return (
+      <div
+        style={{ width: '100%', height: '100%', minHeight: 800 }}
+        data-testid='wrapper'
+      >
+        <Dashboard
+          widgets={args.widgets}
+          columns={args.columns}
+          packing={args.packing}
+          rowHeight={args.rowHeight}
+        />
+      </div>
+    )
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const wrapper = await canvas.getByTestId('wrapper')
+
+    expect(wrapper).toBeInTheDocument()
   },
 }
 
@@ -601,18 +716,81 @@ export const ToolbarWithOptionsWidget: Story = {
             widgets={widgets}
             columns={props.args.columns}
             rowHeight={props.args.rowHeight}
-            packing={props.args.packing}
             onChange={handleChange}
           />
         </div>
       )
     },
   ],
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+
+    await step('Render widget with toolbar options correctly', async () => {
+      expect(toolbar).toBeInTheDocument()
+      expect(toolbar).toHaveClass('custom-toolbar')
+    })
+
+    await step('Custom toolbar has dragable class', async () => {
+      expect(toolbar).toHaveClass('draggable-handle')
+    })
+
+    await step('Custom toolbar render title correctly', async () => {
+      const test = await canvas.findByText(CUSTOM_TOOLBAR_TITLE)
+      expect(test).toBeInTheDocument()
+    })
+
+    await step('Custom toolbar render options correctly', async () => {
+      const action = await canvas.findByTestId('action-button')
+      const remove = await canvas.findByTestId('remove-button')
+      const link = await canvas.findByTestId('link')
+
+      expect(action).toBeInTheDocument()
+      expect(remove).toBeInTheDocument()
+      expect(link).toBeInTheDocument()
+    })
+
+    await step('prevent drag if target is not toolbar', async () => {
+      const widget = (await toolbar.parentElement) as HTMLElement
+      const action = await canvas.findByTestId('action-button')
+
+      await sleep(100)
+      await fireEvent.click(action)
+      // Chrome console will be log a message saying: You fired the action for widget ${id}
+      expect(widget).not.toHaveClass('dragging')
+    })
+  },
 }
 
 export const DragWidgetInteraction: Story = {
   args: {
     widgets: [...FILTER, CUSTOM_TOOLBAR_WIDGET],
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const wrapper = await canvas.getByTestId('wrapper')
+    const columns = args.columns || 12
+    const margin = args.margin || [10, 10]
+    const dashWidth = wrapper.getBoundingClientRect().width
+    const columnWidth = (dashWidth - 10) / columns - margin[0]
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+
+    await sleep(1000)
+    await fireEvent.mouseDown(toolbar)
+
+    await sleep(500)
+    await fireEvent.mouseMove(toolbar, {
+      clientX: -(columnWidth * 2.8),
+      clientY: 0,
+    })
+
+    await sleep(1000)
+    await fireEvent.mouseUp(toolbar, {
+      clientX: -(columnWidth * 2.8),
+      clientY: 0,
+    })
+
+    expect(args.widgets[9].x).toBe(0)
   },
 }
 
@@ -620,16 +798,91 @@ export const ResizeWidgetInteraction: Story = {
   args: {
     widgets: [...FILTER, CUSTOM_TOOLBAR_WIDGET],
   },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+    const resizer = (await toolbar.parentElement?.querySelector(
+      '.resizable-handle',
+    )) as HTMLElement
+
+    await sleep(1000)
+    await fireEvent.mouseDown(resizer)
+
+    await sleep(300)
+    await fireEvent.mouseMove(resizer, {
+      clientX: -100,
+      clientY: 100,
+    })
+
+    await sleep(400)
+    await fireEvent.mouseUp(resizer, {
+      clientX: -100,
+      clientY: 100,
+    })
+
+    expect(args.widgets[9].width).toBe(5)
+    expect(args.widgets[9].height).toBe(3)
+  },
 }
 
 export const MaxResizeWidgetInteraction: Story = {
   args: {
     widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
   },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+    const resizer = (await toolbar.parentElement?.querySelector(
+      '.resizable-handle',
+    )) as HTMLElement
+
+    await sleep(1000)
+    await fireEvent.mouseDown(resizer)
+
+    await sleep(300)
+    await fireEvent.mouseMove(resizer, {
+      clientX: 800,
+      clientY: 800,
+    })
+
+    await sleep(400)
+    await fireEvent.mouseUp(resizer, {
+      clientX: 800,
+      clientY: 800,
+    })
+
+    expect(args.widgets[9].width).toBe(6)
+    expect(args.widgets[9].height).toBe(4)
+  },
 }
 
 export const MinResizeWidgetInteraction: Story = {
   args: {
     widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const toolbar = await canvas.findByTestId('fake-toolbar')
+    const resizer = (await toolbar.parentElement?.querySelector(
+      '.resizable-handle',
+    )) as HTMLElement
+
+    await sleep(1000)
+    await fireEvent.mouseDown(resizer)
+
+    await sleep(300)
+    await fireEvent.mouseMove(resizer, {
+      clientX: -800,
+      clientY: -800,
+    })
+
+    await sleep(400)
+    await fireEvent.mouseUp(resizer, {
+      clientX: -800,
+      clientY: -800,
+    })
+
+    expect(args.widgets[9].width).toBe(3)
+    expect(args.widgets[9].height).toBe(1)
   },
 }

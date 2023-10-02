@@ -121,6 +121,8 @@ interface DashboardProps {
   rowHeight?: number
   /** the margin between widgets */
   margin?: [number, number]
+  /** packing the layout */
+  packing?: boolean
   /** the className for the placeholder (ghost) */
   placeholderClassName?: string
   /** callback method when a widget is moved, resized or deleted */
@@ -207,12 +209,10 @@ As you can see, there are quite a few tasks on the to-do list... Feel like helpi
 Your contributions will be welcome!
 
 - [ ] ⚡️ Extra features
-- [ ] 📘 More Storybook examples and customizations
 - [ ] 💻 Codesandbox and Stackblitz examples
 - [ ] 📄 Docuentation
 - [ ] 📄 Contributing
-- [ ] 🔬 Test
-- [x] 📦 Publish package (beta)
+- [ ] 🔬 Testing
 
 ## Contributing
 

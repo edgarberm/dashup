@@ -23,16 +23,16 @@ import {
 } from '../utils/utils'
 
 /**
- * La idea de este componente es que solo se encargue de 'pintarse' a si mismo, la lógica
- * del layout recaerá sobre el componente que lo contiene.
+ * The idea of this component is for it to only take care of 'painting' itself, while the
+ * layout logic will be handled by the component that contains it.
  *
- * Para esto, le pasaremos por medio de props los datos necesarios (posición y tamaño)
- * para poder recalgular el layout.
+ * To achieve this, we will pass the necessary data (position and size) through props in
+ * order to recalculate the layout.
  *
  * 🗒️ @note
- * Este componente es el que utilizamos para 'pintar' el placeholder ya que contiene
- * toda la logica necesaria. Seria interesante poder separarlo y disponer de la logica en
- * los componentes que la necesiten por medio de hooks o de la Context API.
+ * This component is used to 'paint' the placeholder since it contains all the necessary
+ * logic. It would be interesting to separate it and have the logic available in the
+ * components that need it through hooks or the Context API.
  *
  */
 export default function Widget({
@@ -81,8 +81,8 @@ export default function Widget({
   const [isResizing, setIsResizing, isResizingRef] = useStateRef<boolean>(false)
 
   /**
-   * La primera vez que se renderiza el componente decidimos si el evento de drag lo
-   * dispara el propio widget o bien la toolbar
+   * he first time the component is rendered, we decide whether the drag event is triggered
+   * by the widget itself or by the toolbar.
    */
   useEffect(() => {
     const dragger = widget.current
@@ -93,7 +93,7 @@ export default function Widget({
     const resizer = resizeHandle.current
 
     if (dragger) {
-      // NOTE: añadir `&& isResizingRef.current === false`?
+      // NOTE: add `&& isResizingRef.current === false`?
       if (draggable && !fixed) {
         dragger.addEventListener('mousedown', handleDragEvents, false)
       }
@@ -117,7 +117,7 @@ export default function Widget({
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   /**
-   * Cuando las propiedades necesarias cambian, recalculamos los nuevos estilos y renderizamos el componente.
+   * When the necessary properties change, we recalculate the new styles and render the component.
    */
   useEffect(() => {
     innerX.current = x
@@ -130,8 +130,8 @@ export default function Widget({
   }, [x, y, width, height, columns, colWidth, dashboardWidth]) // eslint-disable-line react-hooks/exhaustive-deps
 
   /**
-   * Crea y setea los estilos para nuestro componente.
-   * 🚨 @important este método renderiza el componente al modificar `style` `setStyle`
+   * Create and set the styles for our component.
+   * 🚨 @important This method renders the component by modifying style and setStyle.
    */
   const createStyle = () => {
     const pos = calcPosition(
@@ -159,9 +159,8 @@ export default function Widget({
   }
 
   /**
-   * Puesto que los tres eventos de drag comparten la mayor parte de su logica los tres
-   * apuntan a esta función. Los fragmentos independientes para cada caso se gestionan
-   * por medio de un switch case.
+   * Since the three drag events share most of their logic, all three point to this function.
+   * The separate fragments for each case are managed through a switch case.
    */
   const handleDragEvents = useCallback((event: MouseEvent) => {
     event.preventDefault()
@@ -171,16 +170,15 @@ export default function Widget({
       fixed ||
       isResizingRef.current
     ) {
-      /* istanbul ignore next */
       return
     }
 
     const target = widget.current as HTMLElement
-    // Posición del widget en el sah (px)
+    // Widget position (in pixels).
     const position = getControlPosition(event, target)
     if (position === null) return
 
-    // Creamos el objeto en el que almacenaremos las posiciones
+    // We create the object where we will store the positions.
     const area: Area = {
       id: id,
       x: innerX.current,
@@ -251,7 +249,7 @@ export default function Widget({
     lastX.current = position.x
     lastY.current = position.y
 
-    // Pasamos nuestras nuevas coordenadas al `Dashboard` para que recalcule el nuevo layout
+    // We pass our new coordinates to the Dashboard to recalculate the new layout.
     onDrag(event.type, {
       id,
       x: pos.x,
@@ -260,13 +258,13 @@ export default function Widget({
       height: innerH.current,
     })
 
-    // Repintamos el componente
+    // We repaint the component.
     createStyle()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   /**
-   * Mismo caso que para los eventos de drag
+   * Same case as for the drag events.
    */
   const handleResizeEvents = (event: MouseEvent) => {
     event.preventDefault()
@@ -280,11 +278,11 @@ export default function Widget({
     }
 
     const target = widget.current as HTMLElement
-    // Posición del widget en el sah (px)
+    // Widget position (in px)
     const position = getControlPosition(event, target)
     if (position === null) return
 
-    // Creamos el objeto en el que almacenaremos las dimensiones
+    // We create the object where we will store the dimensions.
     const newSize: Area = {
       id: id,
       x: innerX.current,
@@ -377,7 +375,7 @@ export default function Widget({
     lastW.current = position.x
     lastH.current = position.y
 
-    // Pasamos nuestras nuevas coordenadas al `Dashboard` para que recalcule el nuevo layout
+    // We pass our new dimensions to the Dashboard to recalculate the new layout.
     onResize(event.type, {
       id,
       x: innerX.current,
@@ -386,7 +384,7 @@ export default function Widget({
       height: size.h,
     })
 
-    // Repintamos el componente
+    // We repaint the component.
     createStyle()
   }
 
@@ -404,7 +402,7 @@ export default function Widget({
         ${isResizing ? 'resizing' : ''}`}
       style={style}
     >
-      {/** 🗒️ @note si es el placeholder no renderizamos el contenido */}
+      {/** 🗒️ @note If it is the placeholder, we do not render the content. */}
       {placeholderClassName === undefined && (
         <div className={!toolbar ? DraggableHandleClassName : 'wrapper'}>
           {toolbar &&

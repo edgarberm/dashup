@@ -7,3 +7,5 @@ public
 *.tgz
 gh-pages
 gh-pages.pub
+
+.DS_Store

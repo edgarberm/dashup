@@ -1,6 +1,5 @@
 import { useEventListener, useStateRef } from '../hooks/hooks'
 import { throttle } from '../utils/utils'
-// @ts-ignore
 import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
 import Widget from './Widget'
 import {
@@ -22,23 +21,14 @@ const PLACEHOLDER = {
 }
 
 /**
- *  @todos
- * - Fix: la animación del plceholder en el repintado. (CSS transfor tansition)
- * - Styling (UI)
- * - Mejorar UX.
- *    - Swapping horizontal de los widgets si es posible antes de empujar
- *    - Restringir el drag y el resize al contenedor
- *    - Que se pueda ocultar el header y se muestre en el hover
- * - Refactor
- *
- * @think
- * - Para los widget staticos necesitamos poder moverlos para colocarlos en el lugar apropiado
+ *  The Dashboard component.
  */
 export function Dashboard({
   widgets,
   columns = 24,
   rowHeight = 100,
   margin = [10, 10],
+  packing = true,
   placeholderClassName = 'widget-placeholder',
   onChange,
   onResize,
@@ -61,7 +51,7 @@ export function Dashboard({
   useEffect(() => {
     onWindowResize()
 
-    const newWidgets = compact(widgets) as Layout
+    const newWidgets = packing ? compact(widgets) : widgets
     setLayout(newWidgets)
     layoutUpdate()
   }, [widgets]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -101,20 +91,21 @@ export function Dashboard({
   }
 
   /**
-   * Aquí se ejecuta la magia del grid, casi toda la lógica está en `ùtils'
+   * Here is where the magic of the grid happens, most of the logic is in `utils`.
    */
   const handleWidgetDrag = (eventName: string, widget: Area) => {
     const item = getLayoutItem(layoutRef.current, widget.id)
     if (item === undefined || item === null) return
 
-    const newLayout = moveElement(
-      layoutRef.current,
-      item,
-      widget.x,
-      widget.y,
-      true,
-    )
-    const compactLayout = compact(newLayout) as Layout
+    const newLayout = moveElement({
+      layout: layoutRef.current,
+      widget: item,
+      x: widget.x,
+      y: widget.y,
+      preventCollision: true,
+      packing,
+    })
+    const compactLayout = packing ? compact(newLayout) : newLayout
     const compactItem = compactLayout.find(
       (c: WidgetProps) => c.id === widget.id,
     ) as WidgetProps
@@ -165,15 +156,15 @@ export function Dashboard({
       const collision = getAllCollisions(layoutRef.current, item) as Layout
       const newLayout =
         collision.length > 0
-          ? moveElement(
-              layoutRef.current,
-              collision[0],
-              collision[0].x,
-              widget.height,
-              false,
-            )
+          ? moveElement({
+              layout: layoutRef.current,
+              widget: collision[0],
+              x: collision[0].x,
+              y: widget.height,
+              packing,
+            })
           : layoutRef.current
-      const compactLayout = compact(newLayout) as Layout
+      const compactLayout = packing ? compact(newLayout) : newLayout
 
       setLayout(compactLayout)
       onChange?.(compactLayout)
@@ -196,9 +187,8 @@ export function Dashboard({
 
   const handleRemoveWidget = (id: string) => {
     const newLayout = layoutRef.current.filter((w: WidgetProps) => w.id !== id)
-    const compactLayout = compact(newLayout) as Layout
+    const compactLayout = packing ? compact(newLayout) : newLayout
 
-    // setLayout(compactLayout)
     onChange?.(compactLayout)
     layoutUpdate()
     updateHeight()
