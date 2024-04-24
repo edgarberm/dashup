@@ -1,7 +1,6 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useEventListener, useStateRef } from '../hooks/hooks'
-import { throttle } from '../utils/utils'
-import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
-import Widget from './Widget'
+import { Area, DashboardProps, Layout, WidgetProps } from '../typings/types'
 import {
   bottom,
   compact,
@@ -9,8 +8,9 @@ import {
   getAllCollisions,
   getLayoutItem,
   moveElement,
+  throttle,
 } from '../utils/utils'
-import { Area, DashboardProps, Layout, WidgetProps } from '../typings/types'
+import Widget from './Widget'
 
 const PLACEHOLDER = {
   id: 'placeholder',
@@ -36,7 +36,6 @@ export function Dashboard({
   const dashboardRef = useRef<HTMLDivElement>(null)
   const originalLayout = useRef<Layout>([])
   const [width, setWidth] = useState<number>(0)
-  const [mergedStyle, setMergedStyle] = useState<CSSProperties>({})
   const [isDragging, setIsDragging] = useState<boolean>(false)
   const [isResizing, setIsResizing] = useState<boolean>(false)
   const [placeholder, setPlaceholder] = useState<Area>(PLACEHOLDER)
@@ -53,7 +52,6 @@ export function Dashboard({
 
     const newWidgets = packing ? compact(widgets) : widgets
     setLayout(newWidgets)
-    updateHeight()
     layoutUpdate()
   }, [widgets]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -62,11 +60,6 @@ export function Dashboard({
       setWidth(dashboardRef.current.offsetWidth)
       onResize?.()
     }
-  }
-
-  function updateHeight() {
-    const height = bottom(layout) * (rowHeight + margin[1]) + margin[1]
-    setMergedStyle({ ...mergedStyle, height: height })
   }
 
   function layoutUpdate() {
@@ -131,7 +124,7 @@ export function Dashboard({
       setLayout(compactLayout)
       onChange?.(compactLayout)
       layoutUpdate()
-      updateHeight()
+      // updateHeight()
     }
 
     if (eventName === 'mouseup') {
@@ -170,7 +163,6 @@ export function Dashboard({
       setLayout(compactLayout)
       onChange?.(compactLayout)
       layoutUpdate()
-      updateHeight()
 
       setPlaceholder({
         ...placeholder,
@@ -192,14 +184,16 @@ export function Dashboard({
 
     onChange?.(compactLayout)
     layoutUpdate()
-    updateHeight()
   }
 
   return (
     <div
       ref={dashboardRef}
       className='dashup dashup-dashboard'
-      style={mergedStyle}
+      style={{
+        minHeight: '100%',
+        height: bottom(layout) * (rowHeight + margin[1]) + margin[1],
+      }}
     >
       {layout.map((w) => (
         <Widget
