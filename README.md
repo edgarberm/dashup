@@ -25,10 +25,6 @@ Highly customizable and performant **React** components specifically designed fo
 
 <br>
 
-### 🚨 Important Notice
-
-This component are under development. Is not ready for production!
-
 ## Examples
 
 See in action in the [Storybook](https://builtbyedgar.github.io/dashup/)
