@@ -17,7 +17,7 @@
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\" --ignore-path .gitignore",
     "format": "prettier --write . --ignore-path .gitignore",
     "precommit": "lint-staged && test",
-    "build": "rm -rf dist && rollup -c",
+    "build": "rollup -c",
     "clean": "rm -rf dist && rm -rf public",
     "pack": "npm run build && npm pack",
     "publish": "npm publish --access public",
