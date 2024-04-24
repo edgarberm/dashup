@@ -81,7 +81,7 @@ export default function Widget({
   const [isResizing, setIsResizing, isResizingRef] = useStateRef<boolean>(false)
 
   /**
-   * he first time the component is rendered, we decide whether the drag event is triggered
+   * The first time the component is rendered, we decide whether the drag event is triggered
    * by the widget itself or by the toolbar.
    */
   useEffect(() => {

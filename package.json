@@ -1,6 +1,6 @@
 {
   "name": "dashup",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A React Dashboard Component.",
   "repository": {
     "type": "git",
@@ -9,14 +9,10 @@
   "author": "Edgar Bermejo",
   "license": "MIT",
   "homepage": "http://builtbyedgar.github.io/dashup",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "unpkg": "dist/index.min.js",
-  "types": "dist/index.d.ts",
-  "style": "dist/style.css",
-  "files": [
-    "./dist"
-  ],
+  "main": "./index.js",
+  "module": "./index.esm.js",
+  "types": "./index.d.ts",
+  "style": "./style.css",
   "scripts": {
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\" --ignore-path .gitignore",
     "format": "prettier --write . --ignore-path .gitignore",
