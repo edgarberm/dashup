@@ -57,26 +57,6 @@ export function Dashboard({
     layoutUpdate()
   }, [widgets]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const totalHeight = useMemo(() => {
-    let altoTotal = 0
-
-    // Iterar sobre cada widget
-    widgets.forEach((widget) => {
-      // Calcular la posición vertical más baja del widget
-      const h = widget.height * rowHeight + margin[0] + margin[1]
-      const y = widget.y * rowHeight + margin[0] + margin[1]
-      const posVertical = h + y
-
-      // Si la posición vertical más baja del widget es mayor que el alto total actual,
-      // actualizar el alto total
-      if (posVertical > altoTotal) {
-        altoTotal = posVertical
-      }
-    })
-
-    return altoTotal
-  }, [layout])
-
   function onWindowResize() {
     if (dashboardRef.current) {
       setWidth(dashboardRef.current.offsetWidth)
