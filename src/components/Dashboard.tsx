@@ -55,6 +55,11 @@ export function Dashboard({
     layoutUpdate()
   }, [widgets]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const height = useMemo(
+    () => bottom(layout) * (rowHeight + margin[1]) + margin[1],
+    [layout, rowHeight, margin],
+  )
+
   function onWindowResize() {
     if (dashboardRef.current) {
       setWidth(dashboardRef.current.offsetWidth)
@@ -192,7 +197,7 @@ export function Dashboard({
       className='dashup dashup-dashboard'
       style={{
         minHeight: '100%',
-        height: bottom(layout) * (rowHeight + margin[1]) + margin[1],
+        height: height,
       }}
     >
       {layout.map((w) => (
