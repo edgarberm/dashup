@@ -11,8 +11,6 @@ import {
 import { uuidv4 } from '../src/utils/utils'
 import './dashboard.css'
 
-const CUSTOM_TOOLBAR_TITLE = 'Widget 2 (with custom toolbar)'
-
 function FakeComponent({
   text = 'Content',
   extra,
@@ -24,14 +22,6 @@ function FakeComponent({
     <div className='content' data-testid='fake-component'>
       <p>{text}</p>
       {extra && <p style={{ fontWeight: 'bold' }}>{extra}</p>}
-    </div>
-  )
-}
-
-function FakeToolbar({ title, className }: CustomToolbarProps): JSX.Element {
-  return (
-    <div className={`custom-toolbar ${className}`} data-testid='fake-toolbar'>
-      <p>{title}</p>
     </div>
   )
 }
@@ -58,7 +48,10 @@ function FakeToolbarWithOptions({
   }
 
   return (
-    <div className={`custom-toolbar ${className}`} data-testid='fake-toolbar'>
+    <div
+      className={`custom-draggable-toolbar ${className}`}
+      data-testid='fake-toolbar'
+    >
       <p>{title}</p>
 
       <div
@@ -109,7 +102,6 @@ const FIXED_WIDGET: WidgetProps = {
   y: 0,
   width: 6,
   height: 2,
-  title: 'Widget 2 (fixed)',
   draggable: true,
   resizable: true,
   fixed: true,
@@ -126,7 +118,6 @@ const NOT_DRAGGABLE_WIDGET: WidgetProps = {
   y: 0,
   width: 6,
   height: 2,
-  title: 'Widget 2 (not draggable)',
   draggable: false,
   resizable: true,
   fixed: false,
@@ -139,7 +130,6 @@ const NOT_RESIZABLE_WIDGET: WidgetProps = {
   y: 0,
   width: 6,
   height: 2,
-  title: 'Widget 2 (not resizable)',
   draggable: true,
   resizable: false,
   fixed: false,
@@ -160,7 +150,6 @@ const MIN_MAX_WIDGET_SIZE: WidgetProps = {
   maxWidth: 6,
   minHeight: 1,
   maxHeight: 4,
-  title: 'Widget 2 (min/max size)',
   draggable: true,
   resizable: true,
   fixed: false,
@@ -178,11 +167,9 @@ const CUSTOM_TOOLBAR_WIDGET: WidgetProps = {
   y: 0,
   width: 6,
   height: 2,
-  title: CUSTOM_TOOLBAR_TITLE,
   draggable: true,
   resizable: true,
   fixed: false,
-  toolbar: <FakeToolbar />,
   component: <FakeComponent text={`This widget has no toolbar`} />,
 }
 
@@ -192,7 +179,6 @@ const CUSTOM_OPTIONS_WIDGET: WidgetProps = {
   y: 0,
   width: 6,
   height: 2,
-  title: CUSTOM_TOOLBAR_TITLE,
   component: <FakeComponent />,
 }
 
@@ -203,7 +189,6 @@ const FAKE_WIDGETS: Layout = [
     y: 0,
     width: 3,
     height: 2,
-    title: 'Widget 1',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -215,7 +200,6 @@ const FAKE_WIDGETS: Layout = [
     y: 0,
     width: 6,
     height: 2,
-    title: 'Widget 2',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -227,7 +211,6 @@ const FAKE_WIDGETS: Layout = [
     y: 0,
     width: 3,
     height: 2,
-    title: 'Widget 3',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -239,7 +222,6 @@ const FAKE_WIDGETS: Layout = [
     y: 2,
     width: 6,
     height: 3,
-    title: 'Widget 4',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -251,7 +233,6 @@ const FAKE_WIDGETS: Layout = [
     y: 2,
     width: 3,
     height: 2,
-    title: 'Widget 5',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -263,7 +244,6 @@ const FAKE_WIDGETS: Layout = [
     y: 2,
     width: 3,
     height: 2,
-    title: 'Widget 6',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -275,7 +255,6 @@ const FAKE_WIDGETS: Layout = [
     y: 4,
     width: 6,
     height: 1,
-    title: 'Widget 7',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -287,7 +266,6 @@ const FAKE_WIDGETS: Layout = [
     y: 6,
     width: 6,
     height: 2,
-    title: 'Widget 8',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -299,7 +277,6 @@ const FAKE_WIDGETS: Layout = [
     y: 6,
     width: 3,
     height: 2,
-    title: 'Widget 9',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -311,7 +288,6 @@ const FAKE_WIDGETS: Layout = [
     y: 6,
     width: 3,
     height: 2,
-    title: 'Widget 10',
     draggable: true,
     resizable: true,
     fixed: false,
@@ -574,12 +550,20 @@ export const ToolbarWithOptionsWidget: Story = {
   decorators: [
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (StoryFn: any, props: any) => {
-      CUSTOM_OPTIONS_WIDGET.toolbar = (
-        <FakeToolbarWithOptions
-          onAction={handleAction}
-          onRemove={handleRemove}
-        />
+      CUSTOM_OPTIONS_WIDGET.component = (
+        <>
+          <FakeToolbarWithOptions
+            title='Toolbar with options'
+            onAction={handleAction}
+            onRemove={handleRemove}
+          />
+          <FakeComponent
+            text={`This widget has a max/min size values (in layout units).`}
+            extra={`minWidth: 3, maxWidth: 6, minHeight: 1, maxHeight: 4.`}
+          />
+        </>
       )
+      CUSTOM_OPTIONS_WIDGET.dragHandleClassName = 'custom-draggable-toolbar'
       const WS = [...FILTER, CUSTOM_OPTIONS_WIDGET]
       const [widgets, setWidgets] = useState(WS)
       const handleChange = (dashboard: Layout) => {
@@ -602,6 +586,7 @@ export const ToolbarWithOptionsWidget: Story = {
             columns={props.args.columns}
             rowHeight={props.args.rowHeight}
             packing={props.args.packing}
+            // dragHandleClassName='custom-draggable-toolbar'
             onChange={handleChange}
           />
         </div>
@@ -624,12 +609,12 @@ export const ResizeWidgetInteraction: Story = {
 
 export const MaxResizeWidgetInteraction: Story = {
   args: {
-    widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
+    widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE }],
   },
 }
 
 export const MinResizeWidgetInteraction: Story = {
   args: {
-    widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE, toolbar: <FakeToolbar /> }],
+    widgets: [...FILTER, { ...MIN_MAX_WIDGET_SIZE }],
   },
 }
