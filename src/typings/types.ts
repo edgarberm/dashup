@@ -1,5 +1,3 @@
-import { ReactElement } from 'react'
-
 /**
  * @internal
  */
@@ -35,14 +33,10 @@ export interface WidgetProps {
   draggable?: boolean
   /** make widget resizable */
   resizable?: boolean
-  /** the widget title */
-  title: string
   /** the component that will be rendered into the widget */
   component?: JSX.Element
-  /** the component that will be the wiidget toolbar */
-  toolbar?: ReactElement
-  /** user internally */
-  moved?: boolean
+  /** the className for the draggable handle (generally toolbar) */
+  dragHandleClassName?: string
 }
 
 export type Layout = WidgetProps[]
@@ -75,12 +69,8 @@ export interface DashboardWidgetProps extends WidgetProps {
   rowHeight: number
   dashboardWidth: number
   padding: [number, number]
-  /** @deprecated */
-  draggableHandle?: string
   /** user internally */
-  moved?: boolean
-  /** user internally */
-  layoutItemProps?: WidgetProps
+  _layoutItemProps?: WidgetProps
   placeholderClassName?: string
   onDrag: (eventName: string, widget: Area) => void
   onResize: (eventName: string, widget: Area) => void
