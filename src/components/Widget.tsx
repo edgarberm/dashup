@@ -48,18 +48,15 @@ export default function Widget({
   fixed = false,
   draggable = true,
   resizable = true,
-  title,
   component,
-  toolbar,
   columns,
   colWidth,
   rowHeight,
   dashboardWidth,
   padding,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  moved,
   placeholderClassName,
-  layoutItemProps,
+  dragHandleClassName,
+  _layoutItemProps,
   onDrag,
   onResize,
 }: DashboardWidgetProps): JSX.Element {
@@ -85,10 +82,9 @@ export default function Widget({
    * by the widget itself or by the toolbar.
    */
   useEffect(() => {
+    const dragClass = dragHandleClassName ?? DraggableHandleClassName
     const dragger = widget.current
-      ? (widget.current.querySelector(
-          `.${DraggableHandleClassName}`,
-        ) as HTMLElement)
+      ? (widget.current.querySelector(`.${dragClass}`) as HTMLElement)
       : widget.current
     const resizer = resizeHandle.current
 
@@ -404,15 +400,17 @@ export default function Widget({
     >
       {/** 🗒️ @note If it is the placeholder, we do not render the content. */}
       {placeholderClassName === undefined && (
-        <div className={!toolbar ? DraggableHandleClassName : 'wrapper'}>
-          {toolbar &&
+        <div
+          className={dragHandleClassName ? 'wrapper' : DraggableHandleClassName}
+        >
+          {/* {toolbar &&
             cloneElement(toolbar, {
               id,
               title,
               className: DraggableHandleClassName,
-            })}
+            })} */}
 
-          {component && cloneElement(component, layoutItemProps)}
+          {component && cloneElement(component, _layoutItemProps)}
 
           {resizable && !fixed && (
             <span

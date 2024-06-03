@@ -24,17 +24,22 @@ h1, h2, h3, h4, h5, h6, p {
   letter-spacing: -0.01em;
 }
 
-.custom-toolbar {
+.custom-draggable-toolbar {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   height: 38px;
-  width: 100%;
+  /* width: 100%; */
   padding: 0 8px;
   border-bottom: 1px solid var(--color-dashboard-border);
   font-size: 12px;
   font-weight: 600;
+  cursor: grab;
+}
+
+.dashup-widget.dragging .custom-draggable-toolbar {
+  cursor: grabbing;
 }
 
 .custom-toolbar-button {

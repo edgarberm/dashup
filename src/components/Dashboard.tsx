@@ -30,6 +30,7 @@ export function Dashboard({
   margin = [10, 10],
   packing = true,
   placeholderClassName = 'widget-placeholder',
+  // dragHandleClassName,
   onChange,
   onResize,
 }: DashboardProps): JSX.Element {
@@ -204,12 +205,13 @@ export function Dashboard({
         <Widget
           key={w.id}
           {...w}
-          layoutItemProps={w}
+          _layoutItemProps={w}
           columns={columns}
           colWidth={colWidth}
           rowHeight={rowHeight}
           dashboardWidth={width}
           padding={margin}
+          // dragHandleClassName={dragHandleClassName}
           onDrag={handleWidgetDrag}
           onResize={handleWidgetResize}
           onRemove={handleRemoveWidget}
@@ -219,7 +221,6 @@ export function Dashboard({
       {(isDragging || isResizing) && (
         <Widget
           {...placeholder}
-          title=''
           maxWidth={columns}
           columns={columns}
           colWidth={colWidth}
