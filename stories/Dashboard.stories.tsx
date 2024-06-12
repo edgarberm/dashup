@@ -564,8 +564,8 @@ export const ToolbarWithOptionsWidget: Story = {
         </>
       )
       CUSTOM_OPTIONS_WIDGET.dragHandleClassName = 'custom-draggable-toolbar'
-      const WS = [...FILTER, CUSTOM_OPTIONS_WIDGET]
-      const [widgets, setWidgets] = useState(WS)
+      const [widgets, setWidgets] = useState([...FILTER, CUSTOM_OPTIONS_WIDGET])
+
       const handleChange = (dashboard: Layout) => {
         setWidgets(dashboard)
       }
@@ -574,6 +574,7 @@ export const ToolbarWithOptionsWidget: Story = {
         // eslint-disable-next-line no-console
         console.log(`You fired the action for widget: \n ${id}`)
       }
+
       function handleRemove(id: string) {
         const newWidgets = widgets.filter((w) => w.id !== id)
         setWidgets(newWidgets)
