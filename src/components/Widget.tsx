@@ -110,7 +110,7 @@ export default function Widget({
         resizer?.removeEventListener('mousedown', handleResizeEvents, false)
       }
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [draggable, fixed, resizable]) // eslint-disable-line react-hooks/exhaustive-deps
 
   /**
    * When the necessary properties change, we recalculate the new styles and render the component.
